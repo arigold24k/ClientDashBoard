@@ -75,7 +75,7 @@ const orm = {
             }
         })
 },
-    insertToKCardss: (customer, scandate, code, part, qty, tag_num) => {
+    insertToKCardss: (customer, code, part, qty, tag_num, cb) => {
         const todayDate = new Date();
         const dataObj = {
             customer: customer,
@@ -87,7 +87,14 @@ const orm = {
             createdat: todayDate,
             updatedat: todayDate
         };
-        db.kcardss.upsert(dataObj).then().catch();
+
+        db.kcardss.upsert(dataObj).then((res, metadata) => {
+            return cb(null, res);
+        }).catch((err) => {
+            if (err) {
+                return cb(err, null);
+            }
+        });
     }
 };
 

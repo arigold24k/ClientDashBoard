@@ -14,6 +14,7 @@ import Review from './../../components/Review';
 import Modal from '@material-ui/core/Modal';
 // import Navbar from './../../components/Navbar';
 import Navbar from '../../components/Navbar2';
+import axios from 'axios';
 
 const styles = theme => ({
     layout: {
@@ -147,6 +148,24 @@ class Checkout extends React.Component {
         // }));
         console.log("curent state: ", this.state);
     };
+
+    handleSubmit = () => {
+        const dataObj = {
+            header: {
+                authorization: "bearer " + sessionStorage.getItem("token")
+            },
+            body: {
+                partnum: this.state.orderdetails.partnum,
+                quantity: this.state.orderdetails.quantity,
+                tagnum: this.state.orderdetails.tagnum,
+                purpose: this.state.purposedetails.purpose
+            }
+        };
+        axios.post("/api/processScan",dataObj).then((res, err) => {
+
+        })
+    };
+
     handleBack = () => {
         this.setState(state => ({
             activeStep: state.activeStep - 1,
@@ -216,14 +235,21 @@ class Checkout extends React.Component {
                                                 Back
                                             </Button>
                                         )}
-                                        <Button
+                                        {activeStep === steps.length - 1 ? <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={this.handleSubmit}
+                                            className={classes.button}
+                                        >
+                                            Submit
+                                        </Button> : <Button
                                             variant="contained"
                                             color="primary"
                                             onClick={this.handleNext}
                                             className={classes.button}
                                         >
-                                            {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
-                                        </Button>
+                                            Next
+                                        </Button>}
                                         {this.getResetButton(activeStep, classes)}
                                     </div>
                                 </React.Fragment>

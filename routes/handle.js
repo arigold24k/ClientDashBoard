@@ -8,6 +8,8 @@ const func = require( '../functions/functions');
 const orm = require('../config/orm');
 //middleware to protect routes
 function verifyToken (req, res, next) {
+
+    console.log("VerifyToken request is the following, ", req);
     const bearerHeader = req.headers['authorization'];
 
     if(typeof bearerHeader !== 'undefined'){
@@ -135,11 +137,18 @@ router.post('/api/verify', function(req, res) {
 router.post('/api/processScan', verifyToken(), (req, res) => {
     console.log("hitting the api process scan route, ", req);
 
-    let decoded = jwt.verify(req.token, process.env.SECRETE_KEY_OR_SO, (err, decoded) => {
+        jwt.verify(req.token, process.env.SECRETE_KEY_OR_SO, (err, decoded) => {
         if(err){
             res.sendStatus(403);
         }else {
             // put in code if the token is good
+            orm.insertToKCardss(decoded.user.companycode,req.body.code, req.body.partnum, req.body.qty, req.body.tag_num, (err, data) => {
+                if(err) {
+                    //put in code if it was not inserted
+                }else{
+                    //code out if it inserted.
+                }
+            })
         }
     });
 

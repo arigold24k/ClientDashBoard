@@ -8,6 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+const javascriptBarcodeReader = require('javascript-barcode-reader');
 
 
 const styles = theme => ({
@@ -107,32 +108,32 @@ class PurposeForm extends React.Component {
                             </FormControl>
                         </form>
                     </Grid>
-                    {this.props.purposeval === '' ?
-                        (<Grid item xs>
-                        </Grid>) : (
-                            <Grid item xs className={classes.barcode}>
-                                <Barcode
-                                    value = {purposetext(this.props.purposeval).substring(0,3) + this.props.barcodeVal}
-                                    // width = {2}
-                                    height = {100}
-                                    format = {"CODE128"}
-                                    displayValue = {true}
-                                    fontOptions = {""}
-                                    font = {"monospace"}
-                                    textAlign = {"center"}
-                                    textPosition = {"bottom"}
-                                    textMargin = {2}
-                                    fontSize = {20}
-                                    background = {"#ffffff"}
-                                    lineColor = {"#000000"}
-                                    margin = {10}
-                                    marginTop = {undefined}
-                                    marginBottom = {undefined}
-                                    marginLeft = {undefined}
-                                    marginRight = {undefined}
-                                />
-                            </Grid>
-                        )}
+                    {/*{this.props.purposeval === '' ?*/}
+                        {/*(<Grid item xs>*/}
+                        {/*</Grid>) : (*/}
+                            {/*<Grid item xs className={classes.barcode}>*/}
+                                {/*<Barcode*/}
+                                    {/*value = {purposetext(this.props.purposeval).substring(0,3) + this.props.barcodeVal}*/}
+                                    {/*// width = {2}*/}
+                                    {/*height = {100}*/}
+                                    {/*format = {"CODE128"}*/}
+                                    {/*displayValue = {true}*/}
+                                    {/*fontOptions = {""}*/}
+                                    {/*font = {"monospace"}*/}
+                                    {/*textAlign = {"center"}*/}
+                                    {/*textPosition = {"bottom"}*/}
+                                    {/*textMargin = {2}*/}
+                                    {/*fontSize = {20}*/}
+                                    {/*background = {"#ffffff"}*/}
+                                    {/*lineColor = {"#000000"}*/}
+                                    {/*margin = {10}*/}
+                                    {/*marginTop = {undefined}*/}
+                                    {/*marginBottom = {undefined}*/}
+                                    {/*marginLeft = {undefined}*/}
+                                    {/*marginRight = {undefined}*/}
+                                {/*/>*/}
+                            {/*</Grid>*/}
+                        {/*)}*/}
                     <Grid item xs={12}>
                     </Grid>
                 </Grid>
