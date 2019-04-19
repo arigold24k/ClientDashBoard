@@ -74,7 +74,21 @@ const orm = {
                return cb(null, 0);
             }
         })
-}
+},
+    insertToKCardss: (customer, scandate, code, part, qty, tag_num) => {
+        const todayDate = new Date();
+        const dataObj = {
+            customer: customer,
+            scandate: todayDate,
+            code: code,
+            part: part,
+            qty: qty,
+            tag_num: tag_num,
+            createdat: todayDate,
+            updatedat: todayDate
+        };
+        db.kcardss.upsert(dataObj).then().catch();
+    }
 };
 
 
