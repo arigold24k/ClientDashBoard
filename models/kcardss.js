@@ -3,30 +3,35 @@ module.exports = (sequelize, DataTypes) => {
   const KCARDSS = sequelize.define('KCARDSS', {
     CUSTOMER: {
       type: DataTypes.STRING,
-      allowNull: false
-      },
+      allowNull: false,
+      defaultValue: "HolderCompany"
+    },
     SCANDATE: {
       type: DataTypes.DATE,
-      allowNull: false
-      },
+      allowNull: false,
+      defaultValue: '01/01/1901'
+    },
     RECNO: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
-      },
+    },
     CODE: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: "HOLD1"
     },
     PART: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: "123456"
     },
     QTY: {
       type: DataTypes.INTEGER,
-      allowNull: false
-      },
+      allowNull: false,
+      defaultValue: "999"
+    },
     TAG_NUM: DataTypes.STRING,
     DATE_CREATED: DataTypes.DATE,
     DATE_MODIFIED: DataTypes.DATE,

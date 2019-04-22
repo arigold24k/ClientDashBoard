@@ -4,11 +4,13 @@ module.exports = {
     return queryInterface.createTable('KCARDSS', {
       CUSTOMER: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        defaultValue: "HolderCompany"
       },
       SCANDATE: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
+        defaultValue: '01/01/1901'
       },
       RECNO: {
         type: Sequelize.INTEGER,
@@ -18,14 +20,18 @@ module.exports = {
       },
       CODE: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        defaultValue: "HOLD1"
       },
       PART: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        defaultValue: "123456"
       },
       QTY: {
-        type: Sequelize.INTEGER, allowNull: false
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: "999"
       },
       TAG_NUM: Sequelize.STRING,
       DATE_CREATED: Sequelize.DATE,

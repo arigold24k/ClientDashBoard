@@ -7,23 +7,6 @@ const func = require( '../functions/functions');
 
 const orm = require('../config/orm');
 //middleware to protect routes
-function verifyToken (req, res, next) {
-
-    console.log("VerifyToken request is the following, ", req);
-    const bearerHeader = req.headers['authorization'];
-
-    if(typeof bearerHeader !== 'undefined'){
-        const bearer = bearerHeader.split(' ');
-        const bearerToken = bearer[1];
-
-        req.token = bearerToken;
-        next();
-
-    }else{
-        //forbidden
-        res.sendStatus(403);
-    }
-}
 
 router.get("/", function(req, res) {
     console.log("Route was hit.");
@@ -47,16 +30,13 @@ router.post('/register', function(req, res) {
     console.log('Register API is being hit');
     orm.addoneUser(req.body.userName, req.body.password, req.body.email, req.body.companyCode, (err, data) => {
         console.log('---data is coming back from query---', data);
-        if(data && (data !==0 || data !== 3)){
+        if(data && (data !==0 && data !== 3)){
             console.log('this is the data that came back from the call ', data);
             res.json({message:'Data has been inserted', data: data})
         }else if(data === 0 || !data) {
             res.json({message: 'user already exists', data: 0});
         }else if(data === 3) {
-            res.json({message: 'user already exists', data: 3});
-        }
-        else {
-            res.json({message: 'Error in getting data', error: err});
+            res.json({message: 'No comp code exist', data: 3});
         }
     })
 });
@@ -116,7 +96,7 @@ router.post('/api/verify', function(req, res) {
     console.log('this is the toekn in the verify route ', req.body);
     try {
         let decoded = jwt.verify(req.body.token, process.env.SECRETE_KEY_OR_SO);
-        console.log('decoded value in the new api route, ', decoded);
+        // console.log('decoded value in the new api route, ', decoded);
         console.log('decoded value in the new api route, ', decoded.user.email);
         if (typeof decoded !== 'undefined'){
             const dataObj = {
@@ -134,19 +114,25 @@ router.post('/api/verify', function(req, res) {
     }
 });
 
-router.post('/api/processScan', verifyToken(), (req, res) => {
+router.post('/api/processScan', verifyToken ,(req, res) => {
     console.log("hitting the api process scan route, ", req);
 
         jwt.verify(req.token, process.env.SECRETE_KEY_OR_SO, (err, decoded) => {
         if(err){
             res.sendStatus(403);
         }else {
+
+            console.log("This is the request in the process scan route, ", req.body);
             // put in code if the token is good
-            orm.insertToKCardss(decoded.user.companycode,req.body.code, req.body.partnum, req.body.qty, req.body.tag_num, (err, data) => {
+            orm.insertToKCardss(decoded.user.companycode,req.body.purpose, req.body.partnum, req.body.quantity, req.body.tagnum, (err, data) => {
                 if(err) {
+                    console.log("Errror in adding activity to kcards ", err);
+                    res.json({message: "data was not added", data: null})
                     //put in code if it was not inserted
                 }else{
                     //code out if it inserted.
+                    console.log("Data should have been added, ", data);
+                    res.json({message: "data was added succesfully", data: data})
                 }
             })
         }
@@ -168,6 +154,27 @@ router.post('/139.64.200.80/', function(req, res) {
         res.json({message: 'There was an error', error: err})
     }
 });
+
+function verifyToken (req, res, next) {
+
+    // console.log("VerifyToken request is the following, ", request);
+    console.log("VerifyToken request header, ", req.headers);
+
+    const bearerHeader = req.headers['authorization'];
+
+    if(typeof bearerHeader !== 'undefined'){
+        const bearer = bearerHeader.split(' ');
+        const bearerToken = bearer[1];
+
+        req.token = bearerToken;
+        console.log("This is the token that is being sent as the header, ", bearerToken);
+        next();
+
+    }else{
+        //forbidden
+        res.sendStatus(403);
+    }
+}
 
 
 module.exports = router;

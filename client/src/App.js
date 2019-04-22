@@ -150,8 +150,6 @@ class App extends Component {
                             this.setState({auth: true, email: res.data.email});
                             console.log('this is the state after the auth was udpated ', this.state);
                             this.props.history.push('/home_page');
-                        }else if (res.data.data === 'noUser') {
-                            this.setState({open5:true})
                         }else{
                             this.setState({open: true});
                         }
@@ -161,6 +159,8 @@ class App extends Component {
                 }
 
 
+            }else {
+                this.setState({open5: true});
             }
  }).catch((e) => {
             console.log('Error: ', e);

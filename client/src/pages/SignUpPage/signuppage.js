@@ -78,7 +78,8 @@ class signuppage extends React.Component {
             password: '',
             rePassWord: '',
             open1: false,
-            open: false
+            open: false,
+            open2: false
         };
     }
 
@@ -88,13 +89,13 @@ class signuppage extends React.Component {
             console.log("This is the response to the front end from the register api ", req);
             if(req.data.data === true) {
                 this.setState({open1: true});
-            }else {
-                this.setState({open: true});
+            }else if (req.data.data === 3) {
+                this.setState({open2: true});
             }
         });
     };
     handleClose = (event) => {
-      this.setState({open: false});
+      this.setState({open: false, open2: false});
         window.location.reload();
     };
     handleClose1 = (event) => {
@@ -171,6 +172,21 @@ class signuppage extends React.Component {
 
                     </div>
                 </Modal>
+
+                <Modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={this.state.open2}
+                    onClose={this.handleClose}
+                >
+                    <div style={getModalStyle()} className={classes.modal}>
+                        <Typography variant="h6" id="modal-title">
+                            No Company Code exist.
+                        </Typography>
+
+                    </div>
+                </Modal>
+
         </React.Fragment>
         )
 

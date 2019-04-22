@@ -42,8 +42,12 @@ const orm = {
 
     },
     addoneUser: function(username, pw, email, compcode, cb) {
+        let resp;
         this.findoneUser(username, (err, data) => {
+            console.log("find one user ", data);
+            //looking to find a user that has that username code if no user exist go to next line of logic
             if(!data[0]) {
+                //if no user with that company code exist exist proceed.
                 this.find_one('UserTable', "CompCode", compcode, (er, data2) => {
                     if (data2 === null ) {
                         this.find_one('Company', 'comp_code', compcode, (error, data1) => {
@@ -57,38 +61,42 @@ const orm = {
                                     CompCode: compcode
                                 };
                                 db.UserTable.upsert( objData).then((response, metadata) => {
-                                    console.log("This is the bulkInsert in the orm.js page res:", metadata);
-                                    console.log("This is the bulkInsert in the orm.js page err:", response);
-                                    console.log('this is the respond from the database ', response);
-                                    return cb(null, response);
+                                    cb(null, response);
                                 })
                             }else {
                                 //code 3 equals no comp code
-                                return cb(null, 3)
+                                cb(null, 3);
                             }})
                     }else {
-                        return cb(null, 3)
+                        //code 2 means there is a user for that company
+                        cb(null, 2);
                     }
                 });
+
             }else{
-               return cb(null, 0);
+                //user exist for that username select a different username.
+                cb(null, 0);
             }
-        })
-},
+        });
+    },
     insertToKCardss: (customer, code, part, qty, tag_num, cb) => {
         const todayDate = new Date();
         const dataObj = {
-            customer: customer,
-            scandate: todayDate,
-            code: code,
-            part: part,
-            qty: qty,
-            tag_num: tag_num,
-            createdat: todayDate,
-            updatedat: todayDate
+            'CUSTOMER': customer,
+            'SCANDATE': todayDate,
+            'CODE': code,
+            'PART': part,
+            'QTY': parseInt(qty.substring(1, qty.length - 1)),
+            'TAG_NUM': tag_num,
+            'DATE_CREATED': todayDate,
+            'DATE_MODIFIED': todayDate,
+            'createdat': todayDate,
+            'updatedat': todayDate
         };
 
-        db.kcardss.upsert(dataObj).then((res, metadata) => {
+        console.log("Data being passed into the db KCARDS upsert, ", dataObj);
+
+        db.KCARDSS.upsert(dataObj).then((res, metadata) => {
             return cb(null, res);
         }).catch((err) => {
             if (err) {

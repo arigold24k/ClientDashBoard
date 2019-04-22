@@ -16,6 +16,40 @@ import Modal from '@material-ui/core/Modal';
 import Navbar from '../../components/Navbar2';
 import axios from 'axios';
 
+function purposetext(purp) {
+    switch (purp) {
+        case 1:
+            return 'RECEIPT';
+        case 2:
+            return 'REPORT';
+        case 3:
+            return 'CONSUME';
+        case 4:
+            return 'ERROR';
+        case 5:
+            return 'CYCLE COUNT';
+        case 6:
+            return 'PRODUCTION RECEIPT';
+        default:
+            return '';
+        // default:
+        //     throw new Error('Unknown step');
+    }
+}
+
+const initialState = {
+    activeStep: 0,
+        orderdetails : {partnum: '',
+        quantity: '',
+        tagnum: ''
+    },
+    purposedetails: {
+        purpose: ''
+    },
+    open: false,
+        open1: false
+};
+
 const styles = theme => ({
     layout: {
         width: 'auto',
@@ -83,22 +117,20 @@ function rand() {
 const steps = ['Order Detail', 'Purpose', 'Review'];
 
 class Checkout extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            activeStep: 0,
-            orderdetails : {partnum: '',
-                quantity: '',
-                tagnum: ''
-            },
-            purposedetails: {
-                purpose: ''
-            },
-            open: false
-        };
+    static contextTypes = {
+        router: PropTypes.object
+    };
+    constructor(props, context) {
+        super(props, context);
+        this.state = initialState;
     }
     handleClose = () => {
-        this.setState({ open: false });
+        this.setState({open1: false });
+    };
+
+    handleClose1 = () => {
+        this.setState(initialState);
+
     };
 
     handleOrderDetail = event => {
@@ -141,7 +173,7 @@ class Checkout extends React.Component {
                 activeStep: state.activeStep + 1,
             }));
         }else {
-            this.setState({open: true});
+            this.setState({open1: true});
         }
         // this.setState(state => ({
         //     activeStep: state.activeStep + 1,
@@ -151,17 +183,20 @@ class Checkout extends React.Component {
 
     handleSubmit = () => {
         const dataObj = {
-            header: {
-                authorization: "bearer " + sessionStorage.getItem("token")
-            },
-            body: {
                 partnum: this.state.orderdetails.partnum,
                 quantity: this.state.orderdetails.quantity,
                 tagnum: this.state.orderdetails.tagnum,
-                purpose: this.state.purposedetails.purpose
-            }
+                purpose: purposetext(this.state.purposedetails.purpose)
+            };
+
+        const headerObj = {
+            'Authorization': "bearer " + sessionStorage.getItem("token")
         };
-        axios.post("/api/processScan",dataObj).then((res, err) => {
+        axios.post("/api/processScan",dataObj, {headers: headerObj}).then((res, err) => {
+            console.log("Added submit to the client checkout page ", res);
+            if(res.data){
+                this.setState({open: true});
+            }
 
         })
     };
@@ -262,6 +297,24 @@ class Checkout extends React.Component {
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
                         open={this.state.open}
+                        onClose={this.handleClose1}
+                    >
+                        <div style={getModalStyle()} className={classes.paper1}>
+                            <Typography variant="h6" id="modal-title">
+                                Added
+                            </Typography>
+                            <Typography variant="subtitle1" id="simple-modal-description">
+                                Material movement has been added.
+                            </Typography>
+                        </div>
+                    </Modal>
+                </div>
+
+                <div>
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={this.state.open1}
                         onClose={this.handleClose}
                     >
                         <div style={getModalStyle()} className={classes.paper1}>
