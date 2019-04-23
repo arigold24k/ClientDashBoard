@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     QTY: DataTypes.INTEGER,
     BP_CODE: {
       type: DataTypes.STRING,
+
       allowNull: false,
       primaryKey: true
     },

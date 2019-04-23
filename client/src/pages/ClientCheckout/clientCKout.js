@@ -44,7 +44,7 @@ const initialState = {
         tagnum: ''
     },
     purposedetails: {
-        purpose: ''
+        purpose: '3'
     },
     open: false,
         open1: false
@@ -114,7 +114,7 @@ function rand() {
     return Math.round(Math.random() * 20) - 10;
 }
 
-const steps = ['Order Detail', 'Purpose', 'Review'];
+const steps = ['Purpose', 'Order Detail', 'Review'];
 
 class Checkout extends React.Component {
     static contextTypes = {
@@ -168,7 +168,7 @@ class Checkout extends React.Component {
         });
     };
     handleNext = () => {
-        if((this.state.activeStep === 0 && (this.state.orderdetails.partnum !== '' && this.state.orderdetails.tagnum !== '' && this.state.orderdetails.quantity !== '')) || (this.state.activeStep === 1 && (this.state.purposedetails.purpose !== '' )) ) {
+        if((this.state.activeStep === 1 && (this.state.orderdetails.partnum !== '' && this.state.orderdetails.tagnum !== '' && this.state.orderdetails.quantity !== '')) || (this.state.activeStep === 0 && (this.state.purposedetails.purpose !== '' )) ) {
             this.setState(state => ({
                 activeStep: state.activeStep + 1,
             }));
@@ -209,9 +209,9 @@ class Checkout extends React.Component {
     };
     getStepContent = (step) => {
         switch (step) {
-            case 0:
-                return <OrderDetail updateval={this.handleOrderDetail.bind(this)} inputpart={this.state.orderdetails.partnum} inputqty={this.state.orderdetails.quantity} inputtagnum={this.state.orderdetails.tagnum}/>;
             case 1:
+                return <OrderDetail updateval={this.handleOrderDetail.bind(this)} inputpart={this.state.orderdetails.partnum} inputqty={this.state.orderdetails.quantity} inputtagnum={this.state.orderdetails.tagnum}/>;
+            case 0:
                 return <PurposeSection updateval={this.handlePurposeChange.bind(this)} purposeval={this.state.purposedetails.purpose} barcodeVal={this.state.orderdetails.tagnum}/>;
             case 2:
                 return <Review pnumber={this.state.orderdetails.partnum} tagnumber={this.state.orderdetails.tagnum} qty={this.state.orderdetails.quantity} purposeval={this.state.purposedetails.purpose}/>;
@@ -221,11 +221,11 @@ class Checkout extends React.Component {
     };
     getResetButton = (actstep, classes) => {
         switch(actstep) {
-            case 0:
+            case 1:
                 return (<Button onClick={this.handlepg0Reset} className={classes.button} variant="outlined">
                             Reset
                         </Button>);
-            case 1:
+            case 0:
                 return (<Button onClick={this.handlepg1Reset} className={classes.button} variant="outlined">
                             Reset
                          </Button>);
@@ -265,11 +265,7 @@ class Checkout extends React.Component {
                                     {this.getStepContent(activeStep)}
                                     <div className={classes.buttons}>
                                         {/*{this.getResetButton(activeStep, classes)}*/}
-                                        {activeStep !== 0 && (
-                                            <Button onClick={this.handleBack} className={classes.button}>
-                                                Back
-                                            </Button>
-                                        )}
+
                                         {activeStep === steps.length - 1 ? <Button
                                             variant="contained"
                                             color="primary"
@@ -285,6 +281,11 @@ class Checkout extends React.Component {
                                         >
                                             Next
                                         </Button>}
+                                        {activeStep !== 0 && (
+                                            <Button onClick={this.handleBack} className={classes.button}>
+                                                Back
+                                            </Button>
+                                        )}
                                         {this.getResetButton(activeStep, classes)}
                                     </div>
                                 </React.Fragment>
