@@ -70,7 +70,7 @@ class App extends Component {
                 error = err;
                 // return res.data.data === true;
                 if(res.data.dataObj.data === true){
-                    this.setState({companyCode : res.data.dataObj.compCD, email: res.data.dataObj.email, auth: true});
+                    this.setState({companyCode : res.data.dataObj.compCD, email: res.data.dataObj.email, auth: true, compName: res.data.dataObj.compName});
                     console.log("state ", this.state);
                 }else{
                     this.setState({auth:false})
@@ -138,16 +138,18 @@ class App extends Component {
                     id: res.data.id,
                     username: res.data.username,
                     email: res.data.Email,
-                    comp: res.data.CompCode
+                    comp: res.data.CompCode,
+                    compname: res.data.comp_name
                 };
 
                 if (check) {
+                    //creating token
                     axios.post('/verify/api', tokenObj).then((res, err) => {
                         console.log("app. js handle submit verify request response, res: ", res);
                         if(typeof res.data.token !== 'undefined') {
                             //save this on local storage
                             sessionStorage.setItem('token', res.data.token);
-                            this.setState({auth: true, email: res.data.email});
+                            this.setState({auth: true, email: res.data.email, compName: res.data.compName});
                             console.log('this is the state after the auth was udpated ', this.state);
                             this.props.history.push('/home_page');
                         }else{
@@ -201,7 +203,7 @@ class App extends Component {
                     <Route exact path="/login1"><Login1 getValue={this.getValue.bind(this)}  usrname={this.state.usrname} open3={this.state.open3} open4={this.state.open4} open5={this.state.open5} handlesubmit={this.handlesubmit.bind(this)} handleAdd={this.handleAdd.bind(this)} open={this.state.open} open1={this.state.open1} handleClose={this.handleClose.bind(this)}/></Route>
                     <Route exacht path="/signup" component={SignUP}/>
                     <PrivateRoute exact path="/home_page" component={this.myDashboardPage} auth={this.state.auth}/>
-                    <PrivateRoute exact path="/manage_inv" component={this.myCheckOutPage} auth={this.state.auth}/>
+                    <PrivateRoute exact path="/manage_inv" component={this.myCheckOutPage} auth={this.state.auth} companyname={this.state.compName}/>
                     <PrivateRoute exact path="/reporting" component={this.myReportingPage} auth={this.state.auth}/>
                 </Switch>
             </div>

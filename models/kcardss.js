@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     SCANDATE: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: '01/01/1901'
+      defaultValue: DataTypes.NOW
     },
     RECNO: {
       type: DataTypes.INTEGER,
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
     QTY: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: "999"
+      defaultValue: "999999"
     },
     TAG_NUM: DataTypes.STRING,
     DATE_CREATED: DataTypes.DATE,
@@ -43,6 +43,8 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       fields: ['RECNO']
     }]
+  }, {
+    timestamp: false
   });
   KCARDSS.associate = function(models) {
     // associations can be defined here

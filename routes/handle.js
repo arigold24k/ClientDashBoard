@@ -48,7 +48,8 @@ router.post('/verify/api', (req, res) => {
             id: req.body.id,
             username: req.body.username,
             email: req.body.email,
-            companycode: req.body.comp
+            companycode: req.body.comp,
+            compName: req.body.compname
         };
 
         console.log("This is the data in the verify/api being created as an object, ", tokenObj);
@@ -56,7 +57,7 @@ router.post('/verify/api', (req, res) => {
             if(err){
                 res.status(502).json({message: 'error creating token'});
             }else{
-                res.json({token: data, email: req.body.email});
+                res.json({token: data, email: req.body.email, compName: req.body.compname});
             }
         })
     }
@@ -102,7 +103,8 @@ router.post('/api/verify', function(req, res) {
             const dataObj = {
                 data : true,
                 compCD: decoded.user.companycode,
-                email: decoded.user.email
+                email: decoded.user.email,
+                compName: decoded.user.compName
 
             };
             res.json({message:'Token Verified', dataObj})

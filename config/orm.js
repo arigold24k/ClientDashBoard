@@ -8,7 +8,7 @@ const prod_table = 'testProdTable';
 
 const orm = {
     findoneUser: function(username, cb){
-        const queryString ="SELECT * FROM " + table_name + " Where LCASE(username)='" + username.toLowerCase() + "';";
+        const queryString ="SELECT a.*, b.comp_name FROM " + table_name + " a, companies b Where LCASE(username)='" + username.toLowerCase() + "' AND b.comp_code = a.compcode;";
         db.sequelize.query(queryString).then((results, metadata) => {
             console.log("orm.js 12 -this is the results: ", results[0][0]);
             console.log("orm.js 13 this is the metadata: ", metadata);
@@ -86,12 +86,10 @@ const orm = {
             'SCANDATE': todayDate,
             'CODE': code,
             'PART': part,
-            'QTY': parseInt(qty.substring(1, qty.length - 1)),
+            'QTY': qty,
             'TAG_NUM': tag_num,
             'DATE_CREATED': todayDate,
             'DATE_MODIFIED': todayDate,
-            'createdat': todayDate,
-            'updatedat': todayDate
         };
 
         console.log("Data being passed into the db KCARDS upsert, ", dataObj);

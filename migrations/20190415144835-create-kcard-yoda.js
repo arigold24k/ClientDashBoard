@@ -5,7 +5,8 @@ module.exports = {
       KCARD: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
       },
       PART: {
         type: DataTypes.STRING,

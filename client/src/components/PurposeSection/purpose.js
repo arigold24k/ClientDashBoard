@@ -30,14 +30,12 @@ function purposetext(purp) {
         case 1:
             return 'Receipt';
         case 2:
-            return 'Report';
-        case 3:
             return 'Consume';
-        case 4:
+        case 3:
             return 'Error';
-        case 5:
+        case 4:
             return 'Cycle Count';
-        case 6:
+        case 5:
             return 'Production Receipt';
         default:
             return '';
@@ -99,11 +97,10 @@ class PurposeForm extends React.Component {
                                         <em>None</em>
                                     </MenuItem>
                                     <MenuItem value={1}>Receipt</MenuItem>
-                                    <MenuItem value={2}>Report</MenuItem>
-                                    <MenuItem value={3}>Consume</MenuItem>
-                                    <MenuItem value={4}>Error</MenuItem>
-                                    <MenuItem value={5}>Cycle Count</MenuItem>
-                                    <MenuItem value={6}>Production Receipt</MenuItem>
+                                    <MenuItem value={2}>Consume</MenuItem>
+                                    <MenuItem value={3}>Error</MenuItem>
+                                    <MenuItem value={4}>Cycle Count</MenuItem>
+                                    <MenuItem value={5}>Production Receipt</MenuItem>
                                 </Select>
                             </FormControl>
                         </form>
@@ -145,26 +142,3 @@ PurposeForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 export default withStyles(styles)(PurposeForm);
-
-
-
-
-
-{/*<Grid item xs={24} md={12}>*/}
-{/*<TextField required id="purpose" label="Name on card" fullWidth />*/}
-{/*</Grid>*/}
-{/*<Grid item xs={24} md={12}>*/}
-{/*<TextField required id="cardNumber" label="Card number" fullWidth />*/}
-{/*</Grid>*/}
-{/*<Grid item xs={12} md={6}>*/}
-{/*<TextField required id="expDate" label="Expiry date" fullWidth />*/}
-{/*</Grid>*/}
-{/*<Grid item xs={12} md={6}>*/}
-{/*<TextField*/}
-{/*required*/}
-{/*id="cvv"*/}
-{/*label="CVV"*/}
-{/*helperText="Last three digits on signature strip"*/}
-{/*fullWidth*/}
-{/*/>*/}
-{/*</Grid>*/}

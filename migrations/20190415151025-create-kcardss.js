@@ -10,7 +10,7 @@ module.exports = {
       SCANDATE: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: '01/01/1901'
+        defaultValue: Sequelize.NOW
       },
       RECNO: {
         type: Sequelize.INTEGER,
@@ -31,14 +31,16 @@ module.exports = {
       QTY: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: "999"
+        defaultValue: "999999"
       },
       TAG_NUM: Sequelize.STRING,
       DATE_CREATED: Sequelize.DATE,
       DATE_MODIFIED: Sequelize.DATE,
       STATUS: Sequelize.STRING,
       PSESSION: Sequelize.INTEGER,
-      PROCESSED: Sequelize.STRING
+      PROCESSED: Sequelize.STRING,
+    }, {
+      timestamp: false
     });
   },
   down: (queryInterface, Sequelize) => {

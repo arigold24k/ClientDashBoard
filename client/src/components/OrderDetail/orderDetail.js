@@ -10,7 +10,7 @@ class orderDetail extends React.Component {
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
-                Order Details
+                Order Details - Scanned Material Count {this.props.count}
             </Typography>
             <Grid container spacing={24}>
                 {/*<Grid item xs={12} sm={6}>*/}
