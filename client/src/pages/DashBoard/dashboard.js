@@ -97,7 +97,7 @@ class Dashboard extends React.Component {
 
             <div className={classes.root}>
                 <CssBaseline />
-                <Navbar handleSignOut={this.props.handleSignOut} username={this.props.username}/>
+                <Navbar handleSignOut={this.props.handleSignOut} username={this.props.companyname}/>
                 <main className={classes.content}>
                     <div className={classes.appBarSpacer} />
                     <Typography variant="h4" gutterBottom component="h2">

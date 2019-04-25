@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React from "react";
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -141,7 +141,7 @@ class report extends React.Component {
         return (
             <React.Fragment>
                 <CssBaseline />
-                <Navbar handleSignOut={this.props.handleSignOut} username={this.props.username}/>
+                <Navbar handleSignOut={this.props.handleSignOut} username={this.props.companyname}/>
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
                         <Typography component="h1" variant="h4" align="center">
@@ -191,7 +191,7 @@ class report extends React.Component {
                             {/*</FormControl>*/}
                             {/*</form>*/}
 
-                                {(this.state.period != "" && this.state.purpose != "") && <Button
+                                {(this.state.period !== "" && this.state.purpose !== "") && <Button
                                     variant="contained"
                                     color="primary"
                                     // onClick={}

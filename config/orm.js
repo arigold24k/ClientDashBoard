@@ -101,6 +101,17 @@ const orm = {
                 return cb(err, null);
             }
         });
+    },
+    findOneTag: (tagNumber, cb) => {
+        db.KCARD_YODA.findOne({
+            where: {
+                'ITEM_TAG_INTEGER': tagNumber
+            }
+        }).then((results) => {
+            cb(null, results)
+        }).catch((error) => {
+            cb(error, null)
+        })
     }
 };
 

@@ -42,10 +42,9 @@ module.exports = (sequelize, DataTypes) => {
     indexes: [{
       unique: true,
       fields: ['RECNO']
-    }]
-  }, {
-    timestamp: false
-  });
+    }],
+    timestamps: false
+  },);
   KCARDSS.associate = function(models) {
     // associations can be defined here
   };

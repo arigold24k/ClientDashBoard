@@ -24,6 +24,7 @@ class orderDetail extends React.Component {
                         autoComplete="pnum"
                         onChange={this.props.updateval}
                         value={this.props.inputpart}
+                        autoFocus={true}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -55,12 +56,3 @@ class orderDetail extends React.Component {
     );}
 }
 export default orderDetail;
-
-
-
-{/*<Grid item xs={12}>*/}
-{/*<FormControlLabel*/}
-{/*control={<Checkbox color="secondary" name="saveAddress" value="yes" />}*/}
-{/*label="Use this address for payment details"*/}
-{/*/>*/}
-{/*</Grid>*/}

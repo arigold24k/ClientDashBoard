@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React  from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -110,8 +110,8 @@ class Checkout extends React.Component {
     static contextTypes = {
         router: PropTypes.object
     };
-    constructor(props, context) {
-        super(props, context);
+    constructor(props) {
+        super(props);
         const initialState = {
             activeStep: 0,
             orderdetails : {partnum: '',
@@ -125,21 +125,14 @@ class Checkout extends React.Component {
             open1: false,
             open2: false,
             open3: false,
+            open4: false,
+            open5: false,
             count: 0,
-            companyName: props.companyname,
         };
-
-
-
-
         this.state = initialState;
     }
     handleClose = () => {
         this.setState({open1: false });
-    };
-
-    handleClose3 = () => {
-        this.setState({open3: false });
     };
 
     handleClose1 = () => {
@@ -171,10 +164,35 @@ class Checkout extends React.Component {
                 this.setState({count: this.state.count + 1});
                 this.setState({open: true, open2: false});
             }else if (res.data.data === null) {
-                this.setState({open3: true});
+                this.setState({open3: true, open2: false});
+            }else if (res.data.data === 'INVALIDTOKEN') {
+                this.setState({open4: true})
+            }else if (res.data.data === 'TAGALREADYCONSUMED') {
+                this.setState({open5: true, open2: false})
             }
 
         })
+    };
+
+    handleClose3 = () => {
+        this.setState({open3: false });
+    };
+
+    handleClose4 = () => {
+        this.setState({open4: false});
+        window.location.reload();
+
+    };
+
+    handleClose5 = () => {
+        this.setState({activeStep: 1,
+            orderdetails : {
+                partnum: '',
+                quantity: '',
+                tagnum: ''
+            },
+            open5: false
+        });
     };
 
     handleOrderDetail = event => {
@@ -268,6 +286,14 @@ class Checkout extends React.Component {
                 return ('');
         }
     };
+
+    componentWillMount() {
+        // this.setState({companyName: this.props});
+
+        console.log('the state in teh comp will mount, ', this.props);
+
+    }
+
     render() {
         const { classes } = this.props;
         const { activeStep } = this.state;
@@ -275,7 +301,7 @@ class Checkout extends React.Component {
         return (
             <React.Fragment>
                 <CssBaseline />
-                <Navbar handleSignOut={this.props.handleSignOut} username={this.props.username}/>
+                <Navbar handleSignOut={this.props.handleSignOut} username={this.props.companyname}/>
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
                         <Typography component="h1" variant="h4" align="center">
@@ -368,6 +394,28 @@ class Checkout extends React.Component {
                     <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
+                        open={this.state.open2}
+                        onClose={this.handleClose2}
+                    >
+                        <div style={getModalStyle()} className={classes.paper1}>
+                            <Typography variant="h6" id="modal-title">
+                                Summary
+                            </Typography>
+                            <Typography variant="subtitle1" id="simple-modal-description">
+                                Part Number: {this.state.orderdetails.partnum} || Quantity: {this.state.orderdetails.quantity.substring(1,this.state.orderdetails.quantity.length)} Lb. || Tag Number: {this.state.orderdetails.tagnum}
+                            </Typography>
+                            <Button onClick={this.handleNoSubmit} className={classes.button}>
+                                Do Not Submit
+                            </Button>
+                        </div>
+
+                    </Modal>
+                </div>
+
+                <div>
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
                         open={this.state.open3}
                         onClose={this.handleClose3}
                     >
@@ -386,23 +434,41 @@ class Checkout extends React.Component {
                     <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
-                        open={this.state.open2}
-                        onClose={this.handleClose2}
+                        open={this.state.open4}
+                        onClose={this.handleClose4}
                     >
                         <div style={getModalStyle()} className={classes.paper1}>
                             <Typography variant="h6" id="modal-title">
-                                Summary
+                                Session Has expired -- Please Log in again.
                             </Typography>
-                            <Typography variant="subtitle1" id="simple-modal-description">
-                                Part Number: {this.state.orderdetails.partnum} || Quantity: {this.state.orderdetails.quantity.substring(1,this.state.orderdetails.quantity.length)} Lb. || Tag Number: {this.state.orderdetails.tagnum}
-                            </Typography>
-                            <Button onClick={this.handleNoSubmit} className={classes.button}>
-                                Do Not Submit
-                            </Button>
                         </div>
 
                     </Modal>
                 </div>
+
+                <div>
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={this.state.open5}
+                        onClose={this.handleClose5}
+                    >
+                        <div style={getModalStyle()} className={classes.paper1}>
+                            <Typography variant="h6" id="modal-title">
+                                Error
+                            </Typography>
+                            <Typography variant="subtitle1" id="simple-modal-description">
+                                Tag Number does not exist.
+
+                                ---- or ----
+
+                                Tag Number has been consumed.
+                            </Typography>
+                        </div>
+
+                    </Modal>
+                </div>
+
             </React.Fragment>
         );
     }

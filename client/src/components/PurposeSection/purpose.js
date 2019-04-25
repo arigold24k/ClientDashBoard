@@ -1,14 +1,12 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Barcode from 'react-barcode';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-const javascriptBarcodeReader = require('javascript-barcode-reader');
 
 
 const styles = theme => ({
@@ -25,24 +23,6 @@ const styles = theme => ({
     },
 });
 
-function purposetext(purp) {
-    switch (purp) {
-        case 1:
-            return 'Receipt';
-        case 2:
-            return 'Consume';
-        case 3:
-            return 'Error';
-        case 4:
-            return 'Cycle Count';
-        case 5:
-            return 'Production Receipt';
-        default:
-            return '';
-        // default:
-        //     throw new Error('Unknown step');
-    }
-}
 class PurposeForm extends React.Component {
     state = {
         open: false,

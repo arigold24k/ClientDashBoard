@@ -1,23 +1,23 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const KCARD_YODA = sequelize.define('KCARD_YODA', {
+  const kcard_yoda_raw = sequelize.define('kcard_yoda_raw', {
     KCARD: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-        autoIncrement: true
-      },
+      autoIncrement: true
+    },
     PART: {
       type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true
-      },
+    },
     INV_ITEM_CODE: DataTypes.INTEGER,
     ITEM_TAG_INTEGER: DataTypes.STRING,
     DATE_CREATED: {
       type: DataTypes.DATE,
       allowNull: false
-      },
+    },
     DATE_MODIFIED: {
       type: DataTypes.DATE,
       allowNull: false
@@ -38,10 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     }],
     timestamps: false
   });
-  KCARD_YODA.associate = function(models) {
+  kcard_yoda_raw.associate = function(models) {
     // associations can be defined here
   };
-
-
-  return KCARD_YODA;
+  return kcard_yoda_raw;
 };

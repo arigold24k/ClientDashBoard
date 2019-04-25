@@ -98,14 +98,14 @@ router.post('/api/verify', function(req, res) {
     try {
         let decoded = jwt.verify(req.body.token, process.env.SECRETE_KEY_OR_SO);
         // console.log('decoded value in the new api route, ', decoded);
-        console.log('decoded value in the new api route, ', decoded.user.email);
+        console.log('decoded value in the new api route, ', decoded);
         if (typeof decoded !== 'undefined'){
             const dataObj = {
                 data : true,
                 compCD: decoded.user.companycode,
                 email: decoded.user.email,
-                compName: decoded.user.compName
-
+                compName: decoded.user.companyName,
+                expires: decoded.exp
             };
             res.json({message:'Token Verified', dataObj})
         }
@@ -117,26 +117,44 @@ router.post('/api/verify', function(req, res) {
 });
 
 router.post('/api/processScan', verifyToken ,(req, res) => {
-    console.log("hitting the api process scan route, ", req);
+    // console.log("hitting the api process scan route, ", req);
 
         jwt.verify(req.token, process.env.SECRETE_KEY_OR_SO, (err, decoded) => {
         if(err){
-            res.sendStatus(403);
+            res.status(403).json({message: "Token invalid", data: 'INVALIDTOKEN'});
         }else {
 
-            console.log("This is the request in the process scan route, ", req.body);
+            // console.log("This is the request in the process scan route, ", req.body);
             // put in code if the token is good
-            orm.insertToKCardss(decoded.user.companycode,req.body.purpose, req.body.partnum, req.body.quantity, req.body.tagnum, (err, data) => {
-                if(err) {
-                    console.log("Errror in adding activity to kcards ", err);
-                    res.json({message: "data was not added", data: null})
-                    //put in code if it was not inserted
-                }else{
-                    //code out if it inserted.
-                    console.log("Data should have been added, ", data);
-                    res.json({message: "data was added succesfully", data: data})
-                }
-            })
+
+            if (req.body.purpose === 'CONSUME') {
+                orm.findOneTag(req.body.tagnum,(err, results) => {
+                    console.log("This is the log from the findontTag orm -- handle.js, ", results);
+                    console.log("This is the error from the findontTag orm -- handle.js, ", err);
+
+                    if(results !== null) {
+                        orm.insertToKCardss(decoded.user.companycode,req.body.purpose, req.body.partnum, req.body.quantity, req.body.tagnum, (err, data) => {
+                            if(err) {
+                                console.log("Error in adding activity to kcards ", err);
+                                res.json({message: "data was not added", data: null})
+                                //put in code if it was not inserted
+                            }else{
+                                //code out if it inserted.
+                                console.log("Data should have been added, ", data);
+                                res.json({message: "data was added successfully", data: data})
+                            }
+                        })
+                    }else if (results === null) {
+                        res.json({message: "data was not added", data: 'TAGALREADYCONSUMED'})
+                    }
+                })
+            }else if (req.body.purpose === 'ERROR') {
+
+            }else if (req.body.purpose === 'RECEIPT') {
+
+            }
+
+
         }
     });
 
@@ -174,7 +192,7 @@ function verifyToken (req, res, next) {
 
     }else{
         //forbidden
-        res.sendStatus(403);
+        res.status(403).json({message: 'token is invalid'});
     }
 }
 

@@ -45,9 +45,6 @@ const styles = theme => console.log(theme) || ({
         color: 'white',
     },
 });
-
-
-const dudUrl = 'javascript:;';
 function SignIn(props) {
     const { classes } = props;
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Login1 from "./pages/Login1";
 import Checkout from './pages/ClientCheckout';
 import Report from './pages/Reporting';
@@ -21,9 +21,9 @@ const initialState = {open1: false,
     auth: false,
 };
 
-function refreshPage() {
-  window.location.reload();
-}
+// function refreshPage() {
+//   window.location.reload();
+// }
 
 class App extends Component {
     constructor(props) {
@@ -33,19 +33,19 @@ class App extends Component {
 
     myCheckOutPage = () => {
         return (
-            <Checkout handleSignOut={this.signOut.bind(this)} username={this.state.email} />
+            <Checkout handleSignOut={this.signOut.bind(this)} companyname={this.state.compName} />
         )
     };
 
     myReportingPage = () => {
         return (
-            <Report handleSignOut={this.signOut.bind(this)} username={this.state.email} />
+            <Report handleSignOut={this.signOut.bind(this)} companyname={this.state.compName} />
         )
     };
 
     myDashboardPage = () => {
         return (
-            <Dashboard handleSignOut={this.signOut.bind(this)} username={this.state.email} />
+            <Dashboard handleSignOut={this.signOut.bind(this)} companyname={this.state.compName} />
         )
     };
 
@@ -55,11 +55,14 @@ class App extends Component {
         window.location.reload();
     };
 
+    reload () {
+        window.location.reload();
+    }
+
     getKey (){
         const token = window.sessionStorage.getItem('token');
         console.log('before it hits the api verify route ', token);
         console.log("This is the path, ", window.location);
-        let error;
         if(token !== null) {
             axios.post('/api/verify', {token}).then((res, err) => {
 
@@ -67,7 +70,6 @@ class App extends Component {
                 console.log('This is the type of for the res.data ', typeof res.data);
                 console.log('this is the data for res.data.data ', res.data.dataObj);
 
-                error = err;
                 // return res.data.data === true;
                 if(res.data.dataObj.data === true){
                     this.setState({companyCode : res.data.dataObj.compCD, email: res.data.dataObj.email, auth: true, compName: res.data.dataObj.compName});
@@ -77,6 +79,9 @@ class App extends Component {
                 }
                 if(this.props.location.pathname ==='/login1' && this.state.auth === true) {
                     this.props.history.push('/home_page');
+
+                    //creating a timeout to reload page once the token has expired
+                    this.interval = setTimeout(this.reload, res.data.dataObj.expires - new Date() );
                 }
             });
         }else{
@@ -85,6 +90,7 @@ class App extends Component {
     }
 
     componentWillMount(){
+        clearTimeout(this.interval);
         this.getKey();
         console.log('This is the state in the component will mount ', this.state);
       };
@@ -115,24 +121,21 @@ class App extends Component {
 
     handlesubmit = (event) => {
         event.preventDefault();
-        console.log("YOu just pressed the button");
-        console.log('this is the state, ', this.state);
-        console.log('this is the environment variable ', process.env);
-
-        const pwHolder = this.state.password;
+ const pwHolder = this.state.password;
         if((typeof (this.state.usrname) === 'undefined' || (this.state.usrname == null)) && (typeof this.state.password === 'undefined' || this.state.password == null)) {
             this.setState({open3: true});
-
         }else {
             let dataObj ={...this.state};
             dataObj.password = funcs_.encryptPW(pwHolder);
 
         console.log("created data object app.js page line 118 ", dataObj);
+
         axios.post('/login', dataObj).then((res, err) => {
             console.log('this is the response for the login', res);
             console.log('this is the response for the login', res.data);
             if(typeof (res.data.password) !== 'undefined' ){
                 const check = funcs_.checkPW(this.state.password, res.data.password);
+                this.setState({password: ''});
                 const tokenObj = {
                     check: check,
                     id: res.data.id,
@@ -203,7 +206,7 @@ class App extends Component {
                     <Route exact path="/login1"><Login1 getValue={this.getValue.bind(this)}  usrname={this.state.usrname} open3={this.state.open3} open4={this.state.open4} open5={this.state.open5} handlesubmit={this.handlesubmit.bind(this)} handleAdd={this.handleAdd.bind(this)} open={this.state.open} open1={this.state.open1} handleClose={this.handleClose.bind(this)}/></Route>
                     <Route exacht path="/signup" component={SignUP}/>
                     <PrivateRoute exact path="/home_page" component={this.myDashboardPage} auth={this.state.auth}/>
-                    <PrivateRoute exact path="/manage_inv" component={this.myCheckOutPage} auth={this.state.auth} companyname={this.state.compName}/>
+                    <PrivateRoute exact path="/manage_inv" component={this.myCheckOutPage} auth={this.state.auth}/>
                     <PrivateRoute exact path="/reporting" component={this.myReportingPage} auth={this.state.auth}/>
                 </Switch>
             </div>
