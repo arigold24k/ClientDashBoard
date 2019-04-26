@@ -112,6 +112,20 @@ const orm = {
         }).catch((error) => {
             cb(error, null)
         })
+    },
+    deleteOneMaster: (table, col, val, cb) => {
+        
+        console.log(`This is the data from delete one value: ${val} table: ${table} col: ${col} `);
+
+        db[table].destroy({
+            where: {
+                [col]: val
+            }
+        }).then ((results) => {
+            cb(null, results);
+        }).catch((error) => {
+            cb(error, null);
+        })
     }
 };
 

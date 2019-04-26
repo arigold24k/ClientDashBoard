@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/client/src/App.js" line="203" />
+    <bookmark url="file://$PROJECT_DIR$/client/src/App.js" line="206" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4bf03c05-fc22-480e-a891-05bede3e6fba" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/Navbar2/navbar3.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/Navbar2/navbar3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/OrderDetail/orderDetail.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/OrderDetail/orderDetail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/PurposeSection/purpose.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PurposeSection/purpose.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/SignIn/signin.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/SignIn/signin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/ClientCheckout/clientCKout.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/ClientCheckout/clientCKout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Reporting/reporting.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Reporting/reporting.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/orm.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/orm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/functions.js" beforeDir="false" afterPath="$PROJECT_DIR$/functions/functions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/kcard_yoda.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/kcard_yoda.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/kcardss.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/kcardss.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/handle.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/handle.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -34,8 +24,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/handle.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="109" column="57" lean-forward="true" selection-start-line="109" selection-start-column="57" selection-end-line="109" selection-end-column="57" />
+            <state relative-caret-position="417">
+              <caret line="140" column="34" lean-forward="true" selection-start-line="140" selection-start-column="34" selection-end-line="140" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/kcard_yoda.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="39" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -43,21 +42,21 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/pages/ClientCheckout/clientCKout.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3840">
-              <caret line="322" column="55" lean-forward="true" selection-start-line="322" selection-start-column="55" selection-end-line="322" selection-end-column="55" />
+            <state relative-caret-position="1528">
+              <caret line="171" column="13" lean-forward="true" selection-start-line="171" selection-start-column="13" selection-end-line="171" selection-end-column="13" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
-                <marker date="1556206253657" expanded="true" signature="13948:15099" ph="..." />
+                <marker date="1556222701605" expanded="true" signature="13973:15124" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="425">
-              <caret line="81" column="63" lean-forward="true" selection-start-line="81" selection-start-column="63" selection-end-line="81" selection-end-column="67" />
+              <caret line="84" column="17" lean-forward="true" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="115" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
                 <element signature="e#655#682#0" />
@@ -66,11 +65,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/orm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="848">
-              <caret line="103" column="6" lean-forward="true" selection-start-line="103" selection-start-column="6" selection-end-line="103" selection-end-column="6" />
+            <state relative-caret-position="493">
+              <caret line="128" column="26" lean-forward="true" selection-start-line="128" selection-start-column="26" selection-end-line="128" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -167,18 +166,18 @@
         <option value="$PROJECT_DIR$/client/src/components/PurposeSection/purpose.js" />
         <option value="$PROJECT_DIR$/client/src/components/SignIn/signin.js" />
         <option value="$PROJECT_DIR$/client/src/components/Navbar2/navbar3.js" />
-        <option value="$PROJECT_DIR$/config/orm.js" />
         <option value="$PROJECT_DIR$/models/kcard_yoda.js" />
         <option value="$PROJECT_DIR$/models/kcardss.js" />
         <option value="$PROJECT_DIR$/client/src/components/OrderDetail/orderDetail.js" />
         <option value="$PROJECT_DIR$/functions/functions.js" />
         <option value="$PROJECT_DIR$/client/src/pages/Reporting/reporting.js" />
         <option value="$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js" />
-        <option value="$PROJECT_DIR$/client/src/pages/ClientCheckout/clientCKout.js" />
         <option value="$PROJECT_DIR$/migrations/20190425154835-create-kcard-yoda-raw.js" />
         <option value="$PROJECT_DIR$/models/kcard_yoda_raw.js" />
-        <option value="$PROJECT_DIR$/routes/handle.js" />
         <option value="$PROJECT_DIR$/client/src/App.js" />
+        <option value="$PROJECT_DIR$/client/src/pages/ClientCheckout/clientCKout.js" />
+        <option value="$PROJECT_DIR$/routes/handle.js" />
+        <option value="$PROJECT_DIR$/config/orm.js" />
       </list>
     </option>
   </component>
@@ -335,15 +334,15 @@
       <workItem from="1556033889051" duration="4110000" />
       <workItem from="1556064138525" duration="133000" />
       <workItem from="1556110220067" duration="12481000" />
-      <workItem from="1556195373215" duration="12753000" />
+      <workItem from="1556195373215" duration="19543000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="378769000" />
+    <option name="totallyTimeSpent" value="385559000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1920" y="0" width="1920" height="1040" extended-state="0" />
+    <frame x="1920" y="0" width="1920" height="1040" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.35175344" />
@@ -430,13 +429,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="35" lean-forward="true" selection-start-column="35" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/usertable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -745,13 +737,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/kcard_yoda.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="42" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/kcard_yoda_raw.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -759,39 +744,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/orm.js">
+    <entry file="file://$PROJECT_DIR$/client/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="848">
-          <caret line="103" column="6" lean-forward="true" selection-start-line="103" selection-start-column="6" selection-end-line="103" selection-end-column="6" />
+        <state relative-caret-position="425">
+          <caret line="84" column="17" lean-forward="true" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="115" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#655#682#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/pages/ClientCheckout/clientCKout.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3840">
-          <caret line="322" column="55" lean-forward="true" selection-start-line="322" selection-start-column="55" selection-end-line="322" selection-end-column="55" />
+        <state relative-caret-position="1528">
+          <caret line="171" column="13" lean-forward="true" selection-start-line="171" selection-start-column="13" selection-end-line="171" selection-end-column="13" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
-            <marker date="1556206253657" expanded="true" signature="13948:15099" ph="..." />
+            <marker date="1556222701605" expanded="true" signature="13973:15124" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/usertable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/kcard_yoda.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="39" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/handle.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="109" column="57" lean-forward="true" selection-start-line="109" selection-start-column="57" selection-end-line="109" selection-end-column="57" />
+        <state relative-caret-position="417">
+          <caret line="140" column="34" lean-forward="true" selection-start-line="140" selection-start-column="34" selection-end-line="140" selection-end-column="34" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/App.js">
+    <entry file="file://$PROJECT_DIR$/config/orm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="81" column="63" lean-forward="true" selection-start-line="81" selection-start-column="63" selection-end-line="81" selection-end-column="67" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="e#655#682#0" />
-          </folding>
+        <state relative-caret-position="493">
+          <caret line="128" column="26" lean-forward="true" selection-start-line="128" selection-start-column="26" selection-end-line="128" selection-end-column="26" />
         </state>
       </provider>
     </entry>

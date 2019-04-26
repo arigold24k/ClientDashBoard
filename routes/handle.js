@@ -141,7 +141,16 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
                             }else{
                                 //code out if it inserted.
                                 console.log("Data should have been added, ", data);
-                                res.json({message: "data was added successfully", data: data})
+                                orm.deleteOneMaster("KCARD_YODA", "ITEM_TAG_INTEGER", req.body.tagnum, (err, data) => {
+                                    console.log("data from delete, ", data);
+                                    if(data !== null) {
+                                        res.json({message: "data was added successfully", data: data});
+                                    }else{
+                                        console.log("error in the delete, ", err);
+                                    }
+
+                                })
+
                             }
                         })
                     }else if (results === null) {

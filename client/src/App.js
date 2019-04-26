@@ -81,7 +81,8 @@ class App extends Component {
                     this.props.history.push('/home_page');
 
                     //creating a timeout to reload page once the token has expired
-                    this.interval = setTimeout(this.reload, res.data.dataObj.expires - new Date() );
+                    console.log('value being passed to the set time out ', (res.data.dataObj.expires - new Date().getTime() ));
+                    // this.interval = setTimeout(this.reload, + res.data.dataObj.expires + new Date().getTime() );
                 }
             });
         }else{
