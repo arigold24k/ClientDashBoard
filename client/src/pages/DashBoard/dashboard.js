@@ -51,6 +51,7 @@ const styles = theme => ({
     drawerPaper: {
         position: 'relative',
         whiteSpace: 'nowrap',
+        overflow: 'auto',
         width: drawerWidth,
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,

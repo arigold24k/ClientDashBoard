@@ -51,6 +51,7 @@ const styles = theme => ({
         marginTop: theme.spacing.unit * 3,
         marginBottom: theme.spacing.unit * 3,
         padding: theme.spacing.unit,
+        overflow: 'auto',
         [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
             marginTop: theme.spacing.unit * 6,
             marginBottom: theme.spacing.unit * 6,
@@ -127,6 +128,8 @@ class Checkout extends React.Component {
             open3: false,
             open4: false,
             open5: false,
+            open6:false,
+            open7: false,
             count: 0,
         };
         this.state = initialState;
@@ -169,6 +172,10 @@ class Checkout extends React.Component {
                 this.setState({open4: true})
             }else if (res.data.data === 'TAGALREADYCONSUMED') {
                 this.setState({open5: true, open2: false})
+            }else if (res.data.data === 'NOERROR') {
+                this.setState({open6: true, open2: false})
+            }else if (res.data.data === 'RECEIPT') {
+                this.setState({open7: true, open2: false})
             }
 
         })
@@ -192,6 +199,28 @@ class Checkout extends React.Component {
                 tagnum: ''
             },
             open5: false
+        });
+    };
+
+    handleClose6 = () => {
+        this.setState({activeStep: 1,
+            orderdetails : {
+                partnum: '',
+                quantity: '',
+                tagnum: ''
+            },
+            open6: false
+        });
+    };
+
+    handleClose7 = () => {
+        this.setState({activeStep: 1,
+            orderdetails : {
+                partnum: '',
+                quantity: '',
+                tagnum: ''
+            },
+            open7: false
         });
     };
 
@@ -463,6 +492,44 @@ class Checkout extends React.Component {
                                 ---- or ----
 
                                 Tag Number has been consumed.
+                            </Typography>
+                        </div>
+
+                    </Modal>
+                </div>
+
+                <div>
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={this.state.open6}
+                        onClose={this.handleClose6}
+                    >
+                        <div style={getModalStyle()} className={classes.paper1}>
+                            <Typography variant="h6" id="modal-title">
+                                Error
+                            </Typography>
+                            <Typography variant="subtitle1" id="simple-modal-description">
+                                No Error To Correct.
+                            </Typography>
+                        </div>
+
+                    </Modal>
+                </div>
+
+                <div>
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={this.state.open7}
+                        onClose={this.handleClose7}
+                    >
+                        <div style={getModalStyle()} className={classes.paper1}>
+                            <Typography variant="h6" id="modal-title">
+                                Success
+                            </Typography>
+                            <Typography variant="subtitle1" id="simple-modal-description">
+                                Receipt Successfully processed.
                             </Typography>
                         </div>
 

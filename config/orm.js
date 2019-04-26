@@ -126,6 +126,32 @@ const orm = {
         }).catch((error) => {
             cb(error, null);
         })
+    },
+    updateOne: (table, col ,val, set1, val1, cb) => {
+        db[table].update({
+        [set1] : val1
+        },{
+            where:  {
+                [col] : val
+            }
+        }).then( (results) => {
+            cb(null, results);
+        }).catch((error) => {
+            cb(error, null);
+        })
+    },
+    runError: (itemtagNum, cb) => {
+        const queryString =`INSERT INTO KCARD_YODAS (SELECT * FROM KCARD_YODA_RAWS WHERE ITEM_TAG_INTEGER = '${itemtagNum}');`;
+        db.sequelize.query(queryString).then((results, metadata) => {
+            console.log('this is the metadata: ' + metadata + 'this is the data ' + results);
+            if(results) {
+                cb(null, results);
+            }
+        }).catch((error) => {
+            console.log('error in the run Error ', error);
+            cb(error, null);
+        });
+
     }
 };
 

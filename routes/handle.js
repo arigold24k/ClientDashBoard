@@ -124,15 +124,17 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
             res.status(403).json({message: "Token invalid", data: 'INVALIDTOKEN'});
         }else {
 
-            // console.log("This is the request in the process scan route, ", req.body);
+            console.log("This is the request in the process scan route, ", req.body);
             // put in code if the token is good
 
-            if (req.body.purpose === 'CONSUME') {
+
                 orm.findOneTag(req.body.tagnum,(err, results) => {
                     console.log("This is the log from the findontTag orm -- handle.js, ", results);
                     console.log("This is the error from the findontTag orm -- handle.js, ", err);
 
                     if(results !== null) {
+
+                        if (req.body.purpose === 'CONSUME') {
                         orm.insertToKCardss(decoded.user.companycode,req.body.purpose, req.body.partnum, req.body.quantity, req.body.tagnum, (err, data) => {
                             if(err) {
                                 console.log("Error in adding activity to kcards ", err);
@@ -146,28 +148,53 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
                                     if(data !== null) {
                                         res.json({message: "data was added successfully", data: data});
                                     }else{
+
                                         console.log("error in the delete, ", err);
                                     }
-
                                 })
-
                             }
                         })
-                    }else if (results === null) {
-                        res.json({message: "data was not added", data: 'TAGALREADYCONSUMED'})
+                        }else if (req.body.purpose === 'RECEIPT') {
+                            // have to updated record in kcards master
+                            orm.updateOne('KCARD_YODA', 'ITEM_TAG_INTEGER', req.body.tagnum, 'DATE_MODIFIED', new Date(), (err, data) => {
+                                if(data !== null) {
+                                    res.json({message: "data was added successfully", data: "RECEIPT"});
+                                }else{
+                                    console.log("error in the delete, ", err);
+                                }
+                            })
+                        }else if (req.body.purpose === 'ERROR') {
+                            res.json({message: 'no action needed as Inventory Item Tag has not been removed from Inventory', data: 'NOERROR'})
+                        }
+                    }
+
+                    else if (results === null) {
+                     if (req.body.purpose === 'ERROR') {
+                            // have to find a row in the kcard_yoda_raw and insert into kcard_yoda and remove from kcards
+                         orm.runError(req.body.tagnum, (error, data) => {
+                             console.log('run error, data: ', data);
+                             if(data !== null) {
+                                 orm.deleteOneMaster('KCARDSS', 'TAG_NUM', req.body.tagnum, (error, data) => {
+                                     if(data !== null) {
+                                         res.json({data: data})
+                                     }else{
+                                         res.json({data: error});
+                                     }
+                                 });
+                                 // res.json({message: "data was added successfully", data: data});
+                             }else{
+                                 console.log("error in the runError, ", err);
+                             }
+                         })
+
+                        }else {
+                         res.json({message: "data was not added", data: 'TAGALREADYCONSUMED'})
+                     }
+
                     }
                 })
-            }else if (req.body.purpose === 'ERROR') {
-
-            }else if (req.body.purpose === 'RECEIPT') {
-
-            }
-
-
         }
     });
-
-
 });
 
 router.post('/139.64.200.80/', function(req, res) {
