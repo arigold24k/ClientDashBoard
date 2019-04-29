@@ -8,14 +8,23 @@ import CartesianGrid from 'recharts/lib/cartesian/CartesianGrid';
 import Tooltip from 'recharts/lib/component/Tooltip';
 import Legend from 'recharts/lib/component/Legend';
 
+// const data = [
+//     { name: 'Jan', Comsumed: 648319},
+//     { name: 'Feb', Comsumed: 580011},
+//     { name: 'Mar', Comsumed: 784259},
+//     { name: 'Apr', Comsumed: 466886},
+// ];
+
 const data = [
-    { name: 'Jan', Comsumed: 648319},
-    { name: 'Feb', Comsumed: 580011},
-    { name: 'Mar', Comsumed: 784259},
-    { name: 'Apr', Comsumed: 466886},
 ];
 
-function SimpleLineChart() {
+function SimpleLineChart(passData) {
+
+    for (let i = 0; i < passData.passData.length; i++) {
+      data.push(passData.passData[i]);
+    };
+
+    console.log('passdata that is being passed, ', data);
     return (
         // 99% per https://github.com/recharts/recharts/issues/172
         <ResponsiveContainer width="99%" height={320}>
@@ -25,8 +34,8 @@ function SimpleLineChart() {
                 <CartesianGrid vertical={false} strokeDasharray="3 3" />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="Comsumed" stroke="#82ca9d" />
-                {/*<Line type="monotone" dataKey="Orders" stroke="#8884d8" activeDot={{ r: 8 }} />*/}
+                <Line type="monotone" dataKey="Consumed" stroke="#82ca9d" />
+                <Line type="monotone" dataKey="Received" stroke="#8884d8" activeDot={{ r: 8 }} />
             </LineChart>
         </ResponsiveContainer>
     );

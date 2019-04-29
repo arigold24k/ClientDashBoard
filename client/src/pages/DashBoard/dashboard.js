@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import SimpleLineChart from '../../components/SimpleLineChart';
 import SimpleTable from '../../components/SimpleTable';
 import Navbar from '../../components/Navbar2';
+import axios from 'axios';
 
 const drawerWidth = 240;
 
@@ -87,35 +88,46 @@ const styles = theme => ({
     },
 });
 
+const initialState = {data: null, dataTable: null};
+let holderArray = [];
+let holderArrayTable = [];
+
 class Dashboard extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = initialState;
+    };
+
     // state = {
     //     open: false,
     // };
     render() {
+        console.log('Holder Array for the data,1 ', this.state.data);
+
         const { classes } = this.props;
 
         return (
 
-            <div className={classes.root}>
-                <CssBaseline />
-                <Navbar handleSignOut={this.props.handleSignOut} username={this.props.companyname}/>
+                <div className={classes.root}>
+                <CssBaseline/>
+                < Navbar handleSignOut={this.props.handleSignOut} username={this.props.companyname}/>
                 <main className={classes.content}>
-                    <div className={classes.appBarSpacer} />
-                    <Typography variant="h4" gutterBottom component="h2">
-                        Orders
-                    </Typography>
-                    <Typography component="div" className={classes.chartContainer}>
-                        <SimpleLineChart />
-                    </Typography>
-                    <Typography variant="h4" gutterBottom component="h2">
-                        Products
-                    </Typography>
-                    <div className={classes.tableContainer}>
-                        <SimpleTable />
-                    </div>
+                <div className={classes.appBarSpacer}/>
+                <Typography variant="h4" gutterBottom component="h2">
+                Product Flow
+                </Typography>
+                <Typography component="div" className={classes.chartContainer}>
+                    {this.props.data ? <SimpleLineChart passData={this.props.holderArray}/> : <Typography variant="h4" gutterBottom component="h2"> Loading..</Typography>}
+                </Typography>
+                <Typography variant="h4" gutterBottom component="h2">
+                Products
+                </Typography>
+                <div className={classes.tableContainer}>
+                    {this.props.dataTable ? <SimpleTable dataPassed={this.props.holderArrayTable}/> : <Typography variant="h4" gutterBottom component="h2"> Loading..</Typography>}
+                </div>
                 </main>
-            </div>
-        );
+                </div>
+        )
     }
 }
 

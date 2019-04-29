@@ -18,19 +18,19 @@ const styles = {
     },
 };
 
-let id = 0;
-function createData(name, quantity) {
-    id += 1;
-    return { id, name, quantity};
-}
-
-const data = [
-    createData('T189050-45', 2131000),
-    createData('185529-25', 2121778),
-    createData('0RM075', 26644),
-    createData('191876-11', 4342),
-    createData('171228-27', 71227),
-];
+// let id = 0;
+// function createData(name, quantity) {
+//     id += 1;
+//     return { id, name, quantity};
+// }
+//
+// const data = [
+//     createData('T189050-45', 2131000),
+//     createData('185529-25', 2121778),
+//     createData('0RM075', 26644),
+//     createData('191876-11', 4342),
+//     createData('171228-27', 71227),
+// ];
 
 function SimpleTable(props) {
     const { classes } = props;
@@ -41,11 +41,11 @@ function SimpleTable(props) {
                 <TableHead>
                     <TableRow>
                         <TableCell>Product</TableCell>
-                        <TableCell align="right">Quantity Consumed</TableCell>
+                        <TableCell align="right">Quantity in Inventory</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data.map(n => (
+                    {props.dataPassed.map(n => (
                         <TableRow key={n.id}>
                             <TableCell component="th" scope="row">
                                 {n.name}

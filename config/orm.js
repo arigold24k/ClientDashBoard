@@ -152,7 +152,27 @@ const orm = {
             cb(error, null);
         });
 
-    }
+    },
+    dashboardData : (compCode, cb) => {
+        const strSql = `SELECT date_format(SCANDATE, '%m_%Y'), (CASE WHEN MONTH(SCANDATE) = 1 THEN 'JAN' WHEN MONTH(SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(SCANDATE) = 4 THEN 'APR'  WHEN MONTH(SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(SCANDATE) = 11 THEN '11'  WHEN MONTH(SCANDATE) = 12 THEN 'DEC' ELSE '' END) Month, SUM((CASE WHEN CODE LIKE '%CONSUME%' THEN QTY ELSE '' END)) Consumed, SUM((CASE WHEN CODE LIKE '%RECEIVE%' THEN QTY ELSE '' END)) Received FROM KCARDSSES WHERE CUSTOMER = '${compCode}' AND SCANDATE >= date_sub(sysdate(), INTERVAL 13 MONTH) AND SCANDATE <= sysdate() GROUP BY date_format(SCANDATE, '%m_%Y'), MONTH(SCANDATE), (CASE WHEN MONTH(SCANDATE) = 1 THEN 'JAN' WHEN MONTH(SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(SCANDATE) = 4 THEN 'APR'  WHEN MONTH(SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(SCANDATE) = 11 THEN '11'  WHEN MONTH(SCANDATE) = 12 THEN 'DEC' ELSE '' END) ORDER BY date_format(SCANDATE, '%m_%Y');`;
+        db.sequelize.query(strSql).then((results) => {
+            console.log('data coming from the dashboard data, ', results);
+            cb(null, results);
+        }).catch((error) => {
+            console.log('error from the dashboard data, ', error);
+            cb(error, null);
+        })
+    },
+    dashboardDataTable : (compCode, cb) => {
+        const strSql = `SELECT KCARD, PART, SUM(QTY) quantity FROM KCARD_YODAS WHERE BP_CODE = '${compCode}' GROUP BY KCARD, PART ORDER BY SUM(QTY) DESC;`;
+        db.sequelize.query(strSql).then((results) => {
+            console.log('data coming from the dashboard data, ', results);
+            cb(null, results);
+        }).catch((error) => {
+            console.log('error from the dashboard data, ', error);
+            cb(error, null);
+        })
+    },
 };
 
 

@@ -197,6 +197,39 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
     });
 });
 
+router.post('/api/consumed', verifyToken , (req, res) => {
+    jwt.verify(req.token, process.env.SECRETE_KEY_OR_SO, (err, decoded) => {
+        if(err){
+            res.status(403).json({message: "Token invalid", data: 'INVALIDTOKEN'});
+        }else {
+            orm.dashboardData(decoded.user.companycode, (err, data) =>{
+                if(err) {
+                    res.status(403).json({message: 'error in getting the data', data: err})
+                }else{
+                    res.status(200).json({data: data});
+                }
+            })
+        }
+    });
+});
+
+router.post('/api/consumedTable', verifyToken , (req, res) => {
+    jwt.verify(req.token, process.env.SECRETE_KEY_OR_SO, (err, decoded) => {
+        if(err){
+            res.status(403).json({message: "Token invalid", data: 'INVALIDTOKEN'});
+        }else {
+            orm.dashboardDataTable(decoded.user.companycode, (err, data) =>{
+                if(err) {
+                    res.status(403).json({message: 'error in getting the data', data: err})
+                }else{
+                    res.status(200).json({data: data});
+                }
+            })
+        }
+    });
+});
+
+
 router.post('/139.64.200.80/', function(req, res) {
     console.log('this is the toekn in the verify route ', req.body);
     try {
@@ -210,6 +243,8 @@ router.post('/139.64.200.80/', function(req, res) {
         res.json({message: 'There was an error', error: err})
     }
 });
+
+
 
 function verifyToken (req, res, next) {
 
