@@ -8,23 +8,14 @@ import CartesianGrid from 'recharts/lib/cartesian/CartesianGrid';
 import Tooltip from 'recharts/lib/component/Tooltip';
 import Legend from 'recharts/lib/component/Legend';
 
-// const data = [
-//     { name: 'Jan', Comsumed: 648319},
-//     { name: 'Feb', Comsumed: 580011},
-//     { name: 'Mar', Comsumed: 784259},
-//     { name: 'Apr', Comsumed: 466886},
-// ];
-
-const data = [
-];
-
 function SimpleLineChart(passData) {
+    const data = [];
 
     for (let i = 0; i < passData.passData.length; i++) {
       data.push(passData.passData[i]);
-    };
+    }
 
-    console.log('passdata that is being passed, ', data);
+    console.log('passdata that is being passed, ', passData);
     return (
         // 99% per https://github.com/recharts/recharts/issues/172
         <ResponsiveContainer width="99%" height={320}>

@@ -15,6 +15,9 @@ const theme = createMuiTheme({
             active: "#b5e7a0",
             hover: "#618685"
         }
+    },
+    typography: {
+        useNextVariants: true
     }
 });
 

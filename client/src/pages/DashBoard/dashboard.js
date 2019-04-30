@@ -7,6 +7,9 @@ import SimpleLineChart from '../../components/SimpleLineChart';
 import SimpleTable from '../../components/SimpleTable';
 import Navbar from '../../components/Navbar2';
 import axios from 'axios';
+import Icon from '@mdi/react';
+import { mdiLoading } from '@mdi/js';
+import Paper from '@material-ui/core/Paper';
 
 const drawerWidth = 240;
 
@@ -86,11 +89,24 @@ const styles = theme => ({
     h5: {
         marginBottom: theme.spacing.unit * 2,
     },
+    paper: {
+        marginTop: theme.spacing.unit * 3,
+        marginBottom: theme.spacing.unit * 3,
+        padding: theme.spacing.unit,
+        overflow: 'auto',
+        [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
+            marginTop: theme.spacing.unit * 6,
+            marginBottom: theme.spacing.unit * 6,
+            padding: theme.spacing.unit * 3,
+        },
+        align: 'center',
+    },
+    loadSection: {
+        align: 'center',
+    },
 });
 
 const initialState = {data: null, dataTable: null};
-let holderArray = [];
-let holderArrayTable = [];
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -98,14 +114,76 @@ class Dashboard extends React.Component {
         this.state = initialState;
     };
 
-    // state = {
-    //     open: false,
-    // };
+    componentWillMount() {
+        this.getChartData();
+        this.getTableData();
+    }
+
+    getChartData = () => {
+        const headerObj = {
+            'Authorization': "bearer " + sessionStorage.getItem("token")
+        };
+        let holderArray = [];
+        console.log('chart data is function is being hit');
+        axios.post('/api/consumed', this.state.email, {headers: headerObj}).then((res) => {
+            let holderObject = {};
+            if(res.data.data !== null) {
+                console.log('Data that is coming back from the consumption, ', res.data.data[0]);
+                //have the array built here
+                holderArray = [];
+                for (let i = 0; i < res.data.data[0].length; i++) {
+                    holderObject = {
+                        name: res.data.data[0][i].Month,
+                        Consumed: res.data.data[0][i].Consumed,
+                        Received: res.data.data[0][i].Received
+                    };
+                    // holderArray = this.state.data;
+                    holderArray.push(holderObject);
+                }
+                this.setState({data: holderArray});
+                holderArray = [];
+            }
+
+            console.log('Holder Array for the data, ', this.state.data);
+        }).catch((err) => {
+            console.log('Error: ', err);
+        });
+
+    };
+
+    getTableData = () => {
+        const headerObj = {
+            'Authorization': "bearer " + sessionStorage.getItem("token")
+        };
+        let holderArrayTable = [];
+        axios.post('/api/consumedTable', this.state.email, {headers: headerObj}).then((res) => {
+            let holderObjectTable = {};
+            if(res.data.data !== null) {
+                console.log('Data that is coming back from the consumption, ', res.data.data[0]);
+                //have the array built here
+                holderArrayTable = [];
+                for (let i = 0; i < res.data.data[0].length; i++) {
+                    holderObjectTable = {
+                        id: res.data.data[0][i].PART,
+                        name: res.data.data[0][i].PART,
+                        quantity: res.data.data[0][i].quantity
+                    };
+                    // holderArray = this.state.data;
+                    holderArrayTable.push(holderObjectTable);
+                }
+                this.setState({dataTable: holderArrayTable});
+                holderArrayTable = [];
+            }
+        }).catch((err) => {
+            console.log('error in getting the table data, ', err);
+        })
+    };
+
     render() {
         console.log('Holder Array for the data,1 ', this.state.data);
 
         const { classes } = this.props;
-
+        console.log('data being passed to the line chart befroe the return, ', this.state.data);
         return (
 
                 <div className={classes.root}>
@@ -117,13 +195,52 @@ class Dashboard extends React.Component {
                 Product Flow
                 </Typography>
                 <Typography component="div" className={classes.chartContainer}>
-                    {this.props.data ? <SimpleLineChart passData={this.props.holderArray}/> : <Typography variant="h4" gutterBottom component="h2"> Loading..</Typography>}
+
+                    {this.state.data
+                            ?
+                                <SimpleLineChart passData={this.state.data}/>
+                            :
+                                <Paper className={classes.paper}>
+                                    <Typography variant="h4" gutterBottom component="h2" className={classes.loadSection} align="center">
+                                        <Icon path={mdiLoading}
+                                            size={1.5}
+                                            horizontal
+                                            vertical
+                                            rotate={90}
+                                            color="#86af49"
+                                            spin/>
+                                     </Typography>
+                                    <Typography variant="h4" gutterBottom component="h2" className={classes.loadSection} align="center">
+                                        Loading...
+                                    </Typography>
+                                </Paper>
+                    }
+
                 </Typography>
                 <Typography variant="h4" gutterBottom component="h2">
                 Products
                 </Typography>
                 <div className={classes.tableContainer}>
-                    {this.props.dataTable ? <SimpleTable dataPassed={this.props.holderArrayTable}/> : <Typography variant="h4" gutterBottom component="h2"> Loading..</Typography>}
+
+                    {this.state.dataTable
+                        ?
+                            <SimpleTable dataPassed={this.state.dataTable}/>
+                        :
+                        <Paper className={classes.paper}>
+                            <Typography variant="h4" gutterBottom component="h2" className={classes.loadSection} align="center">
+                                <Icon path={mdiLoading}
+                                      size={1.5}
+                                      horizontal
+                                      vertical
+                                      rotate={90}
+                                      color="#86af49"
+                                      spin/>
+                            </Typography>
+                            <Typography variant="h4" gutterBottom component="h2" className={classes.loadSection} align="center">
+                                Loading...
+                            </Typography>
+                        </Paper>
+                    }
                 </div>
                 </main>
                 </div>

@@ -154,7 +154,7 @@ const orm = {
 
     },
     dashboardData : (compCode, cb) => {
-        const strSql = `SELECT date_format(SCANDATE, '%m_%Y'), (CASE WHEN MONTH(SCANDATE) = 1 THEN 'JAN' WHEN MONTH(SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(SCANDATE) = 4 THEN 'APR'  WHEN MONTH(SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(SCANDATE) = 11 THEN '11'  WHEN MONTH(SCANDATE) = 12 THEN 'DEC' ELSE '' END) Month, SUM((CASE WHEN CODE LIKE '%CONSUME%' THEN QTY ELSE '' END)) Consumed, SUM((CASE WHEN CODE LIKE '%RECEIVE%' THEN QTY ELSE '' END)) Received FROM KCARDSSES WHERE CUSTOMER = '${compCode}' AND SCANDATE >= date_sub(sysdate(), INTERVAL 13 MONTH) AND SCANDATE <= sysdate() GROUP BY date_format(SCANDATE, '%m_%Y'), MONTH(SCANDATE), (CASE WHEN MONTH(SCANDATE) = 1 THEN 'JAN' WHEN MONTH(SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(SCANDATE) = 4 THEN 'APR'  WHEN MONTH(SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(SCANDATE) = 11 THEN '11'  WHEN MONTH(SCANDATE) = 12 THEN 'DEC' ELSE '' END) ORDER BY date_format(SCANDATE, '%m_%Y');`;
+        const strSql = `SELECT date_format(a.SCANDATE, '%m_%Y'), (CASE WHEN MONTH(a.SCANDATE) = 1 THEN 'JAN' WHEN MONTH(a.SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(a.SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(a.SCANDATE) = 4 THEN 'APR'  WHEN MONTH(a.SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(a.SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(a.SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(a.SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(a.SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(a.SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(a.SCANDATE) = 11 THEN '11'  WHEN MONTH(a.SCANDATE) = 12 THEN 'DEC' ELSE '' END) Month, SUM((CASE WHEN a.CODE LIKE '%CONSUME%' THEN a.QTY ELSE '' END)) Consumed, SUM(b.QTY) Received FROM KCARDSSES a, kcard_yodas b WHERE a.CUSTOMER = '${compCode}' AND a.CUSTOMER = b.BP_CODE AND b.SHIP_DATE >= date_sub(sysdate(), INTERVAL 13 MONTH) AND b.SHIP_DATE <= sysdate() AND a.SCANDATE >= date_sub(sysdate(), INTERVAL 13 MONTH) AND a.SCANDATE <= sysdate() GROUP BY date_format(a.SCANDATE, '%m_%Y'), MONTH(a.SCANDATE), (CASE WHEN MONTH(a.SCANDATE) = 1 THEN 'JAN' WHEN MONTH(a.SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(a.SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(a.SCANDATE) = 4 THEN 'APR'  WHEN MONTH(a.SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(a.SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(a.SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(a.SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(a.SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(a.SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(a.SCANDATE) = 11 THEN '11'  WHEN MONTH(a.SCANDATE) = 12 THEN 'DEC' ELSE '' END) ORDER BY date_format(a.SCANDATE, '%m_%Y');`;
         db.sequelize.query(strSql).then((results) => {
             console.log('data coming from the dashboard data, ', results);
             cb(null, results);
@@ -164,7 +164,7 @@ const orm = {
         })
     },
     dashboardDataTable : (compCode, cb) => {
-        const strSql = `SELECT KCARD, PART, SUM(QTY) quantity FROM KCARD_YODAS WHERE BP_CODE = '${compCode}' GROUP BY KCARD, PART ORDER BY SUM(QTY) DESC;`;
+        const strSql = `SELECT DISTINCT PART, SUM(QTY) quantity FROM KCARD_YODAS WHERE BP_CODE = '${compCode}' GROUP BY PART ORDER BY SUM(QTY) DESC;`;
         db.sequelize.query(strSql).then((results) => {
             console.log('data coming from the dashboard data, ', results);
             cb(null, results);
@@ -175,55 +175,4 @@ const orm = {
     },
 };
 
-
 module.exports = orm;
-
-
-// // ---------------------Working Code, above converting to sequelize ------------------------------------------------------------
-// const connection = require('./connection');
-// const func = require( '../functions/functions');
-//
-// const db_name = 'testDB';
-// const table_name = 'testUserTable';
-// const prod_table = 'testProdTable';
-//
-// const orm = {
-//     findoneUser: function(username, cb) {
-//         const queryString ="SELECT * FROM " + db_name + "." + table_name + " Where LCASE(username)='" + username.toLowerCase() + "';";
-//         console.log('This is the connection query', queryString);
-//         connection.query(queryString, (err, data) => {
-//             console.log('this is the findone returning data ', data);
-//             if(err) cb(err, null);
-//             cb(null, data);
-//         })
-//     },
-//     addoneUser: function(username, pw, email, compcode, cb) {
-//         console.log('Add one is being hit and this is the data being passed ' + username +", " + pw);
-//         this.findoneUser(username,  (err, data) => {
-//             if(!data[0]) {
-//                 //do another findone to see if the compnay code is valid
-//                 const hashPW = func.encryptPW(pw);
-//                 if(hashPW !== 0) {
-//                     const queryString = `INSERT INTO ${db_name}.${table_name} (username, password, Email, companycode) VALUES ('${username}', '${hashPW}', '${email}', '${compcode}');`;
-//                     console.log('This is Insert query being passed ', queryString);
-//                     connection.query(queryString, (err, res) => {
-//                             if(err){
-//                                 console.log('this is the error from the Insert ', err);
-//                                 cb(err, null);
-//                             }
-//                             console.log('this is the respond from the database ', res);
-//                             cb(null, res);
-//                         });
-//                 }
-//             }else {
-//                 cb(null, 0);
-//             }
-//         })
-//     },
-//     add_material: (partnum, quantity, tag_num) => {
-//         console.log("This is the data that is being passed to the add material function");
-//         const queryString = `INSERT INTO ${db_name}.${prod_table} `
-//     }
-// };
-// module.exports = orm;
-// ----------------------------------------------------------------------------------------------------------------------------------------------

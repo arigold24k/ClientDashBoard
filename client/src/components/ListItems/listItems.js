@@ -37,9 +37,10 @@ export const mainListItems = (homepage, inv_manag, report, signoutFunction) => (
                       size={1.5}
                       horizontal
                       vertical
-                      rotate={90}
+                      // rotate={90}
                       color="#86af49"
-                      spin/>
+                      // spin
+                />
             </ListItemIcon>
             <ListItemText primary="Log Out" />
         </ListItem>

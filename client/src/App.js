@@ -11,61 +11,43 @@ import PrivateRoute from './components/PrivateRoute';
 import SignUP from './pages/SignUpPage';
 import funcs_ from './functions/functions';
 
-
 const initialState = {open1: false,
     open3: false,
     redirectToRefererrer: false,
     open: false,
     open4: false,
     open5: false,
-    auth: false,
-    data: null,
-    dataTable: null
+    auth: false
 };
-
-let holderArray = [];
-let holderArrayTable = [];
-
-// function refreshPage() {
-//   window.location.reload();
-// }
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = initialState;
     };
-
-
-
     myCheckOutPage = () => {
         return (
             <Checkout handleSignOut={this.signOut.bind(this)} companyname={this.state.compName} />
         )
     };
-
     myReportingPage = () => {
         return (
             <Report handleSignOut={this.signOut.bind(this)} companyname={this.state.compName} />
         )
     };
-
     myDashboardPage = () => {
         return (
-            <Dashboard handleSignOut={this.signOut.bind(this)} companyname={this.state.compName} data={this.state.data} holderArray={holderArray} dataTable={this.state.dataTable} holderArrayTable={holderArrayTable}/>
+            <Dashboard handleSignOut={this.signOut.bind(this)} companyname={this.state.compName}/>
         )
     };
-
     signOut(){
         sessionStorage.removeItem('token');
         this.setState({auth: false});
         window.location.reload();
     };
-
     reload () {
         window.location.reload();
     }
-
     getKey (){
         const token = window.sessionStorage.getItem('token');
         console.log('before it hits the api verify route ', token);
@@ -96,69 +78,14 @@ class App extends Component {
             this.setState({auth:false})
         }
     }
-
     componentWillMount(){
         clearTimeout(this.interval);
         this.getKey();
         console.log('This is the state in the component will mount ', this.state);
       };
-
     componentDidMount() {
         console.log("This is the state when the component moutned ", this.state);
-
-        const headerObj = {
-            'Authorization': "bearer " + sessionStorage.getItem("token")
-        };
-        this.setState(initialState);
-
-        let holderObject = {};
-        // this.setState({compCode: this.props.companyname});
-        if(this.state.data === null) {
-            axios.post('/api/consumed', this.state.email, {headers: headerObj}).then((res) => {
-                if(res.data.data !== null) {
-                    console.log('Data that is coming back from the consumption, ', res.data.data[0]);
-                    //have the array built here
-
-                    for (let i = 0; i < res.data.data[0].length; i++) {
-                        holderObject = {
-                            name: res.data.data[0][i].Month,
-                            Consumed: res.data.data[0][i].Consumed,
-                            Received: res.data.data[0][i].Received
-                        };
-                        // holderArray = this.state.data;
-                        holderArray.push(holderObject);
-                    }
-                    this.setState({data: holderArray});
-                    holderArray = [];
-                }
-
-                console.log('Holder Array for the data, ', this.state.data);
-            }).catch((err) => {
-                console.log('Error: ', err);
-            });
-
-            axios.post('/api/consumedTable', this.state.email, {headers: headerObj}).then((res) => {
-                let holderObjectTable = {};
-                if(res.data.data !== null) {
-                    console.log('Data that is coming back from the consumption, ', res.data.data[0]);
-                    //have the array built here
-
-                    for (let i = 0; i < res.data.data[0].length; i++) {
-                        holderObjectTable = {
-                            id: res.data.data[0][i].KCARD,
-                            name: res.data.data[0][i].PART,
-                            quantity: res.data.data[0][i].quantity
-                        };
-                        // holderArray = this.state.data;
-                        holderArrayTable.push(holderObjectTable);
-                    }
-                    this.setState({dataTable: holderArrayTable});
-                    holderArrayTable = [];
-                }
-            })
-        }
     }
-
     getValue = (event) => {
         // Updates the input state
         const {name, value} = event.target;
@@ -181,7 +108,7 @@ class App extends Component {
 
     handlesubmit = (event) => {
         event.preventDefault();
- const pwHolder = this.state.password;
+        const pwHolder = this.state.password;
         if((typeof (this.state.usrname) === 'undefined' || (this.state.usrname == null)) && (typeof this.state.password === 'undefined' || this.state.password == null)) {
             this.setState({open3: true});
         }else {
@@ -222,12 +149,10 @@ class App extends Component {
                 }else {
                     this.setState({open: true});
                 }
-
-
             }else {
                 this.setState({open5: true});
             }
- }).catch((e) => {
+        }).catch((e) => {
             console.log('Error: ', e);
         });}
     };
