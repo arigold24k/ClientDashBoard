@@ -14,50 +14,6 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
-
-// const styles = {
-//     root: {
-//         width: '100%',
-//         overflowX: 'auto',
-//     },
-//     table: {
-//         minWidth: 700,
-//     },
-// };
-//
-// function SimpleTable(props) {
-//     const[data, setData] = useState(null);
-//     const { classes } = props;
-//
-//     return (
-//         <Paper className={classes.root}>
-//             <Table className={classes.table}>
-//                 <TableHead>
-//                     <TableRow>
-//                         <TableCell>Product</TableCell>
-//                         <TableCell align="right">Quantity in Inventory</TableCell>
-//                     </TableRow>
-//                 </TableHead>
-//                 <TableBody>
-//                     {props.dataPassed.map(n => (
-//                         <TableRow key={n.id}>
-//                             <TableCell component="th" scope="row">
-//                                 {n.name}
-//                             </TableCell>
-//                             <TableCell align="right">{n.quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</TableCell>
-//                         </TableRow>
-//                     ))}
-//                 </TableBody>
-//             </Table>
-//         </Paper>
-//     );
-// }
-// SimpleTable.propTypes = {
-//     classes: PropTypes.object.isRequired,
-// };
-//
-// export default withStyles(styles)(SimpleTable);
-
 const actionsStyles = theme => ({
     root: {
         flexShrink: 0,
@@ -136,7 +92,6 @@ TablePaginationActions.propTypes = {
 const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: true })(
     TablePaginationActions,
 );
-let counter = 0;
 
 const styles = theme => ({
     root: {
@@ -151,7 +106,7 @@ const styles = theme => ({
     },
 });
 
-class SimpleTable extends React.Component {
+class TableComponent extends React.Component {
     state = {
         rows:this.props.dataPassed,
         page: 0,
@@ -177,17 +132,25 @@ class SimpleTable extends React.Component {
                     <Table className={classes.table}>
                                      <TableHead>
                                        <TableRow>
-                                               <TableCell>Product</TableCell>
-                                             <TableCell align="right">Quantity in Inventory</TableCell>
+                                                <TableCell align="center">Scan Date</TableCell>
+                                                <TableCell align="center">RECNO</TableCell>
+                                                <TableCell align="center">Scan Code</TableCell>
+                                                 <TableCell align="center">Product</TableCell>
+                                                <TableCell align="center">Quantity</TableCell>
+                                                <TableCell align="center">Tag Number</TableCell>
                                         </TableRow>
                                        </TableHead>
                         <TableBody>
                             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-                                <TableRow key={row.id}>
+                                <TableRow key={row.recno}>
                                     <TableCell component="th" scope="row">
-                                        {row.name}
+                                        {row.scandate}
                                     </TableCell>
+                                    <TableCell align="right">{row.recno}</TableCell>
+                                    <TableCell align="right">{row.scancode}</TableCell>
+                                    <TableCell align="right">{row.product}</TableCell>
                                     <TableCell align="right">{row.quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</TableCell>
+                                    <TableCell align="right">{row.tagnum}</TableCell>
                                 </TableRow>
                             ))}
                             {emptyRows > 0 && (
@@ -220,8 +183,8 @@ class SimpleTable extends React.Component {
     }
 }
 
-SimpleTable.propTypes = {
+TableComponent.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleTable);
+export default withStyles(styles)(TableComponent);

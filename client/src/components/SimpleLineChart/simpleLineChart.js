@@ -21,12 +21,12 @@ function SimpleLineChart(passData) {
         <ResponsiveContainer width="99%" height={320}>
             <LineChart data={data}>
                 <XAxis dataKey="name" />
-                <YAxis />
+                <YAxis formatter = {(value) => new Intl.NumberFormat('en').format(value)}/>
                 <CartesianGrid vertical={false} strokeDasharray="3 3" />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="Consumed" stroke="#82ca9d" />
-                <Line type="monotone" dataKey="Received" stroke="#8884d8" activeDot={{ r: 8 }} />
+                <Line type="monotone" dataKey="Consumed" stroke="#82ca9d" formatter = {(value) => new Intl.NumberFormat('en').format(value)}/>
+                <Line type="monotone" dataKey="Received" stroke="#8884d8" activeDot={{ r: 8 }} formatter = {(value) => new Intl.NumberFormat('en').format(value)}/>
             </LineChart>
         </ResponsiveContainer>
     );

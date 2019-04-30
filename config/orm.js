@@ -173,6 +173,46 @@ const orm = {
             cb(error, null);
         })
     },
+    reporting1 : (compCode, cb) => {
+        const strSql = `select * from kcardsses where customer = '${compCode}' AND date_format(SCANDATE, '%m/%d/%Y') = date_format(sysdate(), '%m/%d/%Y');`;
+        db.sequelize.query(strSql).then((results) => {
+            console.log('data coming from the reporting1 data, ', results);
+            cb(null, results);
+        }).catch((error) => {
+            console.log('error from the reporting1 data, ', error);
+            cb(error, null);
+        })
+    },
+    reporting2 : (compCode, cb) => {
+        const strSql = `select * from kcardsses where customer = '${compCode}' AND SCANDATE <= sysdate() AND SCANDATE >= date_sub(sysdate(),interval  weekday(sysdate()) day) order by scandate;`;
+        db.sequelize.query(strSql).then((results) => {
+            console.log('data coming from the reporting1 data, ', results);
+            cb(null, results);
+        }).catch((error) => {
+            console.log('error from the reporting1 data, ', error);
+            cb(error, null);
+        })
+    },
+    reporting3 : (compCode, cb) => {
+        const strSql = `select * from kcardsses where customer ='${compCode}' and date_format(scandate, '%m_%Y') = date_format(sysdate(), '%m_%Y') order by scandate;`;
+        db.sequelize.query(strSql).then((results) => {
+            console.log('data coming from the reporting1 data, ', results);
+            cb(null, results);
+        }).catch((error) => {
+            console.log('error from the reporting1 data, ', error);
+            cb(error, null);
+        })
+    },
+    reporting4 : (compCode, cb) => {
+        const strSql = `select * from kcardsses where customer ='${compCode}' and date_format(scandate, '%Y') = date_format(sysdate(), '%Y') order by scandate;`;
+        db.sequelize.query(strSql).then((results) => {
+            console.log('data coming from the reporting1 data, ', results);
+            cb(null, results);
+        }).catch((error) => {
+            console.log('error from the reporting1 data, ', error);
+            cb(error, null);
+        })
+    },
 };
 
 module.exports = orm;

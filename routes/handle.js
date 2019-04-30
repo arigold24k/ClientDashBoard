@@ -229,6 +229,64 @@ router.post('/api/consumedTable', verifyToken , (req, res) => {
     });
 });
 
+router.post('/reporting', verifyToken, (req, res) => {
+    jwt.verify(req.token, process.env.SECRETE_KEY_OR_SO, (err, decoded) => {
+        if(err){
+            res.status(403).json({message: "Token invalid", data: 'INVALIDTOKEN'});
+        }else {
+          if (req.body.period <= 5) {
+              switch(req.body.period) {
+                  case 1:
+                      //run code
+                      orm.reporting1(decoded.user.companycode, (err, data) => {
+                          if(err) {
+                              res.status(403).json({message: 'error in getting the data', data: err})
+                          }else{
+                              res.status(200).json({data: data});
+                          }
+                      });
+                      break;
+                  case 2:
+                      //run code
+                      orm.reporting2(decoded.user.companycode, (err, data) => {
+                          if(err) {
+                              res.status(403).json({message: 'error in getting the data', data: err})
+                          }else{
+                              res.status(200).json({data: data});
+                          }
+                      });
+                      break;
+                  case 3:
+                      //run code
+                      orm.reporting3(decoded.user.companycode, (err, data) => {
+                          if(err) {
+                              res.status(403).json({message: 'error in getting the data', data: err})
+                          }else{
+                              res.status(200).json({data: data});
+                          }
+                      });
+                      break;
+                  case 4:
+                      //run code
+                      orm.reporting4(decoded.user.companycode, (err, data) => {
+                          if(err) {
+                              res.status(403).json({message: 'error in getting the data', data: err})
+                          }else{
+                              res.status(200).json({data: data});
+                          }
+                      });
+                      break;
+                  case 5:
+                      //run code
+                      break;
+              }
+
+          }
+
+        }
+    });
+});
+
 
 router.post('/139.64.200.80/', function(req, res) {
     console.log('this is the toekn in the verify route ', req.body);

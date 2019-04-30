@@ -6,6 +6,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import CollectionsBookmarkOutlined from '@material-ui/icons/CollectionsBookmarkOutlined';
 import BarChartIcon from '@material-ui/icons/BarChart';
+import LogOut from '@material-ui/icons/AssignmentReturnRounded';
 import Icon from '@mdi/react'
 import { mdiLogoutVariant } from '@mdi/js'
 
@@ -33,14 +34,15 @@ export const mainListItems = (homepage, inv_manag, report, signoutFunction) => (
         </ListItem>
         <ListItem onClick={signoutFunction}  button>
             <ListItemIcon>
-                <Icon path={mdiLogoutVariant}
-                      size={1.5}
-                      horizontal
-                      vertical
-                      // rotate={90}
-                      color="#86af49"
-                      // spin
-                />
+                {/*<Icon path={mdiLogoutVariant}*/}
+                      {/*size={1.5}*/}
+                      {/*horizontal*/}
+                      {/*vertical*/}
+                      {/*// // rotate={90}*/}
+                      {/*color="#86af49"*/}
+                      {/*// // spin*/}
+                {/*/>*/}
+                <LogOut />
             </ListItemIcon>
             <ListItemText primary="Log Out" />
         </ListItem>

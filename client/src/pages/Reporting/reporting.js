@@ -11,13 +11,17 @@ import Navbar from './../../components/Navbar2';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Table from '../../components/Table';
+import Icon from "../DashBoard/dashboard";
+import {mdiLoading} from "@mdi/js";
+import axios from 'axios';
 
 const styles = theme => ({
     layout: {
-        width: 'auto',
+        width: '95%',
         marginLeft: theme.spacing.unit * 2,
         marginRight: theme.spacing.unit * 2,
-        marginTop: theme.spacing.unit * -42,
+        marginTop: theme.spacing.unit * -27,
         [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
             width: 600,
             marginLeft: 'auto',
@@ -25,6 +29,7 @@ const styles = theme => ({
         },
     },
     paper: {
+        width: '95%',
         marginTop: theme.spacing.unit * 3,
         marginBottom: theme.spacing.unit * 3,
         padding: theme.spacing.unit * 2,
@@ -70,25 +75,25 @@ const ranges = [{
     label: 'Custom'
     }];
 
-const ranges1 = [{
-    value: 1,
-    label: 'Receipt'
-},{
-    value: 2,
-    label: 'Report'
-},{
-    value: 3,
-    label: 'Consumed'
-},{
-    value: 4,
-    label: 'Error'
-},{
-    value: 5,
-    label: 'Cycle Count'
-},{
-    value: 6,
-    label: 'Production Receipt'
-}];
+// const ranges1 = [{
+//     value: 1,
+//     label: 'Receipt'
+// },{
+//     value: 2,
+//     label: 'Report'
+// },{
+//     value: 3,
+//     label: 'Consumed'
+// },{
+//     value: 4,
+//     label: 'Error'
+// },{
+//     value: 5,
+//     label: 'Cycle Count'
+// },{
+//     value: 6,
+//     label: 'Production Receipt'
+// }];
 
 function getModalStyle() {
     const top = 50 + rand();
@@ -110,9 +115,10 @@ class report extends React.Component {
         super(props);
         this.state = {
             period : "",
-            purpose: "",
+            runReport: false,
             open: false,
-            modalOpen: false
+            modalOpen: false,
+            data: null
 
         };
     }
@@ -133,6 +139,41 @@ class report extends React.Component {
         this.setState({
         [prop] : value
         })
+    };
+
+    handleSubmit = () => {
+        const headerObj = {
+            'Authorization': "bearer " + sessionStorage.getItem("token")
+        };
+        this.setState({runReport: true, data: null});
+        let dataObj = {comp: this.props.companyname, period: this.state.period};
+        let holderArray = [];
+            axios.post('/reporting', dataObj, {headers: headerObj}).then((res, err) => {
+                if(err) {
+                    console.log('Error in getting data from database for reporting ', err);
+                }
+                console.log('this is the response from the reporting 1', res.data.data[0].length);
+                if(res.data.data[0] !== null && res.data.data[0].length > 0) {
+                    for (let i = 0; i < res.data.data[0].length; i++) {
+                        let dObj = {
+                            'recno': res.data.data[0][i].RECNO,
+                            'scandate': res.data.data[0][i].SCANDATE,
+                            'product': res.data.data[0][i].PART,
+                            'quantity': res.data.data[0][i].QTY,
+                            'tagnum': res.data.data[0][i].TAG_NUM,
+                        };
+
+                        holderArray.push(dObj);
+                    }
+                    this.setState({data: holderArray});
+                    holderArray = [];
+                }else {
+                    this.state.data = [];
+                }
+
+                console.log('this is the state after the submit, ', this.state);
+            })
+
     };
 
     render() {
@@ -169,40 +210,45 @@ class report extends React.Component {
                                     ))}
                                     </TextField>
 
-
-                                    <TextField
-                                        select
-                                        className={classNames(classes.margin, classes.textField)}
-                                        variant="outlined"
-                                        label="Transaction type"
-                                        value={this.state.purpose}
-                                        onChange={this.handleChange('purpose')}
-                                        InputProps={{
-                                            startAdornment: <InputAdornment position="start">Purpose</InputAdornment>,
-                                        }}
-                                    >
-                                        {ranges1.map(option => (
-                                            <MenuItem key={option.value} value={option.value}>
-                                                {option.label}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-
-                            {/*</FormControl>*/}
-                            {/*</form>*/}
-
-                                {(this.state.period !== "" && this.state.purpose !== "") && <Button
+                                {(this.state.period !== "" ) && <Button
                                     variant="contained"
                                     color="primary"
-                                    // onClick={}
+                                    onClick={this.handleSubmit}
                                     className={classes.button}
                                 > Run Report </Button>
                                 }
 
 
+
+
                         </React.Fragment>
                     </Paper>
+                    <div>
+                        {this.state.runReport &&
+                        (this.state.data ?
+                                <Table dataPassed={this.state.data}/>
+                                :
+                                <Paper>
+
+                                    <Typography variant="h4" gutterBottom component="h2" className={classes.loadSection} align="center">
+                                        <Icon path={mdiLoading}
+                                              size={1.5}
+                                              horizontal
+                                              vertical
+                                              rotate={90}
+                                              color="#86af49"
+                                              spin/>
+                                    </Typography>
+                                    <Typography variant="h4" gutterBottom component="h2" className={classes.loadSection} align="center">
+                                        Loading...
+                                    </Typography>
+
+                                </Paper>
+                        )}
+
+                    </div>
                 </main>
+
                 <div>
                     <Modal
                         aria-labelledby="simple-modal-title"
