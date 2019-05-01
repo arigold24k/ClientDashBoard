@@ -163,8 +163,12 @@ class Checkout extends React.Component {
         };
         axios.post("/api/processScan",dataObj, {headers: headerObj}).then((res, err) => {
             console.log("Added submit to the client checkout page ", res);
-            if((res.data.data !== null && res.data.data === true) || res.data.data === 1){
-                this.setState({count: this.state.count + 1});
+            if((res.data.data !== null && res.data.data === true) || (res.data.data === 1)){
+                if(this.state.purposedetails.purpose === 3) {
+                    this.setState({count: this.state.count - 1});
+                }else {
+                    this.setState({count: this.state.count + 1});
+                }
                 this.setState({open: true, open2: false});
             }else if (res.data.data === null) {
                 this.setState({open3: true, open2: false});
