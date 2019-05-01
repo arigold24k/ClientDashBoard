@@ -12,49 +12,109 @@ import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Table from '../../components/Table';
-import Icon from "../DashBoard/dashboard";
+import Icon from '@mdi/react';
 import {mdiLoading} from "@mdi/js";
 import axios from 'axios';
 
+const drawerWidth = 240;
+
 const styles = theme => ({
-    layout: {
-        width: '95%',
-        marginLeft: theme.spacing.unit * 2,
-        marginRight: theme.spacing.unit * 2,
-        marginTop: theme.spacing.unit * -27,
-        [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
-            width: 600,
-            marginLeft: 'auto',
-            marginRight: 'auto',
+    root: {
+        display: 'flex',
+    },
+    toolbar: {
+        paddingRight: 24, // keep right padding when drawer closed
+    },
+    toolbarIcon: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: '0 8px',
+        ...theme.mixins.toolbar,
+    },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+    },
+    appBarShift: {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    menuButton: {
+        marginLeft: 12,
+        marginRight: 36,
+    },
+    menuButtonHidden: {
+        display: 'none',
+    },
+    title: {
+        flexGrow: 1,
+    },
+    drawerPaper: {
+        position: 'relative',
+        whiteSpace: 'nowrap',
+        overflow: 'auto',
+        width: drawerWidth,
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    drawerPaperClose: {
+        overflowX: 'hidden',
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        width: theme.spacing.unit * 7,
+        [theme.breakpoints.up('sm')]: {
+            width: theme.spacing.unit * 9,
         },
     },
+    appBarSpacer: theme.mixins.toolbar,
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing.unit * 3,
+        height: '100vh',
+        overflow: 'auto',
+    },
+    chartContainer: {
+        marginLeft: -22,
+    },
+    tableContainer: {
+        height: 320,
+    },
+    h5: {
+        marginBottom: theme.spacing.unit * 2,
+    },
     paper: {
-        width: '95%',
         marginTop: theme.spacing.unit * 3,
         marginBottom: theme.spacing.unit * 3,
-        padding: theme.spacing.unit * 2,
+        padding: theme.spacing.unit,
+        overflow: 'auto',
         [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
-            marginTop: theme.spacing.unit * 6,
+            marginTop: theme.spacing.unit * -1,
             marginBottom: theme.spacing.unit * 6,
             padding: theme.spacing.unit * 3,
         },
+        align: 'center',
     },
-
-    button: {
+    loadSection: {
+        align: 'center',
+    },
+        button: {
         marginTop: theme.spacing.unit * 3,
         marginLeft: theme.spacing.unit,
         display: 'flex',
         justifyContent: 'center',
-    },
-    formControl1: {
-        margin: theme.spacing.unit,
-        minWidth: 120,
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    textField: {
-        flexBasis: 200,
-        margin: theme.spacing.unit,
+        align: 'center',
     },
 });
 
@@ -74,26 +134,6 @@ const ranges = [{
     value: 5,
     label: 'Custom'
     }];
-
-// const ranges1 = [{
-//     value: 1,
-//     label: 'Receipt'
-// },{
-//     value: 2,
-//     label: 'Report'
-// },{
-//     value: 3,
-//     label: 'Consumed'
-// },{
-//     value: 4,
-//     label: 'Error'
-// },{
-//     value: 5,
-//     label: 'Cycle Count'
-// },{
-//     value: 6,
-//     label: 'Production Receipt'
-// }];
 
 function getModalStyle() {
     const top = 50 + rand();
@@ -175,98 +215,94 @@ class report extends React.Component {
             })
 
     };
-
     render() {
         const { classes } = this.props;
 
         return (
-            <React.Fragment>
-                <CssBaseline />
-                <Navbar handleSignOut={this.props.handleSignOut} username={this.props.companyname}/>
-                <main className={classes.layout}>
+            <div className={classes.root}>
+                <CssBaseline/>
+                < Navbar handleSignOut={this.props.handleSignOut} username={this.props.companyname}/>
+                <main className={classes.content}>
+                    <div className={classes.appBarSpacer}/>
                     <Paper className={classes.paper}>
                         <Typography component="h1" variant="h4" align="center">
                             Reporting
                         </Typography>
                         <React.Fragment>
-                            {/*<form autoComplete="off">*/}
-                                {/*<FormControl className={classes.formControl1}>*/}
-
-                                    <TextField
-                                    select
-                                    className={classNames(classes.margin, classes.textField)}
-                                    variant="outlined"
-                                    label="Time Range"
-                                    value={this.state.period}
-                                    onChange={this.handleChange('period')}
-                                    InputProps={{
-                                        startAdornment: <InputAdornment position="start">Time</InputAdornment>,
-                                    }}
-                                >
-                                    {ranges.map(option => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                    </TextField>
-
-                                {(this.state.period !== "" ) && <Button
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={this.handleSubmit}
-                                    className={classes.button}
-                                > Run Report </Button>
+                            <TextField
+                                select
+                                className={classNames(classes.margin, classes.textField)}
+                                variant="outlined"
+                                label="Time Range"
+                                align='center'
+                                value={this.state.period}
+                                onChange={this.handleChange('period')}
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start">Time</InputAdornment>,
+                                }}
+                            >
+                                {ranges.map(option => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                            {(this.state.period !== "" ) &&
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={this.handleSubmit}
+                                className={classes.button}
+                                align='center'
+                            >
+                                Run Report
+                            </Button>
+                            }
+                            <div>
+                                {this.state.runReport &&
+                                (this.state.data ?
+                                        <Table dataPassed={this.state.data}/>
+                                        :
+                                        <Paper>
+                                            <Typography variant="h4" gutterBottom component="h2" className={classes.loadSection} align="center">
+                                                <Icon path={mdiLoading}
+                                                      size={1.5}
+                                                      horizontal
+                                                      vertical
+                                                      rotate={90}
+                                                      color="#86af49"
+                                                      spin/>
+                                            </Typography>
+                                            <Typography variant="h4" gutterBottom component="h2" className={classes.loadSection} align="center">
+                                                Loading...
+                                            </Typography>
+                                        </Paper>
+                                )
                                 }
+                            </div>
 
-
-
+                            <div>
+                                <Modal
+                                    aria-labelledby="simple-modal-title"
+                                    aria-describedby="simple-modal-description"
+                                    open={this.state.modalOpen}
+                                    onClose={this.handleClose}
+                                >
+                                    <div style={getModalStyle()} className={classes.paper1}>
+                                        <Typography variant="h6" id="modal-title">
+                                            Error
+                                        </Typography>
+                                        <Typography variant="subtitle1" id="simple-modal-description">
+                                            One of the fields was left unfilled.
+                                        </Typography>
+                                    </div>
+                                </Modal>
+                            </div>
 
                         </React.Fragment>
                     </Paper>
-                    <div>
-                        {this.state.runReport &&
-                        (this.state.data ?
-                                <Table dataPassed={this.state.data}/>
-                                :
-                                <Paper>
-
-                                    <Typography variant="h4" gutterBottom component="h2" className={classes.loadSection} align="center">
-                                        <Icon path={mdiLoading}
-                                              size={1.5}
-                                              horizontal
-                                              vertical
-                                              rotate={90}
-                                              color="#86af49"
-                                              spin/>
-                                    </Typography>
-                                    <Typography variant="h4" gutterBottom component="h2" className={classes.loadSection} align="center">
-                                        Loading...
-                                    </Typography>
-
-                                </Paper>
-                        )}
-
-                    </div>
                 </main>
-
-                <div>
-                    <Modal
-                        aria-labelledby="simple-modal-title"
-                        aria-describedby="simple-modal-description"
-                        open={this.state.modalOpen}
-                        onClose={this.handleClose}
-                    >
-                        <div style={getModalStyle()} className={classes.paper1}>
-                            <Typography variant="h6" id="modal-title">
-                                Error
-                            </Typography>
-                            <Typography variant="subtitle1" id="simple-modal-description">
-                                One of the fields was left unfilled.
-                            </Typography>
-                        </div>
-                    </Modal>
-                </div>
-            </React.Fragment>
+            </div>
         );
     }
 }
