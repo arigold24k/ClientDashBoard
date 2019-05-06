@@ -90,6 +90,8 @@ const styles = theme => ({
     },
 });
 
+
+
 function getModalStyle() {
     const top = 50 + rand();
     const left = 50 + rand();
@@ -111,6 +113,8 @@ class Checkout extends React.Component {
     static contextTypes = {
         router: PropTypes.object
     };
+
+
     constructor(props) {
         super(props);
         const initialState = {
@@ -151,38 +155,7 @@ class Checkout extends React.Component {
     };
 
     handleClose2 = () => {
-        const dataObj = {
-            partnum: this.state.orderdetails.partnum,
-            quantity: this.state.orderdetails.quantity.substring(1,this.state.orderdetails.quantity.length),
-            tagnum: this.state.orderdetails.tagnum,
-            purpose: purposetext(this.state.purposedetails.purpose)
-        };
 
-        const headerObj = {
-            'Authorization': "bearer " + sessionStorage.getItem("token")
-        };
-        axios.post("/api/processScan",dataObj, {headers: headerObj}).then((res, err) => {
-            console.log("Added submit to the client checkout page ", res);
-            if((res.data.data !== null && res.data.data === true) || (res.data.data === 1)){
-                if(this.state.purposedetails.purpose === 3) {
-                    this.setState({count: this.state.count - 1});
-                }else {
-                    this.setState({count: this.state.count + 1});
-                }
-                this.setState({open: true, open2: false});
-            }else if (res.data.data === null) {
-                this.setState({open3: true, open2: false});
-            }else if (res.data.data === 'INVALIDTOKEN') {
-                this.setState({open4: true})
-            }else if (res.data.data === 'TAGALREADYCONSUMED') {
-                this.setState({open5: true, open2: false})
-            }else if (res.data.data === 'NOERROR') {
-                this.setState({open6: true, open2: false})
-            }else if (res.data.data === 'RECEIPT') {
-                this.setState({open7: true, open2: false})
-            }
-
-        })
     };
 
     handleClose3 = () => {
@@ -281,8 +254,54 @@ class Checkout extends React.Component {
     };
 
     handleSubmit = () => {
-        this.setState({open2: true});
-        console.log("State when i press the submit button, ", this.state);
+        const dataObj = {
+            partnum: this.state.orderdetails.partnum,
+            quantity: this.state.orderdetails.quantity.substring(1,this.state.orderdetails.quantity.length),
+            tagnum: this.state.orderdetails.tagnum,
+            purpose: purposetext(this.state.purposedetails.purpose)
+        };
+
+        const headerObj = {
+            'Authorization': "bearer " + sessionStorage.getItem("token")
+        };
+        axios.post("/api/processScan",dataObj, {headers: headerObj}).then((res, err) => {
+            console.log("Added submit to the client checkout page ", res);
+            if((res.data.data !== null && res.data.data === true) || (res.data.data === 1)){
+                if(this.state.purposedetails.purpose === 3) {
+                    this.setState({count: this.state.count - 1});
+                    this.setState({activeStep: 1,
+                        orderdetails : {
+                            partnum: '',
+                            quantity: '',
+                            tagnum: ''
+                        }
+                    });
+                }else {
+                    this.setState({count: this.state.count + 1});
+                    this.setState({activeStep: 1,
+                        orderdetails : {
+                            partnum: '',
+                            quantity: '',
+                            tagnum: ''
+                        }
+                    });
+                }
+                //removed to increase scan efficency.
+                // this.setState({open: true, open2: false});
+            }else if (res.data.data === null) {
+                this.setState({open3: true, open2: false});
+            }else if (res.data.data === 'INVALIDTOKEN') {
+                this.setState({open4: true})
+            }else if (res.data.data === 'TAGALREADYCONSUMED') {
+                this.setState({open5: true, open2: false})
+            }else if (res.data.data === 'NOERROR') {
+                this.setState({open6: true, open2: false})
+            }else if (res.data.data === 'RECEIPT') {
+                this.setState({count: this.state.count + 1});
+                // this.setState({open7: true, open2: false})
+            }
+
+        })
 
 
     };
@@ -298,7 +317,7 @@ class Checkout extends React.Component {
             case 0:
                 return <PurposeSection updateval={this.handlePurposeChange.bind(this)} purposeval={this.state.purposedetails.purpose} barcodeVal={this.state.orderdetails.tagnum}/>;
             case 1:
-                return <OrderDetail updateval={this.handleOrderDetail.bind(this)} inputpart={this.state.orderdetails.partnum} inputqty={this.state.orderdetails.quantity} inputtagnum={this.state.orderdetails.tagnum} count={this.state.count}/>;
+                return <OrderDetail field1={this.state.orderdetails.partnum} field2={this.state.orderdetails.quantity} field3={this.state.orderdetails.tagnum} updateval={this.handleOrderDetail.bind(this)} inputpart={this.state.orderdetails.partnum} inputqty={this.state.orderdetails.quantity} inputtagnum={this.state.orderdetails.tagnum} count={this.state.count}/>;
             // case 2:
             //     return <Review pnumber={this.state.orderdetails.partnum} tagnumber={this.state.orderdetails.tagnum} qty={this.state.orderdetails.quantity} purposeval={this.state.purposedetails.purpose}/>;
             default:

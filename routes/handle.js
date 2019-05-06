@@ -278,6 +278,14 @@ router.post('/reporting', verifyToken, (req, res) => {
                       break;
                   case 5:
                       //run code
+                      console.log("this is the handle.js dataObj: ", req.body);
+                      orm.reporting5(decoded.user.companycode, req.body.range1, req.body.range2, (err, data) => {
+                          if(err) {
+                              res.status(403).json({message: 'error in getting the data', data: err})
+                          }else{
+                              res.status(200).json({data: data});
+                          }
+                      });
                       break;
               }
 

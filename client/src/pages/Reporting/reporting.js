@@ -15,6 +15,7 @@ import Table from '../../components/Table';
 import Icon from '@mdi/react';
 import {mdiLoading} from "@mdi/js";
 import axios from 'axios';
+import DateBox from '../../components/DateSelector';
 
 const drawerWidth = 240;
 
@@ -94,6 +95,14 @@ const styles = theme => ({
     h5: {
         marginBottom: theme.spacing.unit * 2,
     },
+    paper1: {
+        position: 'absolute',
+        width: theme.spacing.unit * 50,
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing.unit * 4,
+        outline: 'none',
+    },
     paper: {
         marginTop: theme.spacing.unit * 3,
         marginBottom: theme.spacing.unit * 3,
@@ -108,6 +117,7 @@ const styles = theme => ({
     },
     loadSection: {
         align: 'center',
+        marginTop: theme.spacing.unit * 3,
     },
         button: {
         marginTop: theme.spacing.unit * 3,
@@ -158,12 +168,23 @@ class report extends React.Component {
             runReport: false,
             open: false,
             modalOpen: false,
-            data: null
+            open2: false,
+            data: null,
+            range1: "",
+            range2: ""
 
         };
     }
     handleClose = () => {
-        this.setState({ open: false });
+        this.setState({ modalOpen: false });
+    };
+
+    handleClose2 = () => {
+        this.setState({
+            open2: false,
+            range1: "",
+            range2: ""
+        })
     };
 
     openModal = () => {
@@ -177,8 +198,23 @@ class report extends React.Component {
     handleChange = prop => event => {
         const { value } = event.target;
         this.setState({
-        [prop] : value
+        [prop] : value,
+        range1: "",
+        range2: ""
         })
+    };
+    handleDate = (event) => {
+        console.log("the event target object beign passed to the handledate, ", event.target.value);
+        const { value, id} = event.target;
+        if(id === 'range2') {
+            if(this.state.range1 > value) {
+                this.setState({open2: true});
+            }
+        }
+        this.setState({
+            [id] : value
+        });
+        console.log("state once date is changed", this.state);
     };
 
     handleSubmit = () => {
@@ -186,18 +222,28 @@ class report extends React.Component {
             'Authorization': "bearer " + sessionStorage.getItem("token")
         };
         this.setState({runReport: true, data: null});
-        let dataObj = {comp: this.props.companyname, period: this.state.period};
+        let dataObj;
+        if (this.state.period === 5){
+            dataObj = {comp: this.props.companyname, period: this.state.period, range1: this.state.range1, range2: this.state.range2};
+        }else {
+            dataObj  = {comp: this.props.companyname, period: this.state.period};
+        }
+
         let holderArray = [];
             axios.post('/reporting', dataObj, {headers: headerObj}).then((res, err) => {
                 if(err) {
                     console.log('Error in getting data from database for reporting ', err);
                 }
-                console.log('this is the response from the reporting 1', res.data.data[0].length);
+                console.log('this is the response from the reporting 1', res.data.data[0]);
                 if(res.data.data[0] !== null && res.data.data[0].length > 0) {
                     for (let i = 0; i < res.data.data[0].length; i++) {
+                        let holderDate = res.data.data[0][i].SCANDATE + '';
+                        let holderArr =  holderDate.split('T');
+                        console.log("Splitting the date, ", holderArr);
                         let dObj = {
                             'recno': res.data.data[0][i].RECNO,
-                            'scandate': res.data.data[0][i].SCANDATE,
+                            'scandate': holderArr[0],
+                            'scancode': res.data.data[0][i].CODE,
                             'product': res.data.data[0][i].PART,
                             'quantity': res.data.data[0][i].QTY,
                             'tagnum': res.data.data[0][i].TAG_NUM,
@@ -208,7 +254,8 @@ class report extends React.Component {
                     this.setState({data: holderArray});
                     holderArray = [];
                 }else {
-                    this.state.data = [];
+                    this.setState({data: []
+                    });
                 }
 
                 console.log('this is the state after the submit, ', this.state);
@@ -219,6 +266,7 @@ class report extends React.Component {
         const { classes } = this.props;
 
         return (
+            <React.Fragment>
             <div className={classes.root}>
                 <CssBaseline/>
                 < Navbar handleSignOut={this.props.handleSignOut} username={this.props.companyname}/>
@@ -247,7 +295,13 @@ class report extends React.Component {
                                     </MenuItem>
                                 ))}
                             </TextField>
-                            {(this.state.period !== "" ) &&
+
+                            {this.state.period === 5 &&
+                                <DateBox handleDateChange={this.handleDate.bind(this)} range1={this.state.range1} range2={this.state.range2}/>
+
+                            }
+
+                            {((this.state.period !== "" && this.state.period !== 5) || (this.state.period === 5 && this.state.range1 !=="" && this.state.range2 !== "")) &&
                             <Button
                                 variant="contained"
                                 color="primary"
@@ -258,9 +312,12 @@ class report extends React.Component {
                                 Run Report
                             </Button>
                             }
+
+                            <CssBaseline/>
+
                             <div>
                                 {this.state.runReport &&
-                                (this.state.data ?
+                                (this.state.data !== null ?
                                         <Table dataPassed={this.state.data}/>
                                         :
                                         <Paper>
@@ -280,29 +337,45 @@ class report extends React.Component {
                                 )
                                 }
                             </div>
-
-                            <div>
-                                <Modal
-                                    aria-labelledby="simple-modal-title"
-                                    aria-describedby="simple-modal-description"
-                                    open={this.state.modalOpen}
-                                    onClose={this.handleClose}
-                                >
-                                    <div style={getModalStyle()} className={classes.paper1}>
-                                        <Typography variant="h6" id="modal-title">
-                                            Error
-                                        </Typography>
-                                        <Typography variant="subtitle1" id="simple-modal-description">
-                                            One of the fields was left unfilled.
-                                        </Typography>
-                                    </div>
-                                </Modal>
-                            </div>
-
                         </React.Fragment>
                     </Paper>
                 </main>
+                <div>
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={this.state.modalOpen}
+                        onClose={this.handleClose}
+                    >
+                        <div style={getModalStyle()} className={classes.paper1}>
+                            <Typography variant="h6" id="modal-title">
+                                Error
+                            </Typography>
+                            <Typography variant="subtitle1" id="simple-modal-description">
+                                One of the fields was left unfilled.
+                            </Typography>
+                        </div>
+                    </Modal>
+                </div>
+                <div>
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={this.state.open2}
+                        onClose={this.handleClose2}
+                    >
+                        <div style={getModalStyle()} className={classes.paper1}>
+                            <Typography variant="h6" id="modal-title">
+                                Error
+                            </Typography>
+                            <Typography variant="subtitle1" id="simple-modal-description">
+                                Invalid Date Range.
+                            </Typography>
+                        </div>
+                    </Modal>
+                </div>
             </div>
+            </React.Fragment>
         );
     }
 }

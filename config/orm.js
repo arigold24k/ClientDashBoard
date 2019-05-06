@@ -184,7 +184,7 @@ const orm = {
         })
     },
     reporting2 : (compCode, cb) => {
-        const strSql = `select * from kcardsses where customer = '${compCode}' AND SCANDATE <= sysdate() AND SCANDATE >= date_sub(sysdate(),interval  weekday(sysdate()) day) order by scandate;`;
+        const strSql = ` select * from kcardsses where customer = '${compCode}' AND date_format(SCANDATE,'%m/%d/%Y') <= date_format(sysdate(),'%m/%d/%Y')  AND date_format(SCANDATE,'%m/%d/%Y') >= date_format(date_sub(sysdate(),interval  weekday(sysdate()) day), '%m/%d/%Y') order by scandate;`;
         db.sequelize.query(strSql).then((results) => {
             console.log('data coming from the reporting1 data, ', results);
             cb(null, results);
@@ -205,6 +205,19 @@ const orm = {
     },
     reporting4 : (compCode, cb) => {
         const strSql = `select * from kcardsses where customer ='${compCode}' and date_format(scandate, '%Y') = date_format(sysdate(), '%Y') order by scandate;`;
+        db.sequelize.query(strSql).then((results) => {
+            console.log('data coming from the reporting1 data, ', results);
+            cb(null, results);
+        }).catch((error) => {
+            console.log('error from the reporting1 data, ', error);
+            cb(error, null);
+        })
+    },
+    reporting5 : (compCode,range1, range2, cb) => {
+        // const date1 = new Date(range1);
+        // const date2 = new Date(range2);
+        const strSql = `select distinct * from kcardsses where customer ='${compCode}' and date_format(scandate, '%m/%d/%Y') BETWEEN date_format('${range1}', '%m/%d/%Y') AND date_format('${range2}', '%m/%d/%Y') order by scandate;`;
+        console.log("This is the query being passed, ", strSql);
         db.sequelize.query(strSql).then((results) => {
             console.log('data coming from the reporting1 data, ', results);
             cb(null, results);

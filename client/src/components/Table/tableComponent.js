@@ -143,14 +143,12 @@ class TableComponent extends React.Component {
                         <TableBody>
                             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
                                 <TableRow key={row.recno}>
-                                    <TableCell component="th" scope="row">
-                                        {row.scandate}
-                                    </TableCell>
-                                    <TableCell align="right">{row.recno}</TableCell>
-                                    <TableCell align="right">{row.scancode}</TableCell>
-                                    <TableCell align="right">{row.product}</TableCell>
-                                    <TableCell align="right">{row.quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</TableCell>
-                                    <TableCell align="right">{row.tagnum}</TableCell>
+                                    <TableCell align="center" component="th" scope="row">{row.scandate}</TableCell>
+                                    <TableCell align="center">{row.recno}</TableCell>
+                                    <TableCell align="center">{row.scancode}</TableCell>
+                                    <TableCell align="center">{row.product}</TableCell>
+                                    <TableCell align="center">{row.quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</TableCell>
+                                    <TableCell align="center">{row.tagnum}</TableCell>
                                 </TableRow>
                             ))}
                             {emptyRows > 0 && (

@@ -6,6 +6,30 @@ import TextField from '@material-ui/core/TextField';
 
 class orderDetail extends React.Component {
 
+    constructor(props) {
+        super(props);
+        // this.myRef = React.createRef();
+    };
+
+
+    // componentDidMount(nextProps, nextState, nextContext) {
+    //
+    // }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log("Data being passed from the comp did update, ", this.state);
+
+        if (this.props.inputpart === '' && this.props.inputqty === '' && this.props.inputtagnum === '') {
+            this.myRef.focus();
+        }
+    }
+
+    focusUsernameInputField = (input) => {
+        if (input) {
+           input.focus()
+        }
+    };
+
     render () {
     return (
         <React.Fragment>
@@ -17,6 +41,7 @@ class orderDetail extends React.Component {
                 <Grid item xs={12}>
                     <TextField
                         required
+                        inputRef={(input) => {this.myRef = input}}
                         id="partnum"
                         name="partnum"
                         label="partnum"
