@@ -297,7 +297,11 @@ class report extends React.Component {
                             </TextField>
 
                             {this.state.period === 5 &&
+
                                 <DateBox handleDateChange={this.handleDate.bind(this)} range1={this.state.range1} range2={this.state.range2}/>
+
+
+
 
                             }
 

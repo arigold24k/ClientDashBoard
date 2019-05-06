@@ -118,7 +118,7 @@ class TableComponent extends React.Component {
     };
 
     handleChangeRowsPerPage = event => {
-        this.setState({ page: 0, rowsPerPage: event.target.value });
+        this.setState({ page: 0, rowsPerPage: Number(event.target.value) });
     };
 
     render() {
@@ -163,7 +163,7 @@ class TableComponent extends React.Component {
                                     rowsPerPageOptions={[5, 10, 25]}
                                     colSpan={3}
                                     count={rows.length}
-                                    rowsPerPage={rowsPerPage}
+                                    rowsPerPage={Number(rowsPerPage)}
                                     page={page}
                                     SelectProps={{
                                         native: true,
