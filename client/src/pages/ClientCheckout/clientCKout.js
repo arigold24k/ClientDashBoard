@@ -31,45 +31,83 @@ function purposetext(purp) {
         //     throw new Error('Unknown step');
     }
 }
+const drawerWidth = 240;
+
 const styles = theme => ({
-    layout: {
-        width: 'auto',
-        marginLeft: theme.spacing.unit * 2,
-        marginRight: theme.spacing.unit * 2,
-        marginTop: theme.spacing.unit * -30,
-        [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
-            width: 600,
-            marginLeft: 'auto',
-            marginRight: 'auto',
+    root: {
+        display: 'flex',
+    },
+    toolbar: {
+        paddingRight: 24, // keep right padding when drawer closed
+    },
+    toolbarIcon: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: '0 8px',
+        ...theme.mixins.toolbar,
+    },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+    },
+    appBarShift: {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    menuButton: {
+        marginLeft: 12,
+        marginRight: 36,
+    },
+    menuButtonHidden: {
+        display: 'none',
+    },
+    title: {
+        flexGrow: 1,
+    },
+    drawerPaper: {
+        position: 'relative',
+        whiteSpace: 'nowrap',
+        overflow: 'auto',
+        width: drawerWidth,
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
+    drawerPaperClose: {
+        overflowX: 'hidden',
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+        width: theme.spacing.unit * 7,
+        [theme.breakpoints.up('sm')]: {
+            width: theme.spacing.unit * 9,
         },
+    },
+    appBarSpacer: theme.mixins.toolbar,
+    content: {
         flexGrow: 1,
         padding: theme.spacing.unit * 3,
         height: '100vh',
         overflow: 'auto',
     },
-    paper: {
-        marginTop: theme.spacing.unit * 3,
-        marginBottom: theme.spacing.unit * 3,
-        padding: theme.spacing.unit,
-        overflow: 'auto',
-        [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
-            marginTop: theme.spacing.unit * 6,
-            marginBottom: theme.spacing.unit * 6,
-            padding: theme.spacing.unit * 3,
-        },
+    chartContainer: {
+        marginLeft: -22,
     },
-    stepper: {
-        padding: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 5}px`,
+    tableContainer: {
+        height: 320,
     },
-    buttons: {
-        display: 'flex',
-        justifyContent: 'flex-end',
-    },
-    button: {
-        marginTop: theme.spacing.unit * 3,
-        marginLeft: theme.spacing.unit,
-        display: 'flex',
-        justifyContent: 'center',
+    h5: {
+        marginBottom: theme.spacing.unit * 2,
     },
     paper1: {
         position: 'absolute',
@@ -79,15 +117,38 @@ const styles = theme => ({
         padding: theme.spacing.unit * 4,
         outline: 'none',
     },
-    listItem: {
-        padding: `${theme.spacing.unit}px 0`,
+    paper: {
+        marginTop: theme.spacing.unit * 3,
+        marginBottom: theme.spacing.unit * 3,
+        marginLeft: theme.spacing.unit * 20,
+        padding: theme.spacing.unit,
+        overflow: 'auto',
+        width: '60%',
+        [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
+            marginTop: theme.spacing.unit * 6,
+            marginBottom: theme.spacing.unit * 6,
+            padding: theme.spacing.unit * 3,
+        },
     },
-    total: {
-        fontWeight: '700',
+    loadSection: {
+        align: 'center',
+        marginTop: theme.spacing.unit * 3,
     },
-    title: {
-        marginTop: theme.spacing.unit * 2,
+    button: {
+        marginTop: theme.spacing.unit * 3,
+        marginLeft: theme.spacing.unit,
+        display: 'inline-flex',
+        justifyContent: 'center',
+        align: 'center',
     },
+    buttons: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+    },
+    buttonHolder: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    }
 });
 
 
@@ -357,60 +418,52 @@ class Checkout extends React.Component {
 
         return (
             <React.Fragment>
-                <CssBaseline />
+                <div className={classes.root}>
+                <CssBaseline/>
                 <Navbar handleSignOut={this.props.handleSignOut} username={this.props.companyname}/>
-                <main className={classes.layout}>
-                    <Paper className={classes.paper}>
-                        <Typography component="h1" variant="h4" align="center">
-                            Order Input
-                        </Typography>
-                        <Stepper activeStep={activeStep} className={classes.stepper}>
-                            {steps.map(label => (
-                                <Step key={label}>
-                                    <StepLabel>{label}</StepLabel>
-                                </Step>
-                            ))}
-                        </Stepper>
-                        <React.Fragment>
-                            {/*{activeStep === steps.length ? (*/}
-                                {/*<React.Fragment>*/}
-                                    {/*<Typography variant="h5" gutterBottom>*/}
-                                        {/*Thank you for choosing PaceSetter.*/}
-                                    {/*</Typography>*/}
-                                {/*</React.Fragment>*/}
-                            {/*) : (*/}
-                                <React.Fragment>
-                                    {this.getStepContent(activeStep)}
-                                    <div className={classes.buttons}>
-                                        {/*{this.getResetButton(activeStep, classes)}*/}
-
-                                        {activeStep === steps.length - 1 ? <Button
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={this.handleSubmit}
-                                            className={classes.button}
-                                        >
-                                            Submit
-                                        </Button> : <Button
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={this.handleNext}
-                                            className={classes.button}
-                                        >
-                                            Next
-                                        </Button>}
-                                        {activeStep !== 0 && (
-                                            <Button onClick={this.handleBack} className={classes.button}>
-                                                Back
-                                            </Button>
-                                        )}
-                                        {this.getResetButton(activeStep, classes)}
-                                    </div>
-                                </React.Fragment>
-                            {/*)}*/}
-                        </React.Fragment>
-                    </Paper>
-                </main>
+                <main className={classes.content}>
+                    <div className={classes.appBarSpacer}/>
+                        <Paper className={classes.paper}>
+                            <Typography component="h1" variant="h4" align="center">
+                                Order Input
+                            </Typography>
+                            <Stepper activeStep={activeStep} className={classes.stepper}>
+                                {steps.map(label => (
+                                    <Step key={label}>
+                                        <StepLabel>{label}</StepLabel>
+                                    </Step>
+                                ))}
+                            </Stepper>
+                            {this.getStepContent(activeStep)}
+                            <div className={classes.buttons}>
+                                {activeStep === steps.length - 1 ?
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={this.handleSubmit}
+                                        className={classes.button}
+                                    >
+                                        Submit
+                                    </Button>
+                                    :
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={this.handleNext}
+                                        className={classes.button}
+                                    >
+                                        Next
+                                    </Button>}
+                                {activeStep !== 0 && (
+                                    <Button onClick={this.handleBack} className={classes.button}>
+                                        Back
+                                    </Button>
+                                )}
+                                {this.getResetButton(activeStep, classes)}
+                            </div>
+                        </Paper>
+                    </main>
+                </div>
                 <div>
                     <Modal
                         aria-labelledby="simple-modal-title"
@@ -427,9 +480,6 @@ class Checkout extends React.Component {
                             </Typography>
                         </div>
                     </Modal>
-                </div>
-
-                <div>
                     <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
@@ -445,9 +495,6 @@ class Checkout extends React.Component {
                             </Typography>
                         </div>
                     </Modal>
-                </div>
-
-                <div>
                     <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
@@ -465,11 +512,7 @@ class Checkout extends React.Component {
                                 Do Not Submit
                             </Button>
                         </div>
-
                     </Modal>
-                </div>
-
-                <div>
                     <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
@@ -485,9 +528,6 @@ class Checkout extends React.Component {
                             </Typography>
                         </div>
                     </Modal>
-                </div>
-
-                <div>
                     <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
@@ -501,9 +541,6 @@ class Checkout extends React.Component {
                         </div>
 
                     </Modal>
-                </div>
-
-                <div>
                     <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
@@ -524,9 +561,6 @@ class Checkout extends React.Component {
                         </div>
 
                     </Modal>
-                </div>
-
-                <div>
                     <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
@@ -543,9 +577,6 @@ class Checkout extends React.Component {
                         </div>
 
                     </Modal>
-                </div>
-
-                <div>
                     <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
@@ -563,7 +594,6 @@ class Checkout extends React.Component {
 
                     </Modal>
                 </div>
-
             </React.Fragment>
         );
     }
