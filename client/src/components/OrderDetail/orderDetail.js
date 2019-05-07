@@ -5,31 +5,17 @@ import TextField from '@material-ui/core/TextField';
 
 
 class orderDetail extends React.Component {
-
-    constructor(props) {
-        super(props);
-        // this.myRef = React.createRef();
-    };
-
-
-    // componentDidMount(nextProps, nextState, nextContext) {
-    //
-    // }
-
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("Data being passed from the comp did update, ", this.state);
-
         if (this.props.inputpart === '' && this.props.inputqty === '' && this.props.inputtagnum === '') {
-            this.myRef.focus();
+            // this.myRef.focus();
+            this.focusUsernameInputField(this.myRef);
         }
     }
-
     focusUsernameInputField = (input) => {
         if (input) {
            input.focus()
         }
     };
-
     render () {
     return (
         <React.Fragment>

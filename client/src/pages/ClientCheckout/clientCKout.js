@@ -170,33 +170,18 @@ class Checkout extends React.Component {
 
     handleClose5 = () => {
         this.setState({activeStep: 1,
-            orderdetails : {
-                partnum: '',
-                quantity: '',
-                tagnum: ''
-            },
             open5: false
         });
     };
 
     handleClose6 = () => {
         this.setState({activeStep: 1,
-            orderdetails : {
-                partnum: '',
-                quantity: '',
-                tagnum: ''
-            },
             open6: false
         });
     };
 
     handleClose7 = () => {
         this.setState({activeStep: 1,
-            orderdetails : {
-                partnum: '',
-                quantity: '',
-                tagnum: ''
-            },
             open7: false
         });
     };
@@ -289,15 +274,35 @@ class Checkout extends React.Component {
                 //removed to increase scan efficency.
                 // this.setState({open: true, open2: false});
             }else if (res.data.data === null) {
-                this.setState({open3: true, open2: false});
+                this.setState({open3: true, open2: false, orderdetails : {
+                        partnum: '',
+                        quantity: '',
+                        tagnum: ''
+                    }});
             }else if (res.data.data === 'INVALIDTOKEN') {
-                this.setState({open4: true})
+                this.setState({open4: true, orderdetails : {
+                        partnum: '',
+                        quantity: '',
+                        tagnum: ''
+                    }})
             }else if (res.data.data === 'TAGALREADYCONSUMED') {
-                this.setState({open5: true, open2: false})
+                this.setState({open5: true, open2: false, orderdetails : {
+                        partnum: '',
+                        quantity: '',
+                        tagnum: ''
+                    }})
             }else if (res.data.data === 'NOERROR') {
-                this.setState({open6: true, open2: false})
+                this.setState({open6: true, open2: false, orderdetails : {
+                        partnum: '',
+                        quantity: '',
+                        tagnum: ''
+                    }})
             }else if (res.data.data === 'RECEIPT') {
-                this.setState({count: this.state.count + 1});
+                this.setState({count: this.state.count + 1, orderdetails : {
+                        partnum: '',
+                        quantity: '',
+                        tagnum: ''
+                    }});
                 // this.setState({open7: true, open2: false})
             }
 

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from "@material-ui/core/InputAdornment";
-import classNames from 'classnames';
 
 const styles = theme => ({
     container: {
@@ -32,7 +31,6 @@ function DatePickers(props) {
                 color="primary"
                 value={props.range1}
                 onChange={props.handleDateChange}
-                className={classes.textField}
                 InputLabelProps={{
                     shrink: true,
                 }}

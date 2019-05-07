@@ -16,6 +16,7 @@ import Icon from '@mdi/react';
 import {mdiLoading} from "@mdi/js";
 import axios from 'axios';
 import DateBox from '../../components/DateSelector';
+import Download from '../../components/ExcelExport';
 
 const drawerWidth = 240;
 
@@ -122,10 +123,14 @@ const styles = theme => ({
         button: {
         marginTop: theme.spacing.unit * 3,
         marginLeft: theme.spacing.unit,
-        display: 'flex',
+        display: 'inline-flex',
         justifyContent: 'center',
         align: 'center',
     },
+    buttonHolder: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    }
 });
 
 const ranges = [{
@@ -306,16 +311,22 @@ class report extends React.Component {
                             }
 
                             {((this.state.period !== "" && this.state.period !== 5) || (this.state.period === 5 && this.state.range1 !=="" && this.state.range2 !== "")) &&
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={this.handleSubmit}
-                                className={classes.button}
-                                align='center'
-                            >
-                                Run Report
-                            </Button>
+                            <div className={classes.buttonHolder}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={this.handleSubmit}
+                                    className={classes.button}
+                                    align='center'
+                                >
+                                    Run Report
+                                </Button>
+
+                                {this.state.runReport && (this.state.data !== null && <Download dataArray={this.state.data}/>) }
+                            </div>
                             }
+
+
 
                             <CssBaseline/>
 

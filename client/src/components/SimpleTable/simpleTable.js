@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -14,49 +14,6 @@ import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
-
-// const styles = {
-//     root: {
-//         width: '100%',
-//         overflowX: 'auto',
-//     },
-//     table: {
-//         minWidth: 700,
-//     },
-// };
-//
-// function SimpleTable(props) {
-//     const[data, setData] = useState(null);
-//     const { classes } = props;
-//
-//     return (
-//         <Paper className={classes.root}>
-//             <Table className={classes.table}>
-//                 <TableHead>
-//                     <TableRow>
-//                         <TableCell>Product</TableCell>
-//                         <TableCell align="right">Quantity in Inventory</TableCell>
-//                     </TableRow>
-//                 </TableHead>
-//                 <TableBody>
-//                     {props.dataPassed.map(n => (
-//                         <TableRow key={n.id}>
-//                             <TableCell component="th" scope="row">
-//                                 {n.name}
-//                             </TableCell>
-//                             <TableCell align="right">{n.quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</TableCell>
-//                         </TableRow>
-//                     ))}
-//                 </TableBody>
-//             </Table>
-//         </Paper>
-//     );
-// }
-// SimpleTable.propTypes = {
-//     classes: PropTypes.object.isRequired,
-// };
-//
-// export default withStyles(styles)(SimpleTable);
 
 const actionsStyles = theme => ({
     root: {
@@ -136,7 +93,6 @@ TablePaginationActions.propTypes = {
 const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: true })(
     TablePaginationActions,
 );
-let counter = 0;
 
 const styles = theme => ({
     root: {
