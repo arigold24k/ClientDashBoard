@@ -19,6 +19,7 @@
     "express": "^4.16.4",
     "jade": "^1.11.0",
     "jsonwebtoken": "^8.5.1",
+    "loadash": "^1.0.0",
     "material-ui": "^0.20.2",
     "method-override": "^3.0.0",
     "mongoose": "^5.4.19",
@@ -37,6 +38,7 @@
     "sequelize": "^5.3.1",
     "serve-favicon": "~2.5.0",
     "tedious": "^5.0.3",
+    "tempa-xlsx": "0.0.1",
     "uglify-js": "^3.4.10"
   },
   "devDependencies": {

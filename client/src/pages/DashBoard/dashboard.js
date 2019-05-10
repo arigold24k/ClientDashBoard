@@ -10,6 +10,7 @@ import axios from 'axios';
 import Icon from '@mdi/react';
 import { mdiLoading } from '@mdi/js';
 import Paper from '@material-ui/core/Paper';
+import orderBy from 'lodash/orderBy';
 
 const drawerWidth = 240;
 
@@ -106,7 +107,12 @@ const styles = theme => ({
     },
 });
 
-const initialState = {data: null, dataTable: null};
+const initialState = {
+    data: null,
+    dataTable: null,
+    columnToSort: "",
+    sortDirection: "desc"
+};
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -115,9 +121,13 @@ class Dashboard extends React.Component {
     };
 
     componentWillMount() {
-        this.getChartData();
-        this.getTableData();
+        if(this.state.dataTable === null) {
+            this.getChartData();
+            this.getTableData();
+        }
     }
+
+
 
     getChartData = () => {
         const headerObj = {
@@ -150,6 +160,14 @@ class Dashboard extends React.Component {
         });
 
     };
+    sortData = (columnName) => {
+        console.log("Sort data is being hit Column Name:", columnName);
+        this.setState({
+            columnToSort: columnName,
+            sortDirection: this.state.columnToSort === columnName ? (this.state.sortDirection === 'desc' ? 'asc' : 'desc') : 'asc'
+        });
+        console.log("State of the state after the update in the sort data function ", this.state);
+    };
 
     getTableData = () => {
         const headerObj = {
@@ -166,7 +184,7 @@ class Dashboard extends React.Component {
                     holderObjectTable = {
                         id: res.data.data[0][i].PART,
                         name: res.data.data[0][i].PART,
-                        quantity: res.data.data[0][i].quantity
+                        quantity: parseInt(res.data.data[0][i].quantity)
                     };
                     // holderArray = this.state.data;
                     holderArrayTable.push(holderObjectTable);
@@ -184,6 +202,7 @@ class Dashboard extends React.Component {
 
         const { classes } = this.props;
         console.log('data being passed to the line chart befroe the return, ', this.state.data);
+        console.log('data being passed to the order by', orderBy(this.state.dataTable, this.state.columnToSort, this.state.sortDirection));
         return (
 
                 <div className={classes.root}>
@@ -224,7 +243,8 @@ class Dashboard extends React.Component {
 
                     {this.state.dataTable
                         ?
-                            <SimpleTable dataPassed={this.state.dataTable}/>
+
+                            <SimpleTable dataPassed={orderBy(this.state.dataTable, this.state.columnToSort, this.state.sortDirection)}  handleSort={this.sortData.bind(this)} sortDirction = {this.state.sortDirection} columnToSort={this.state.columnToSort}/>
                         :
                         <Paper className={classes.paper}>
                             <Typography variant="h4" gutterBottom component="h2" className={classes.loadSection} align="center">

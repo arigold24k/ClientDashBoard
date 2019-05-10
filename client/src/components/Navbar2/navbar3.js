@@ -147,7 +147,7 @@ class navbar2 extends React.Component {
                     noWrap
                     className={classes.title}
                 >
-                    Pacesetter Steal --- {this.props.username}
+                    Pacesetter Steel --- {this.props.username}
                 </Typography>
                 <IconButton color="inherit">
                     {/*<Badge badgeContent={4} color="secondary">*/}

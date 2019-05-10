@@ -130,16 +130,16 @@ class TableComponent extends React.Component {
             <Paper className={classes.root}>
                 <div className={classes.tableWrapper}>
                     <Table className={classes.table}>
-                                     <TableHead>
-                                       <TableRow>
-                                                <TableCell align="center">Scan Date</TableCell>
-                                                <TableCell align="center">RECNO</TableCell>
-                                                <TableCell align="center">Scan Code</TableCell>
-                                                 <TableCell align="center">Product</TableCell>
-                                                <TableCell align="center">Quantity</TableCell>
-                                                <TableCell align="center">Tag Number</TableCell>
-                                        </TableRow>
-                                       </TableHead>
+                         <TableHead>
+                               <TableRow>
+                                    <TableCell align="center"><div onClick={() => this.props.handleSort(this.prop)}>Scan Date</div></TableCell>
+                                    <TableCell align="center">RECNO</TableCell>
+                                    <TableCell align="center">Scan Code</TableCell>
+                                     <TableCell align="center">Product</TableCell>
+                                    <TableCell align="center">Quantity</TableCell>
+                                    <TableCell align="center">Tag Number</TableCell>
+                                </TableRow>
+                           </TableHead>
                         <TableBody>
                             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
                                 <TableRow key={row.recno}>

@@ -13,6 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import DownArrow from '@material-ui/icons/KeyboardArrowDown';
+import UpArrow from '@material-ui/icons/KeyboardArrowUp';
 import LastPageIcon from '@material-ui/icons/LastPage';
 
 const actionsStyles = theme => ({
@@ -107,13 +109,31 @@ const styles = theme => ({
     },
 });
 
-class SimpleTable extends React.Component {
-    state = {
-        rows:this.props.dataPassed,
-        page: 0,
-        rowsPerPage: 5,
-    };
+const initialState = {
+    rows: [],
+    page: 0,
+    rowsPerPage: 5,
+};
 
+class SimpleTable extends React.Component {
+    constructor (props) {
+        super(props);
+        const {dataPassed} = this.props;
+        this.state = {
+                ...initialState,
+                rows: dataPassed
+        };
+    }
+
+
+    componentDidMount () {
+        console.log("Component Did Mount");
+        const { dataPassed } = this.props;
+        console.log(`component will moutn has this array being passed to it ${dataPassed}`);
+        this.setState({
+            rows: dataPassed
+        })
+    }
     handleChangePage = (event, page) => {
         this.setState({ page });
     };
@@ -123,18 +143,23 @@ class SimpleTable extends React.Component {
     };
 
     render() {
-        const { classes } = this.props;
-        const { rows, rowsPerPage, page } = this.state;
-        const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+
+        const { classes, sortDirction, columnToSort } = this.props;
+        const rows = this.props.dataPassed;
+        const { rowsPerPage, page } = this.state;
+        const emptyRows = rowsPerPage - Math.min(rowsPerPage, (rows != null ? rows.length : 0) - page * rowsPerPage);
+console.log("This is the props " + sortDirction + " " + columnToSort);
         return (
             <Paper className={classes.root}>
                 <div className={classes.tableWrapper}>
                     <Table className={classes.table}>
                                      <TableHead>
                                        <TableRow>
-                                               <TableCell>Product</TableCell>
-                                             <TableCell align="right">Quantity in Inventory</TableCell>
+                                           <TableCell><div onClick={() => this.props.handleSort("name")}>
+                                               <span>Product {columnToSort === "name" ? (sortDirction === "asc" ? <UpArrow/> : <DownArrow/>) : null} </span>
+                                           </div></TableCell>
+                                           <TableCell align="right"><div onClick={() => this.props.handleSort("quantity")}><span>Quantity in Inventory {columnToSort === "quantity" ? (sortDirction === "asc" ? <UpArrow/> : <DownArrow/>) : null}</span></div></TableCell>
                                         </TableRow>
                                        </TableHead>
                         <TableBody>
