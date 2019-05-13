@@ -11,12 +11,13 @@ import Navbar from './../../components/Navbar2';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Table from '../../components/Table';
+import Table from '../../components/SimpleTable';
 import Icon from '@mdi/react';
 import {mdiLoading} from "@mdi/js";
 import axios from 'axios';
 import DateBox from '../../components/DateSelector';
 import Download from '../../components/ExcelExport';
+import orderBy from 'lodash/orderBy';
 
 const drawerWidth = 240;
 
@@ -176,12 +177,22 @@ class report extends React.Component {
             open2: false,
             data: null,
             range1: "",
-            range2: ""
+            range2: "",
+            columnToSort: "",
+            sortDirection: "desc"
 
         };
     }
     handleClose = () => {
         this.setState({ modalOpen: false });
+    };
+    sortData = (columnName) => {
+        console.log("Sort data is being hit Column Name:", columnName);
+        this.setState({
+            columnToSort: columnName,
+            sortDirection: this.state.columnToSort === columnName ? (this.state.sortDirection === 'desc' ? 'asc' : 'desc') : 'asc'
+        });
+        console.log("State of the state after the update in the sort data function ", this.state);
     };
 
     handleClose2 = () => {
@@ -333,7 +344,38 @@ class report extends React.Component {
                             <div>
                                 {this.state.runReport &&
                                 (this.state.data !== null ?
-                                        <Table dataPassed={this.state.data}/>
+                                        <Table
+                                            dataPassed={orderBy(this.state.data, this.state.columnToSort, this.state.sortDirection)}
+                                            handleSort={this.sortData.bind(this)}
+                                            sortDirction = {this.state.sortDirection}
+                                            columnToSort={this.state.columnToSort}
+                                            columns={[
+                                                {
+                                                    name: 'Rec Number',
+                                                    prop: 'recno'
+                                                },
+                                                {
+                                                    name: 'Scan Date',
+                                                    prop: 'scandate'
+                                                },
+                                                {
+                                                    name: 'Scan Code',
+                                                    prop: 'scancode'
+                                                },
+                                                {
+                                                    name: 'Product',
+                                                    prop: 'product'
+                                                },
+                                                {
+                                                    name: 'Quantity',
+                                                    prop: 'quantity'
+                                                },
+                                                {
+                                                    name: 'Tag Number',
+                                                    prop: 'tagnum'
+                                                }
+                                            ]}
+                                        />
                                         :
                                         <Paper>
                                             <Typography variant="h4" gutterBottom component="h2" className={classes.loadSection} align="center">

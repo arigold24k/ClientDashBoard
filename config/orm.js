@@ -153,8 +153,15 @@ const orm = {
         });
 
     },
-    dashboardData : (compCode, cb) => {
-        const strSql = `SELECT date_format(a.SCANDATE, '%m_%Y'), (CASE WHEN MONTH(a.SCANDATE) = 1 THEN 'JAN' WHEN MONTH(a.SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(a.SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(a.SCANDATE) = 4 THEN 'APR'  WHEN MONTH(a.SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(a.SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(a.SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(a.SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(a.SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(a.SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(a.SCANDATE) = 11 THEN '11'  WHEN MONTH(a.SCANDATE) = 12 THEN 'DEC' ELSE '' END) Month, SUM((CASE WHEN a.CODE LIKE '%CONSUME%' THEN a.QTY ELSE '' END)) Consumed, SUM(b.QTY) Received FROM KCARDSSES a, kcard_yodas b WHERE a.CUSTOMER = '${compCode}' AND a.CUSTOMER = b.BP_CODE AND b.SHIP_DATE >= date_sub(sysdate(), INTERVAL 13 MONTH) AND b.SHIP_DATE <= sysdate() AND a.SCANDATE >= date_sub(sysdate(), INTERVAL 13 MONTH) AND a.SCANDATE <= sysdate() GROUP BY date_format(a.SCANDATE, '%m_%Y'), MONTH(a.SCANDATE), (CASE WHEN MONTH(a.SCANDATE) = 1 THEN 'JAN' WHEN MONTH(a.SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(a.SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(a.SCANDATE) = 4 THEN 'APR'  WHEN MONTH(a.SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(a.SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(a.SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(a.SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(a.SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(a.SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(a.SCANDATE) = 11 THEN '11'  WHEN MONTH(a.SCANDATE) = 12 THEN 'DEC' ELSE '' END) ORDER BY date_format(a.SCANDATE, '%m_%Y');`;
+    dashboardData : (compCode, filtered,cb) => {
+
+        let condition;
+        if(!filtered){
+            condition = 'Select part from KCARDSSES UNION SELECT part FROM kcard_yodas';
+        }else{
+            condition = filtered.join(',');
+        }
+        const strSql = `SELECT date_format(a.SCANDATE, '%m_%Y'), (CASE WHEN MONTH(a.SCANDATE) = 1 THEN 'JAN' WHEN MONTH(a.SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(a.SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(a.SCANDATE) = 4 THEN 'APR'  WHEN MONTH(a.SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(a.SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(a.SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(a.SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(a.SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(a.SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(a.SCANDATE) = 11 THEN '11'  WHEN MONTH(a.SCANDATE) = 12 THEN 'DEC' ELSE '' END) Month, SUM((CASE WHEN a.CODE LIKE '%CONSUME%' THEN a.QTY ELSE '' END)) Consumed, SUM(b.QTY) Received FROM KCARDSSES a, kcard_yodas b WHERE a.CUSTOMER = '${compCode}' AND a.CUSTOMER = b.BP_CODE AND b.SHIP_DATE >= date_sub(sysdate(), INTERVAL 13 MONTH) AND b.SHIP_DATE <= sysdate() AND a.SCANDATE >= date_sub(sysdate(), INTERVAL 13 MONTH) AND a.SCANDATE <= sysdate() AND a.part in (${condition}) GROUP BY date_format(a.SCANDATE, '%m_%Y'), MONTH(a.SCANDATE), (CASE WHEN MONTH(a.SCANDATE) = 1 THEN 'JAN' WHEN MONTH(a.SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(a.SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(a.SCANDATE) = 4 THEN 'APR'  WHEN MONTH(a.SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(a.SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(a.SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(a.SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(a.SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(a.SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(a.SCANDATE) = 11 THEN '11'  WHEN MONTH(a.SCANDATE) = 12 THEN 'DEC' ELSE '' END) ORDER BY date_format(a.SCANDATE, '%m_%Y');`;
         db.sequelize.query(strSql).then((results) => {
             console.log('data coming from the dashboard data, ', results);
             cb(null, results);

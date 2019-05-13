@@ -16,6 +16,7 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import DownArrow from '@material-ui/icons/KeyboardArrowDown';
 import UpArrow from '@material-ui/icons/KeyboardArrowUp';
 import LastPageIcon from '@material-ui/icons/LastPage';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const actionsStyles = theme => ({
     root: {
@@ -98,7 +99,7 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: tru
 
 const styles = theme => ({
     root: {
-        width: '100%',
+        width: 'auto',
         marginTop: theme.spacing.unit * 3,
     },
     table: {
@@ -124,8 +125,6 @@ class SimpleTable extends React.Component {
                 rows: dataPassed
         };
     }
-
-
     componentDidMount () {
         console.log("Component Did Mount");
         const { dataPassed } = this.props;
@@ -137,38 +136,40 @@ class SimpleTable extends React.Component {
     handleChangePage = (event, page) => {
         this.setState({ page });
     };
-
     handleChangeRowsPerPage = event => {
         this.setState({ page: 0, rowsPerPage: event.target.value });
     };
-
     render() {
-
-
-        const { classes, sortDirction, columnToSort } = this.props;
+        const { classes, columns, sortDirection, columnToSort } = this.props;
         const rows = this.props.dataPassed;
         const { rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, (rows != null ? rows.length : 0) - page * rowsPerPage);
-console.log("This is the props " + sortDirction + " " + columnToSort);
+        console.log("This is the props " + sortDirection + " " + columnToSort);
         return (
             <Paper className={classes.root}>
                 <div className={classes.tableWrapper}>
                     <Table className={classes.table}>
                                      <TableHead>
                                        <TableRow>
-                                           <TableCell><div onClick={() => this.props.handleSort("name")}>
-                                               <span>Product {columnToSort === "name" ? (sortDirction === "asc" ? <UpArrow/> : <DownArrow/>) : null} </span>
-                                           </div></TableCell>
-                                           <TableCell align="right"><div onClick={() => this.props.handleSort("quantity")}><span>Quantity in Inventory {columnToSort === "quantity" ? (sortDirction === "asc" ? <UpArrow/> : <DownArrow/>) : null}</span></div></TableCell>
+                                           <TableCell padding="checkbox">
+                                               <Checkbox />
+                                           </TableCell>
+                                           {columns.map((col) => (
+                                               <TableCell align="left">
+                                                   <div onClick={() => this.props.handleSort(col.prop)}><span>{col.name} {columnToSort === col.prop ? (sortDirection === "asc" ? <UpArrow/> : <DownArrow/>) : null} </span></div>
+                                               </TableCell>
+                                           ))}
                                         </TableRow>
                                        </TableHead>
                         <TableBody>
                             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
                                 <TableRow key={row.id}>
-                                    <TableCell component="th" scope="row">
-                                        {row.name}
-                                    </TableCell>
-                                    <TableCell align="right">{row.quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</TableCell>
+
+                                    {columns.map((col) => (
+                                        <TableCell component="th" scope="row" align="left">
+                                            {row[col.prop]}
+                                        </TableCell>
+                                    ))}
                                 </TableRow>
                             ))}
                             {emptyRows > 0 && (
@@ -200,7 +201,6 @@ console.log("This is the props " + sortDirction + " " + columnToSort);
         );
     }
 }
-
 SimpleTable.propTypes = {
     classes: PropTypes.object.isRequired,
 };

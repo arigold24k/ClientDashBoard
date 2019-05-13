@@ -86,6 +86,7 @@ const styles = theme => ({
     },
     tableContainer: {
         height: 320,
+        marginLeft: theme.spacing.unit * 5,
     },
     h5: {
         marginBottom: theme.spacing.unit * 2,
@@ -111,7 +112,8 @@ const initialState = {
     data: null,
     dataTable: null,
     columnToSort: "",
-    sortDirection: "desc"
+    sortDirection: "desc",
+    filtered: false,
 };
 
 class Dashboard extends React.Component {
@@ -135,7 +137,7 @@ class Dashboard extends React.Component {
         };
         let holderArray = [];
         console.log('chart data is function is being hit');
-        axios.post('/api/consumed', this.state.email, {headers: headerObj}).then((res) => {
+        axios.post('/api/consumed', {email: this.state.email, filtered: this.state.filtered}, {headers: headerObj}).then((res) => {
             let holderObject = {};
             if(res.data.data !== null) {
                 console.log('Data that is coming back from the consumption, ', res.data.data[0]);
@@ -244,7 +246,22 @@ class Dashboard extends React.Component {
                     {this.state.dataTable
                         ?
 
-                            <SimpleTable dataPassed={orderBy(this.state.dataTable, this.state.columnToSort, this.state.sortDirection)}  handleSort={this.sortData.bind(this)} sortDirction = {this.state.sortDirection} columnToSort={this.state.columnToSort}/>
+                            <SimpleTable
+                                dataPassed={orderBy(this.state.dataTable, this.state.columnToSort, this.state.sortDirection)}
+                                handleSort={this.sortData.bind(this)}
+                                sortDirection = {this.state.sortDirection}
+                                columnToSort={this.state.columnToSort}
+                                columns={[
+                                    {
+                                        name: 'Product',
+                                        prop: 'name'
+                                    },
+                                    {
+                                        name: 'Quantity in Inventory',
+                                        prop: 'quantity'
+                                    }
+                                ]}
+                            />
                         :
                         <Paper className={classes.paper}>
                             <Typography variant="h4" gutterBottom component="h2" className={classes.loadSection} align="center">

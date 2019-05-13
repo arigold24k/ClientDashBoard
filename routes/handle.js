@@ -202,7 +202,7 @@ router.post('/api/consumed', verifyToken , (req, res) => {
         if(err){
             res.status(403).json({message: "Token invalid", data: 'INVALIDTOKEN'});
         }else {
-            orm.dashboardData(decoded.user.companycode, (err, data) =>{
+            orm.dashboardData(decoded.user.companycode, req.body.filtered, (err, data) =>{
                 if(err) {
                     res.status(403).json({message: 'error in getting the data', data: err})
                 }else{
