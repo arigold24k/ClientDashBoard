@@ -114,6 +114,7 @@ const initialState = {
     columnToSort: "",
     sortDirection: "desc",
     filtered: false,
+    selected: [],
 };
 
 class Dashboard extends React.Component {
@@ -162,14 +163,14 @@ class Dashboard extends React.Component {
         });
 
     };
-    sortData = (columnName) => {
-        console.log("Sort data is being hit Column Name:", columnName);
-        this.setState({
-            columnToSort: columnName,
-            sortDirection: this.state.columnToSort === columnName ? (this.state.sortDirection === 'desc' ? 'asc' : 'desc') : 'asc'
-        });
-        console.log("State of the state after the update in the sort data function ", this.state);
-    };
+    // sortData = (columnName) => {
+    //     console.log("Sort data is being hit Column Name:", columnName);
+    //     this.setState({
+    //         columnToSort: columnName,
+    //         sortDirection: this.state.columnToSort === columnName ? (this.state.sortDirection === 'desc' ? 'asc' : 'desc') : 'asc'
+    //     });
+    //     console.log("State of the state after the update in the sort data function ", this.state);
+    // };
 
     getTableData = () => {
         const headerObj = {
@@ -198,6 +199,14 @@ class Dashboard extends React.Component {
             console.log('error in getting the table data, ', err);
         })
     };
+
+    // handleSelectAllClick = event => {
+    //     if (event.target.checked) {
+    //         this.setState(state => ({ selected: state.data.map(n => n.id) }));
+    //         return;
+    //     }
+    //     this.setState({ selected: [] });
+    // };
 
     render() {
         console.log('Holder Array for the data,1 ', this.state.data);
@@ -247,18 +256,26 @@ class Dashboard extends React.Component {
                         ?
 
                             <SimpleTable
-                                dataPassed={orderBy(this.state.dataTable, this.state.columnToSort, this.state.sortDirection)}
-                                handleSort={this.sortData.bind(this)}
-                                sortDirection = {this.state.sortDirection}
-                                columnToSort={this.state.columnToSort}
+                                // dataPassed={orderBy(this.state.dataTable, this.state.columnToSort, this.state.sortDirection)}
+                                // handleSort={this.sortData.bind(this)}
+                                // sortDirection = {this.state.sortDirection}
+                                // columnToSort={this.state.columnToSort}
+                                dataPassed={this.state.dataTable}
+                                tableTitle="Products"
                                 columns={[
                                     {
                                         name: 'Product',
-                                        prop: 'name'
+                                        id: 'name',
+                                        numeric: false,
+                                        disablePadding: true,
+                                        label: "Product"
                                     },
                                     {
                                         name: 'Quantity in Inventory',
-                                        prop: 'quantity'
+                                        id: 'quantity',
+                                        numeric: true,
+                                        disablePadding: true,
+                                        label: 'Quantity in Inventory'
                                     }
                                 ]}
                             />

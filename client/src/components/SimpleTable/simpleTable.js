@@ -7,124 +7,187 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import IconButton from '@material-ui/core/IconButton';
+import Checkbox from '@material-ui/core/Checkbox';
+import Tooltip from '@material-ui/core/Tooltip';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Typography from '@material-ui/core/Typography';
+import Toolbar from '@material-ui/core/Toolbar';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import classNames from 'classnames';
+import { lighten } from '@material-ui/core/styles/colorManipulator';
+import orderBy from 'lodash/orderBy';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import DownArrow from '@material-ui/icons/KeyboardArrowDown';
 import UpArrow from '@material-ui/icons/KeyboardArrowUp';
 import LastPageIcon from '@material-ui/icons/LastPage';
-import Checkbox from '@material-ui/core/Checkbox';
+import TableFooter from '@material-ui/core/TableFooter';
 
-const actionsStyles = theme => ({
-    root: {
-        flexShrink: 0,
-        color: theme.palette.text.secondary,
-        marginLeft: theme.spacing.unit * 2.5,
-    },
-});
+class EnhancedTableHead extends React.Component {
 
-class TablePaginationActions extends React.Component {
-    handleFirstPageButtonClick = event => {
-        this.props.onChangePage(event, 0);
-    };
-
-    handleBackButtonClick = event => {
-        this.props.onChangePage(event, this.props.page - 1);
-    };
-
-    handleNextButtonClick = event => {
-        this.props.onChangePage(event, this.props.page + 1);
-    };
-
-    handleLastPageButtonClick = event => {
-        this.props.onChangePage(
-            event,
-            Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
-        );
-    };
-
+    constructor(props){
+        super(props);
+    }
     render() {
-        const { classes, count, page, rowsPerPage, theme } = this.props;
-
+        const { onSelectAllClick, order, orderBy, numSelected, rowCount, cols } = this.props;
+        console.log("Enhanced header, Order: " + order + ". OrderBy: " + orderBy);
+        console.log("Enhanced header, cols props " + cols[0].id);
         return (
-            <div className={classes.root}>
-                <IconButton
-                    onClick={this.handleFirstPageButtonClick}
-                    disabled={page === 0}
-                    aria-label="First Page"
-                >
-                    {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-                </IconButton>
-                <IconButton
-                    onClick={this.handleBackButtonClick}
-                    disabled={page === 0}
-                    aria-label="Previous Page"
-                >
-                    {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-                </IconButton>
-                <IconButton
-                    onClick={this.handleNextButtonClick}
-                    disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-                    aria-label="Next Page"
-                >
-                    {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-                </IconButton>
-                <IconButton
-                    onClick={this.handleLastPageButtonClick}
-                    disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-                    aria-label="Last Page"
-                >
-                    {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-                </IconButton>
-            </div>
+            <TableHead>
+                <TableRow>
+                    <TableCell padding="checkbox">
+                        <Checkbox
+                            indeterminate={numSelected > 0 && numSelected < rowCount}
+                            checked={numSelected === rowCount}
+                            onChange={onSelectAllClick}
+                        />
+                    </TableCell>
+                    {cols.map(
+                        cols => (
+                            <TableCell
+                                key={cols.id}
+                                align={cols.numeric ? 'right' : 'left'}
+                                padding={cols.disablePadding ? 'none' : 'default'}
+                                sortDirection={orderBy === cols.id ? order : false}
+                            >
+                                <Tooltip
+                                    title="Sort"
+                                    placement={cols.numeric ? 'bottom-end' : 'bottom-start'}
+                                    enterDelay={300}
+                                >
+                                    <TableSortLabel
+                                        active={orderBy === cols.id}
+                                        direction={order}
+                                        onClick={(event) => this.props.handleSort1(event, cols.id)}
+                                    >
+                                        {cols.label}
+                                    </TableSortLabel>
+                                </Tooltip>
+                            </TableCell>
+                        ),
+                        this,
+                    )}
+                </TableRow>
+            </TableHead>
         );
     }
 }
-
-TablePaginationActions.propTypes = {
-    classes: PropTypes.object.isRequired,
-    count: PropTypes.number.isRequired,
-    onChangePage: PropTypes.func.isRequired,
-    page: PropTypes.number.isRequired,
-    rowsPerPage: PropTypes.number.isRequired,
-    theme: PropTypes.object.isRequired,
+EnhancedTableHead.propTypes = {
+    numSelected: PropTypes.number.isRequired,
+    onRequestSort: PropTypes.func.isRequired,
+    onSelectAllClick: PropTypes.func.isRequired,
+    order: PropTypes.string.isRequired,
+    orderBy: PropTypes.string.isRequired,
+    rowCount: PropTypes.number.isRequired,
 };
 
-const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: true })(
-    TablePaginationActions,
-);
+const toolbarStyles = theme => ({
+    root: {
+        paddingRight: theme.spacing.unit,
+    },
+    highlight:
+        theme.palette.type === 'light'
+            ? {
+                color: theme.palette.secondary.main,
+                backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+            }
+            : {
+                color: theme.palette.text.primary,
+                backgroundColor: theme.palette.secondary.dark,
+            },
+    spacer: {
+        flex: '1 1 100%',
+    },
+    actions: {
+        color: theme.palette.text.secondary,
+    },
+    title: {
+        flex: '0 0 auto',
+    },
+});
+
+let EnhancedTableToolbar = props => {
+    const { numSelected, classes } = props;
+    return (
+        <Toolbar
+            className={classNames(classes.root, {
+                [classes.highlight]: numSelected > 0,
+            })}
+        >
+            <div className={classes.title}>
+                {numSelected > 0 ? (
+                    <Typography color="inherit" variant="subtitle1">
+                        {numSelected} selected
+                    </Typography>
+                ) : (
+                    <Typography variant="h6" id="tableTitle">
+                        Products
+                    </Typography>
+                )}
+            </div>
+            <div className={classes.spacer} />
+            <div className={classes.actions}>
+                <Tooltip title="Filter list">
+                    <IconButton aria-label="Filter list">
+                        <FilterListIcon />
+                    </IconButton>
+                </Tooltip>
+            </div>
+        </Toolbar>
+    );
+};
+
+EnhancedTableToolbar.propTypes = {
+    classes: PropTypes.object.isRequired,
+    numSelected: PropTypes.number.isRequired,
+};
+
+EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar);
 
 const styles = theme => ({
     root: {
-        width: 'auto',
+        width: '100%',
         marginTop: theme.spacing.unit * 3,
+        color: "primary"
     },
     table: {
-        minWidth: 500,
+        minWidth: 1020,
+        color: 'primary',
     },
     tableWrapper: {
         overflowX: 'auto',
     },
 });
-
 const initialState = {
-    rows: [],
-    page: 0,
-    rowsPerPage: 5,
-};
+        selected: [],
+        page: 0,
+        rowsPerPage: 5,
+        columnToSort: '',
+        sortDirection: 'desc',
 
-class SimpleTable extends React.Component {
+};
+class EnhancedTable extends React.Component {
+    state = initialState;
     constructor (props) {
         super(props);
         const {dataPassed} = this.props;
         this.state = {
-                ...initialState,
-                rows: dataPassed
+             ...initialState,
+            rows: dataPassed
         };
-    }
+    };
+    handleSort = (event, columnName) => {
+        console.log("sort event object: ");
+        console.log("Sort data is being hit Column Name:", columnName);
+        this.setState({
+            columnToSort: columnName,
+            sortDirection: this.state.columnToSort === columnName ? (this.state.sortDirection === 'desc' ? 'asc' : 'desc') : 'asc'
+        });
+        console.log("State of the state after the update in the sort data function ", this.state);
+    };
     componentDidMount () {
         console.log("Component Did Mount");
         const { dataPassed } = this.props;
@@ -132,42 +195,87 @@ class SimpleTable extends React.Component {
         this.setState({
             rows: dataPassed
         })
-    }
+    };
+
+    handleSelectAllClick = event => {
+        if (event.target.checked) {
+            this.setState(state => ({ selected: state.rows.map(n => n.id) }));
+            return;
+        }
+        this.setState({ selected: [] });
+    };
+
+    handleClick = (event, id) => {
+        const { selected } = this.state;
+        const selectedIndex = selected.indexOf(id);
+        let newSelected = [];
+
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, id);
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(
+                selected.slice(0, selectedIndex),
+                selected.slice(selectedIndex + 1),
+            );
+        }
+
+        this.setState({ selected: newSelected });
+    };
+
     handleChangePage = (event, page) => {
         this.setState({ page });
     };
+
     handleChangeRowsPerPage = event => {
-        this.setState({ page: 0, rowsPerPage: event.target.value });
+        this.setState({ rowsPerPage: event.target.value });
     };
+
+    isSelected = id => this.state.selected.indexOf(id) !== -1;
+
     render() {
-        const { classes, columns, sortDirection, columnToSort } = this.props;
+        const { classes, columns, tableTitle} = this.props;
         const rows = this.props.dataPassed;
-        const { rowsPerPage, page } = this.state;
+        const { sortDirection, columnToSort, selected, rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, (rows != null ? rows.length : 0) - page * rowsPerPage);
-        console.log("This is the props " + sortDirection + " " + columnToSort);
+
+        console.log("data being passed to table", this.state.columnToSort);
+        console.log("data being passed to table, columns", columns);
+        console.log("State in the table, ", this.state);
+
         return (
             <Paper className={classes.root}>
+                <EnhancedTableToolbar numSelected={selected.length} />
                 <div className={classes.tableWrapper}>
-                    <Table className={classes.table}>
-                                     <TableHead>
-                                       <TableRow>
-                                           <TableCell padding="checkbox">
-                                               <Checkbox />
-                                           </TableCell>
-                                           {columns.map((col) => (
-                                               <TableCell align="left">
-                                                   <div onClick={() => this.props.handleSort(col.prop)}><span>{col.name} {columnToSort === col.prop ? (sortDirection === "asc" ? <UpArrow/> : <DownArrow/>) : null} </span></div>
-                                               </TableCell>
-                                           ))}
-                                        </TableRow>
-                                       </TableHead>
+                    <Table className={classes.table} aria-labelledby={tableTitle}>
+                        <EnhancedTableHead
+                            numSelected={selected.length}
+                            order={sortDirection}
+                            orderBy={columnToSort}
+                            onSelectAllClick={this.handleSelectAllClick}
+                            rowCount={rows.length}
+                            cols={columns}
+                            handleSort1={this.handleSort}
+                        />
                         <TableBody>
-                            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-                                <TableRow key={row.id}>
-
+                            {orderBy(rows, this.state.columnToSort, this.state.sortDirection).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
+                                <TableRow
+                                    key={row.id}
+                                    hover
+                                    onClick={event => this.handleClick(event, row.id)}
+                                    role="checkbox"
+                                    tabIndex={-1}
+                                    selected={this.isSelected(row.id)}
+                                >
+                                    <TableCell padding="checkbox">
+                                        <Checkbox checked={this.isSelected(row.id)} />
+                                    </TableCell>
                                     {columns.map((col) => (
-                                        <TableCell component="th" scope="row" align="left">
-                                            {row[col.prop]}
+                                        <TableCell component="th" scope="row" align={col.numeric ? "right" : "left"}>
+                                            {col.numeric ? row[col.id].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : row[col.id]}
                                         </TableCell>
                                     ))}
                                 </TableRow>
@@ -178,31 +286,219 @@ class SimpleTable extends React.Component {
                                 </TableRow>
                             )}
                         </TableBody>
-                        <TableFooter>
-                            <TableRow>
-                                <TablePagination
-                                    rowsPerPageOptions={[5, 10, 25]}
-                                    colSpan={3}
-                                    count={rows.length}
-                                    rowsPerPage={rowsPerPage}
-                                    page={page}
-                                    SelectProps={{
-                                        native: true,
-                                    }}
-                                    onChangePage={this.handleChangePage}
-                                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                    ActionsComponent={TablePaginationActionsWrapped}
-                                />
-                            </TableRow>
-                        </TableFooter>
                     </Table>
                 </div>
+                <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    backIconButtonProps={{
+                        'aria-label': 'Previous Page',
+                    }}
+                    nextIconButtonProps={{
+                        'aria-label': 'Next Page',
+                    }}
+                    onChangePage={this.handleChangePage}
+                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                />
             </Paper>
         );
     }
 }
-SimpleTable.propTypes = {
+
+EnhancedTable.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleTable);
+export default withStyles(styles)(EnhancedTable);
+;
+// const actionsStyles = theme => ({
+//     root: {
+//         flexShrink: 0,
+//         color: theme.palette.text.secondary,
+//         marginLeft: theme.spacing.unit * 2.5,
+//     },
+// });
+//
+// class TablePaginationActions extends React.Component {
+//     handleFirstPageButtonClick = event => {
+//         this.props.onChangePage(event, 0);
+//     };
+//
+//     handleBackButtonClick = event => {
+//         this.props.onChangePage(event, this.props.page - 1);
+//     };
+//
+//     handleNextButtonClick = event => {
+//         this.props.onChangePage(event, this.props.page + 1);
+//     };
+//
+//     handleLastPageButtonClick = event => {
+//         this.props.onChangePage(
+//             event,
+//             Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
+//         );
+//     };
+//
+//     render() {
+//         const { classes, count, page, rowsPerPage, theme } = this.props;
+//
+//         return (
+//             <div className={classes.root}>
+//                 <IconButton
+//                     onClick={this.handleFirstPageButtonClick}
+//                     disabled={page === 0}
+//                     aria-label="First Page"
+//                 >
+//                     {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+//                 </IconButton>
+//                 <IconButton
+//                     onClick={this.handleBackButtonClick}
+//                     disabled={page === 0}
+//                     aria-label="Previous Page"
+//                 >
+//                     {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+//                 </IconButton>
+//                 <IconButton
+//                     onClick={this.handleNextButtonClick}
+//                     disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+//                     aria-label="Next Page"
+//                 >
+//                     {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+//                 </IconButton>
+//                 <IconButton
+//                     onClick={this.handleLastPageButtonClick}
+//                     disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+//                     aria-label="Last Page"
+//                 >
+//                     {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+//                 </IconButton>
+//             </div>
+//         );
+//     }
+// }
+//
+// TablePaginationActions.propTypes = {
+//     classes: PropTypes.object.isRequired,
+//     count: PropTypes.number.isRequired,
+//     onChangePage: PropTypes.func.isRequired,
+//     page: PropTypes.number.isRequired,
+//     rowsPerPage: PropTypes.number.isRequired,
+//     theme: PropTypes.object.isRequired,
+// };
+//
+// const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: true })(
+//     TablePaginationActions,
+// );
+//
+// const styles = theme => ({
+//     root: {
+//         width: 'auto',
+//         marginTop: theme.spacing.unit * 3,
+//     },
+//     table: {
+//         minWidth: 500,
+//     },
+//     tableWrapper: {
+//         overflowX: 'auto',
+//     },
+// });
+//
+// const initialState = {
+//     rows: [],
+//     page: 0,
+//     rowsPerPage: 5,
+// };
+//
+// class SimpleTable extends React.Component {
+//     constructor (props) {
+//         super(props);
+//         const {dataPassed} = this.props;
+//         this.state = {
+//                 ...initialState,
+//                 rows: dataPassed
+//         };
+//     }
+//     componentDidMount () {
+//         console.log("Component Did Mount");
+//         const { dataPassed } = this.props;
+//         console.log(`component will moutn has this array being passed to it ${dataPassed}`);
+//         this.setState({
+//             rows: dataPassed
+//         })
+//     }
+//     handleChangePage = (event, page) => {
+//         this.setState({ page });
+//     };
+//     handleChangeRowsPerPage = event => {
+//         this.setState({ page: 0, rowsPerPage: event.target.value });
+//     };
+//     render() {
+//         const { classes, columns, sortDirection, columnToSort } = this.props;
+//         const rows = this.props.dataPassed;
+//         const { rowsPerPage, page } = this.state;
+//         const emptyRows = rowsPerPage - Math.min(rowsPerPage, (rows != null ? rows.length : 0) - page * rowsPerPage);
+//         console.log("This is the props " + sortDirection + " " + columnToSort);
+//         return (
+//             <Paper className={classes.root}>
+//                 <div className={classes.tableWrapper}>
+//                     <Table className={classes.table}>
+//                                      <TableHead>
+//                                        <TableRow>
+//                                            <TableCell padding="checkbox">
+//                                                <Checkbox />
+//                                            </TableCell>
+//                                            {columns.map((col) => (
+//                                                <TableCell align="left">
+//                                                    <div onClick={() => this.props.handleSort(col.prop)}><span>{col.name} {columnToSort === col.prop ? (sortDirection === "asc" ? <UpArrow/> : <DownArrow/>) : null} </span></div>
+//                                                </TableCell>
+//                                            ))}
+//                                         </TableRow>
+//                                        </TableHead>
+//                         <TableBody>
+//                             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
+//                                 <TableRow key={row.id}>
+//
+//                                     {columns.map((col) => (
+//                                         <TableCell component="th" scope="row" align="left">
+//                                             {row[col.prop]}
+//                                         </TableCell>
+//                                     ))}
+//                                 </TableRow>
+//                             ))}
+//                             {emptyRows > 0 && (
+//                                 <TableRow style={{ height: 48 * emptyRows }}>
+//                                     <TableCell colSpan={6} />
+//                                 </TableRow>
+//                             )}
+//                         </TableBody>
+//                         <TableFooter>
+//                             <TableRow>
+//                                 <TablePagination
+//                                     rowsPerPageOptions={[5, 10, 25]}
+//                                     colSpan={3}
+//                                     count={rows.length}
+//                                     rowsPerPage={rowsPerPage}
+//                                     page={page}
+//                                     SelectProps={{
+//                                         native: true,
+//                                     }}
+//                                     onChangePage={this.handleChangePage}
+//                                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
+//                                     ActionsComponent={TablePaginationActionsWrapped}
+//                                 />
+//                             </TableRow>
+//                         </TableFooter>
+//                     </Table>
+//                 </div>
+//             </Paper>
+//         );
+//     }
+// }
+// SimpleTable.propTypes = {
+//     classes: PropTypes.object.isRequired,
+// };
+//
+// export default withStyles(styles)(SimpleTable);
