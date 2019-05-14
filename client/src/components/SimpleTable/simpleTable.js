@@ -18,6 +18,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import classNames from 'classnames';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import orderBy from 'lodash/orderBy';
+import TextField from '@material-ui/core/TextField';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
@@ -50,9 +51,11 @@ class EnhancedTableHead extends React.Component {
                             <TableCell
                                 key={cols.id}
                                 align={cols.numeric ? 'right' : 'left'}
+                                display='flex'
                                 padding={cols.disablePadding ? 'none' : 'default'}
                                 sortDirection={orderBy === cols.id ? order : false}
                             >
+                                <div display='block'>
                                 <Tooltip
                                     title="Sort"
                                     placement={cols.numeric ? 'bottom-end' : 'bottom-start'}
@@ -66,6 +69,17 @@ class EnhancedTableHead extends React.Component {
                                         {cols.label}
                                     </TableSortLabel>
                                 </Tooltip>
+                                </div>
+                                <div display='block'>
+                                <TextField
+                                    name={cols.id}
+                                    hintText="Query"
+                                    floatingLabelText="Query"
+                                    value={this.props.query}
+                                    onChange={(e) => this.props.handleQueryChange(e)}
+
+                                />
+                                </div>
                             </TableCell>
                         ),
                         this,
@@ -110,7 +124,7 @@ const toolbarStyles = theme => ({
 });
 
 let EnhancedTableToolbar = props => {
-    const { numSelected, classes } = props;
+    const { numSelected, classes, title } = props;
     return (
         <Toolbar
             className={classNames(classes.root, {
@@ -124,17 +138,17 @@ let EnhancedTableToolbar = props => {
                     </Typography>
                 ) : (
                     <Typography variant="h6" id="tableTitle">
-                        Products
+                        {title}
                     </Typography>
                 )}
             </div>
             <div className={classes.spacer} />
             <div className={classes.actions}>
-                <Tooltip title="Filter list">
-                    <IconButton aria-label="Filter list">
-                        <FilterListIcon />
-                    </IconButton>
-                </Tooltip>
+                {/*<Tooltip title="Filter list">*/}
+                    {/*<IconButton aria-label="Filter list">*/}
+                        {/*<FilterListIcon />*/}
+                    {/*</IconButton>*/}
+                {/*</Tooltip>*/}
             </div>
         </Toolbar>
     );
@@ -167,6 +181,8 @@ const initialState = {
         rowsPerPage: 5,
         columnToSort: '',
         sortDirection: 'desc',
+        query: '',
+        columnToQuery: '',
 
 };
 class EnhancedTable extends React.Component {
@@ -188,6 +204,14 @@ class EnhancedTable extends React.Component {
         });
         console.log("State of the state after the update in the sort data function ", this.state);
     };
+
+    handleQueryChange1 = (event) => {
+        this.setState({
+            columnToQuery: event.target.name,
+            query: event.target.value
+        })
+    };
+
     componentDidMount () {
         console.log("Component Did Mount");
         const { dataPassed } = this.props;
@@ -241,14 +265,14 @@ class EnhancedTable extends React.Component {
         const rows = this.props.dataPassed;
         const { sortDirection, columnToSort, selected, rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, (rows != null ? rows.length : 0) - page * rowsPerPage);
-
+        const formQuery = this.state.query.toLowerCase();
         console.log("data being passed to table", this.state.columnToSort);
         console.log("data being passed to table, columns", columns);
         console.log("State in the table, ", this.state);
 
         return (
             <Paper className={classes.root}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+                <EnhancedTableToolbar numSelected={selected.length} title={tableTitle} />
                 <div className={classes.tableWrapper}>
                     <Table className={classes.table} aria-labelledby={tableTitle}>
                         <EnhancedTableHead
@@ -259,9 +283,11 @@ class EnhancedTable extends React.Component {
                             rowCount={rows.length}
                             cols={columns}
                             handleSort1={this.handleSort}
+                            handleQueryChange={this.handleQueryChange1}
                         />
                         <TableBody>
-                            {orderBy(rows, this.state.columnToSort, this.state.sortDirection).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
+
+                            {orderBy(this.state.query ? rows.filter(x => x[this.state.columnToQuery].toLowerCase().includes(formQuery)) : rows, this.state.columnToSort, this.state.sortDirection).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
                                 <TableRow
                                     key={row.id}
                                     hover

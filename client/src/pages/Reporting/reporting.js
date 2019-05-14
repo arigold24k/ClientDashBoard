@@ -257,11 +257,12 @@ class report extends React.Component {
                         let holderArr =  holderDate.split('T');
                         console.log("Splitting the date, ", holderArr);
                         let dObj = {
-                            'recno': res.data.data[0][i].RECNO,
+                            'id' : res.data.data[0][i].RECNO,
+                            'recno': res.data.data[0][i].RECNO.toString(),
                             'scandate': holderArr[0],
                             'scancode': res.data.data[0][i].CODE,
                             'product': res.data.data[0][i].PART,
-                            'quantity': res.data.data[0][i].QTY,
+                            'quantity': res.data.data[0][i].QTY.toString(),
                             'tagnum': res.data.data[0][i].TAG_NUM,
                         };
 
@@ -345,34 +346,52 @@ class report extends React.Component {
                                 {this.state.runReport &&
                                 (this.state.data !== null ?
                                         <Table
-                                            dataPassed={orderBy(this.state.data, this.state.columnToSort, this.state.sortDirection)}
-                                            handleSort={this.sortData.bind(this)}
-                                            sortDirction = {this.state.sortDirection}
-                                            columnToSort={this.state.columnToSort}
+                                            dataPassed={this.state.data}
+                                            tableTitle={"Report"}
+
+
                                             columns={[
                                                 {
                                                     name: 'Rec Number',
-                                                    prop: 'recno'
+                                                    id: 'recno',
+                                                    numeric: false,
+                                                    disablePadding: true,
+                                                    label: 'Rec Number'
                                                 },
                                                 {
                                                     name: 'Scan Date',
-                                                    prop: 'scandate'
+                                                    id: 'scandate',
+                                                    numeric: false,
+                                                    disablePadding: true,
+                                                    label: 'Scan Date'
                                                 },
                                                 {
                                                     name: 'Scan Code',
-                                                    prop: 'scancode'
+                                                    id: 'scancode',
+                                                    numeric: false,
+                                                    disablePadding: true,
+                                                    label: 'Scan Code'
                                                 },
                                                 {
                                                     name: 'Product',
-                                                    prop: 'product'
+                                                    id: 'product',
+                                                    numeric: false,
+                                                    disablePadding: true,
+                                                    label: 'Product Number'
                                                 },
                                                 {
                                                     name: 'Quantity',
-                                                    prop: 'quantity'
+                                                    id: 'quantity',
+                                                    numeric: true,
+                                                    disablePadding: true,
+                                                    label: 'Quantity in Inventory'
                                                 },
                                                 {
                                                     name: 'Tag Number',
-                                                    prop: 'tagnum'
+                                                    id: 'tagnum',
+                                                    numeric: true,
+                                                    disablePadding: true,
+                                                    label: 'Tag Number'
                                                 }
                                             ]}
                                         />

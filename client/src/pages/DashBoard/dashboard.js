@@ -187,7 +187,7 @@ class Dashboard extends React.Component {
                     holderObjectTable = {
                         id: res.data.data[0][i].PART,
                         name: res.data.data[0][i].PART,
-                        quantity: parseInt(res.data.data[0][i].quantity)
+                        quantity: parseInt(res.data.data[0][i].quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                     };
                     // holderArray = this.state.data;
                     holderArrayTable.push(holderObjectTable);
