@@ -11,6 +11,7 @@ import Icon from '@mdi/react';
 import { mdiLoading } from '@mdi/js';
 import Paper from '@material-ui/core/Paper';
 import orderBy from 'lodash/orderBy';
+import Button from "@material-ui/core/Button";
 
 const drawerWidth = 240;
 
@@ -106,6 +107,13 @@ const styles = theme => ({
     loadSection: {
         align: 'center',
     },
+    button: {
+        marginTop: theme.spacing.unit * -1,
+        marginLeft: theme.spacing.unit,
+        display: 'inline-flex',
+        justifyContent: 'center',
+        align: 'center',
+    },
 });
 
 const initialState = {
@@ -122,23 +130,50 @@ class Dashboard extends React.Component {
         super(props);
         this.state = initialState;
     };
-
     componentWillMount() {
         if(this.state.dataTable === null) {
             this.getChartData();
             this.getTableData();
         }
     }
+    updSelected (newSel) {
+        const { selected } = this.state;
+        const selectedIndex = selected.indexOf(newSel);
+        let newSelected = [];
 
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, newSel);
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(
+                selected.slice(0, selectedIndex),
+                selected.slice(selectedIndex + 1),
+            );
+        }
+        this.setState({
+            selected: newSelected
+        });
 
-
-    getChartData = () => {
+        console.log("update selected on dasboard being hit, ", this.state);
+    }
+    handleSelectAll (checked, rows) {
+        if (checked) {
+            this.setState({ selected: rows.map(n => n.id) });
+            // return;
+        }else {
+            this.setState({selected: [], filter: false});
+        }
+    }
+    getChartData = (conditions) => {
         const headerObj = {
             'Authorization': "bearer " + sessionStorage.getItem("token")
         };
         let holderArray = [];
         console.log('chart data is function is being hit');
-        axios.post('/api/consumed', {email: this.state.email, filtered: this.state.filtered}, {headers: headerObj}).then((res) => {
+        axios.post('/api/consumed', {email: this.state.email, filtered: conditions || false}, {headers: headerObj}).then((res) => {
             let holderObject = {};
             if(res.data.data !== null) {
                 console.log('Data that is coming back from the consumption, ', res.data.data[0]);
@@ -156,22 +191,12 @@ class Dashboard extends React.Component {
                 this.setState({data: holderArray});
                 holderArray = [];
             }
-
             console.log('Holder Array for the data, ', this.state.data);
         }).catch((err) => {
             console.log('Error: ', err);
         });
 
     };
-    // sortData = (columnName) => {
-    //     console.log("Sort data is being hit Column Name:", columnName);
-    //     this.setState({
-    //         columnToSort: columnName,
-    //         sortDirection: this.state.columnToSort === columnName ? (this.state.sortDirection === 'desc' ? 'asc' : 'desc') : 'asc'
-    //     });
-    //     console.log("State of the state after the update in the sort data function ", this.state);
-    // };
-
     getTableData = () => {
         const headerObj = {
             'Authorization': "bearer " + sessionStorage.getItem("token")
@@ -189,7 +214,6 @@ class Dashboard extends React.Component {
                         name: res.data.data[0][i].PART,
                         quantity: parseInt(res.data.data[0][i].quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                     };
-                    // holderArray = this.state.data;
                     holderArrayTable.push(holderObjectTable);
                 }
                 this.setState({dataTable: holderArrayTable});
@@ -199,18 +223,32 @@ class Dashboard extends React.Component {
             console.log('error in getting the table data, ', err);
         })
     };
+    handleSubmit = () => {
+        let holdQueryString = "";
+        const {selected} = this.state;
+        if(selected.length > 0) {
+            selected.map((x) => {
+                if(selected.indexOf(x) === selected.length -1) {
+                    holdQueryString = holdQueryString + "'" + x + "'";
+                }else{
+                    holdQueryString = holdQueryString + "'" + x + "', ";
+                }
+                return holdQueryString;
+            });
+            this.setState({
+                filtered: holdQueryString
+            });
+            console.log("Data in teh handle submit in the dasboard page, ", holdQueryString);
+            console.log("Data in teh handle submit in the dasboard page, ", this.state);
 
-    // handleSelectAllClick = event => {
-    //     if (event.target.checked) {
-    //         this.setState(state => ({ selected: state.data.map(n => n.id) }));
-    //         return;
-    //     }
-    //     this.setState({ selected: [] });
-    // };
+            this.getChartData(holdQueryString);
+        }else{
+            this.getChartData();
+        }
+    };
 
     render() {
         console.log('Holder Array for the data,1 ', this.state.data);
-
         const { classes } = this.props;
         console.log('data being passed to the line chart befroe the return, ', this.state.data);
         console.log('data being passed to the order by', orderBy(this.state.dataTable, this.state.columnToSort, this.state.sortDirection));
@@ -221,9 +259,21 @@ class Dashboard extends React.Component {
                 < Navbar handleSignOut={this.props.handleSignOut} username={this.props.companyname}/>
                 <main className={classes.content}>
                 <div className={classes.appBarSpacer}/>
+                <div display='in-line'>
                 <Typography variant="h4" gutterBottom component="h2">
-                Product Flow
+                Product Flow {this.state.selected.length === 0 &&
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.handleSubmit}
+                    className={classes.button}
+                    align='center'
+                >
+                    Reset
+                </Button>
+                }
                 </Typography>
+                </div>
                 <Typography component="div" className={classes.chartContainer}>
 
                     {this.state.data
@@ -248,7 +298,17 @@ class Dashboard extends React.Component {
 
                 </Typography>
                 <Typography variant="h4" gutterBottom component="h2">
-                Products
+                Products {this.state.selected.length > 0 &&
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.handleSubmit}
+                    className={classes.button}
+                    align='center'
+                >
+                    Update Chart
+                </Button>
+                }
                 </Typography>
                 <div className={classes.tableContainer}>
 
@@ -256,10 +316,9 @@ class Dashboard extends React.Component {
                         ?
 
                             <SimpleTable
-                                // dataPassed={orderBy(this.state.dataTable, this.state.columnToSort, this.state.sortDirection)}
-                                // handleSort={this.sortData.bind(this)}
-                                // sortDirection = {this.state.sortDirection}
-                                // columnToSort={this.state.columnToSort}
+                                handleSelected={this.updSelected.bind(this)}
+                                handleSelAll={this.handleSelectAll.bind(this)}
+                                selected={this.state.selected}
                                 dataPassed={this.state.dataTable}
                                 tableTitle="Products"
                                 columns={[
@@ -301,7 +360,6 @@ class Dashboard extends React.Component {
         )
     }
 }
-
 Dashboard.propTypes = {
     classes: PropTypes.object.isRequired,
 };

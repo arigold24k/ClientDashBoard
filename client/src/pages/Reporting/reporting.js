@@ -17,7 +17,6 @@ import {mdiLoading} from "@mdi/js";
 import axios from 'axios';
 import DateBox from '../../components/DateSelector';
 import Download from '../../components/ExcelExport';
-import orderBy from 'lodash/orderBy';
 
 const drawerWidth = 240;
 
@@ -179,8 +178,8 @@ class report extends React.Component {
             range1: "",
             range2: "",
             columnToSort: "",
-            sortDirection: "desc"
-
+            sortDirection: "desc",
+            selected: []
         };
     }
     handleClose = () => {
@@ -279,6 +278,39 @@ class report extends React.Component {
             })
 
     };
+
+    updSelected (newSel) {
+        const { selected } = this.state;
+        const selectedIndex = selected.indexOf(newSel);
+        let newSelected = [];
+
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, newSel);
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(
+                selected.slice(0, selectedIndex),
+                selected.slice(selectedIndex + 1),
+            );
+        }
+
+        this.setState({
+            selected: newSelected
+        });
+        console.log("update selected on dasboard being hit, ", this.state);
+    }
+
+    handleSelectAll (checked, rows) {
+        if (checked) {
+            this.setState({ selected: rows.map(n => n.id) });
+            return;
+        }
+        this.setState({ selected: [] });
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -348,7 +380,9 @@ class report extends React.Component {
                                         <Table
                                             dataPassed={this.state.data}
                                             tableTitle={"Report"}
-
+                                            handleSelected={this.updSelected.bind(this)}
+                                            handleSelAll={this.handleSelectAll.bind(this)}
+                                            selected={this.state.selected}
 
                                             columns={[
                                                 {

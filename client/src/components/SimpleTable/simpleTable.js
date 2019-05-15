@@ -8,30 +8,17 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
-import IconButton from '@material-ui/core/IconButton';
 import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import classNames from 'classnames';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import orderBy from 'lodash/orderBy';
 import TextField from '@material-ui/core/TextField';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import DownArrow from '@material-ui/icons/KeyboardArrowDown';
-import UpArrow from '@material-ui/icons/KeyboardArrowUp';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import TableFooter from '@material-ui/core/TableFooter';
 
 class EnhancedTableHead extends React.Component {
-
-    constructor(props){
-        super(props);
-    }
     render() {
         const { onSelectAllClick, order, orderBy, numSelected, rowCount, cols } = this.props;
         console.log("Enhanced header, Order: " + order + ". OrderBy: " + orderBy);
@@ -44,6 +31,7 @@ class EnhancedTableHead extends React.Component {
                             indeterminate={numSelected > 0 && numSelected < rowCount}
                             checked={numSelected === rowCount}
                             onChange={onSelectAllClick}
+                            color='primary'
                         />
                     </TableCell>
                     {cols.map(
@@ -105,18 +93,18 @@ const toolbarStyles = theme => ({
     highlight:
         theme.palette.type === 'light'
             ? {
-                color: theme.palette.secondary.main,
-                backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+                color: theme.palette.primary.main,
+                backgroundColor: lighten(theme.palette.primary.light, 0.85),
             }
             : {
                 color: theme.palette.text.primary,
-                backgroundColor: theme.palette.secondary.dark,
+                backgroundColor: theme.palette.primary.dark,
             },
     spacer: {
         flex: '1 1 100%',
     },
     actions: {
-        color: theme.palette.text.secondary,
+        color: theme.palette.text.primary,
     },
     title: {
         flex: '0 0 auto',
@@ -144,11 +132,6 @@ let EnhancedTableToolbar = props => {
             </div>
             <div className={classes.spacer} />
             <div className={classes.actions}>
-                {/*<Tooltip title="Filter list">*/}
-                    {/*<IconButton aria-label="Filter list">*/}
-                        {/*<FilterListIcon />*/}
-                    {/*</IconButton>*/}
-                {/*</Tooltip>*/}
             </div>
         </Toolbar>
     );
@@ -165,14 +148,15 @@ const styles = theme => ({
     root: {
         width: '100%',
         marginTop: theme.spacing.unit * 3,
-        color: "primary"
+        hover: 'primary'
     },
     table: {
         minWidth: 1020,
-        color: 'primary',
+        backgroundColor: 'primary',
     },
-    tableWrapper: {
-        overflowX: 'auto',
+    highlight: {
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.primary.dark
     },
 });
 const initialState = {
@@ -189,10 +173,11 @@ class EnhancedTable extends React.Component {
     state = initialState;
     constructor (props) {
         super(props);
-        const {dataPassed} = this.props;
+        const {dataPassed, selected} = this.props;
         this.state = {
              ...initialState,
-            rows: dataPassed
+            rows: dataPassed,
+            selected: selected
         };
     };
     handleSort = (event, columnName) => {
@@ -222,32 +207,11 @@ class EnhancedTable extends React.Component {
     };
 
     handleSelectAllClick = event => {
-        if (event.target.checked) {
-            this.setState(state => ({ selected: state.rows.map(n => n.id) }));
-            return;
-        }
-        this.setState({ selected: [] });
+        this.props.handleSelAll(event.target.checked, this.state.rows);
     };
 
     handleClick = (event, id) => {
-        const { selected } = this.state;
-        const selectedIndex = selected.indexOf(id);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, id);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        this.setState({ selected: newSelected });
+        this.props.handleSelected(id);
     };
 
     handleChangePage = (event, page) => {
@@ -258,12 +222,12 @@ class EnhancedTable extends React.Component {
         this.setState({ rowsPerPage: event.target.value });
     };
 
-    isSelected = id => this.state.selected.indexOf(id) !== -1;
+    isSelected = id => this.props.selected.indexOf(id) !== -1;
 
     render() {
-        const { classes, columns, tableTitle} = this.props;
+        const { classes, columns, tableTitle, selected} = this.props;
         const rows = this.props.dataPassed;
-        const { sortDirection, columnToSort, selected, rowsPerPage, page } = this.state;
+        const { sortDirection, columnToSort, rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, (rows != null ? rows.length : 0) - page * rowsPerPage);
         const formQuery = this.state.query.toLowerCase();
         console.log("data being passed to table", this.state.columnToSort);
@@ -297,7 +261,7 @@ class EnhancedTable extends React.Component {
                                     selected={this.isSelected(row.id)}
                                 >
                                     <TableCell padding="checkbox">
-                                        <Checkbox checked={this.isSelected(row.id)} />
+                                        <Checkbox color='primary' checked={this.isSelected(row.id)} />
                                     </TableCell>
                                     {columns.map((col) => (
                                         <TableCell component="th" scope="row" align={col.numeric ? "right" : "left"}>
@@ -339,7 +303,7 @@ EnhancedTable.propTypes = {
 };
 
 export default withStyles(styles)(EnhancedTable);
-;
+
 // const actionsStyles = theme => ({
 //     root: {
 //         flexShrink: 0,
