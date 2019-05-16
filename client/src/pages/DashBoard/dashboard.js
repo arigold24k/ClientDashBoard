@@ -212,7 +212,8 @@ class Dashboard extends React.Component {
                     holderObjectTable = {
                         id: res.data.data[0][i].PART,
                         name: res.data.data[0][i].PART,
-                        quantity: parseInt(res.data.data[0][i].quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                        tagcount: res.data.data[0][i].tagcount,
+                        quantity: res.data.data[0][i].quantity
                     };
                     holderArrayTable.push(holderObjectTable);
                 }
@@ -328,6 +329,13 @@ class Dashboard extends React.Component {
                                         numeric: false,
                                         disablePadding: true,
                                         label: "Product"
+                                    },
+                                    {
+                                        name: 'Tag Count',
+                                        id: 'tagcount',
+                                        numeric: false,
+                                        disablePadding: true,
+                                        label: "Tag Count"
                                     },
                                     {
                                         name: 'Quantity in Inventory',

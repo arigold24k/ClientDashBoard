@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/client/src/App.js" line="190" />
+    <bookmark url="file://$PROJECT_DIR$/client/src/App.js" line="191" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4bf03c05-fc22-480e-a891-05bede3e6fba" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Reporting/reporting.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Reporting/reporting.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/SignUpPage/signuppage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/SignUpPage/signuppage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/orm.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/orm.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -22,26 +24,66 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js">
+        <entry file="file://$PROJECT_DIR$/config/orm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="114" column="24" lean-forward="true" selection-start-line="114" selection-start-column="24" selection-end-line="114" selection-end-column="24" />
+            <state relative-caret-position="391">
+              <caret line="176" column="30" lean-forward="true" selection-start-line="176" selection-start-column="30" selection-end-line="176" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2737">
+              <caret line="80" column="45" selection-start-line="80" selection-start-column="45" selection-end-line="80" selection-end-column="45" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
-                <marker date="1557936193826" expanded="true" signature="7532:8381" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/pages/SignUpPage/signuppage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="34" column="26" lean-forward="true" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
+            <state relative-caret-position="1428">
+              <caret line="95" column="45" selection-start-line="95" selection-start-column="45" selection-end-line="96" selection-end-column="13" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
-                <element signature="e#13267#13303#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/pages/Login1/Login1.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="782">
+              <caret line="50" column="90" selection-start-line="50" selection-start-column="90" selection-end-line="50" selection-end-column="90" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/App.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" selection-start-line="11" selection-end-line="11" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="216" column="22" lean-forward="true" selection-start-line="216" selection-start-column="22" selection-end-line="216" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -118,7 +160,6 @@
         <option value="$PROJECT_DIR$/client/src/components/Navbar2/navbar2.js" />
         <option value="$PROJECT_DIR$/client/src/components/Navbar2/index.js" />
         <option value="$PROJECT_DIR$/dbCRUD/function.js" />
-        <option value="$PROJECT_DIR$/client/src/pages/SignUpPage/signuppage.js" />
         <option value="$PROJECT_DIR$/migrations/20190415144835-create-kcard-yoda.js" />
         <option value="$PROJECT_DIR$/client/src/components/Review/review.js" />
         <option value="$PROJECT_DIR$/migrations/20190415151025-create-kcardss.js" />
@@ -129,7 +170,6 @@
         <option value="$PROJECT_DIR$/functions/functions.js" />
         <option value="$PROJECT_DIR$/migrations/20190425154835-create-kcard-yoda-raw.js" />
         <option value="$PROJECT_DIR$/models/kcard_yoda_raw.js" />
-        <option value="$PROJECT_DIR$/client/src/App.js" />
         <option value="$PROJECT_DIR$/client/src/index.js" />
         <option value="$PROJECT_DIR$/client/src/components/SimpleLineChart/simpleLineChart.js" />
         <option value="$PROJECT_DIR$/client/src/components/Table/simpleTable.js" />
@@ -147,16 +187,18 @@
         <option value="$PROJECT_DIR$/client/src/components/Navbar2/navbar3.js" />
         <option value="$PROJECT_DIR$/client/src/components/Table/tableComponent.js" />
         <option value="$PROJECT_DIR$/routes/handle.js" />
-        <option value="$PROJECT_DIR$/config/orm.js" />
         <option value="$PROJECT_DIR$/client/src/pages/Reporting/reporting.js" />
-        <option value="$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js" />
+        <option value="$PROJECT_DIR$/client/src/App.js" />
+        <option value="$PROJECT_DIR$/client/src/pages/SignUpPage/signuppage.js" />
         <option value="$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js" />
+        <option value="$PROJECT_DIR$/config/orm.js" />
+        <option value="$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2620" />
-    <option name="y" value="-20" />
+    <option name="x" value="2611" />
+    <option name="y" value="-29" />
     <option name="width" value="1020" />
     <option name="height" value="610" />
   </component>
@@ -171,11 +213,6 @@
             <path>
               <item name="ClientDashBoard" type="b2602c69:ProjectViewProjectNode" />
               <item name="ClientDashBoard" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ClientDashBoard" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ClientDashBoard" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ClientDashBoard" type="b2602c69:ProjectViewProjectNode" />
@@ -284,12 +321,14 @@
       <workItem from="1557423723311" duration="25744000" />
       <workItem from="1557752679117" duration="18174000" />
       <workItem from="1557850064776" duration="9867000" />
-      <workItem from="1557926906299" duration="9598000" />
+      <workItem from="1557926906299" duration="10196000" />
+      <workItem from="1558009199766" duration="2500000" />
+      <workItem from="1558013674305" duration="3474000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="528912000" />
+    <option name="totallyTimeSpent" value="535484000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1913" y="-7" width="1550" height="838" extended-state="6" />
@@ -375,16 +414,6 @@
     <entry file="file://$PROJECT_DIR$/client/node_modules/@material-ui/icons/Style.d.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/pages/Login1/Login1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="37" column="58" selection-start-line="37" selection-start-column="58" selection-end-line="37" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -440,16 +469,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/pages/SignUpPage/signuppage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="969">
-          <caret line="99" column="6" selection-start-line="99" selection-start-column="6" selection-end-line="99" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -684,16 +703,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="763">
-          <caret line="185" column="6" lean-forward="true" selection-start-line="185" selection-start-column="6" selection-end-line="185" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/Table/tableComponent.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
@@ -721,13 +730,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/orm.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="508">
-          <caret line="170" column="10" lean-forward="true" selection-start-line="170" selection-start-column="10" selection-end-line="170" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/pages/Reporting/reporting.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-408">
@@ -738,24 +740,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js">
+    <entry file="file://$PROJECT_DIR$/client/src/pages/SignUpPage/signuppage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="114" column="24" lean-forward="true" selection-start-line="114" selection-start-column="24" selection-end-line="114" selection-end-column="24" />
+        <state relative-caret-position="1428">
+          <caret line="95" column="45" selection-start-line="95" selection-start-column="45" selection-end-line="96" selection-end-column="13" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-            <marker date="1557936193826" expanded="true" signature="7532:8381" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/pages/Login1/Login1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="50" column="90" selection-start-line="50" selection-start-column="90" selection-end-line="50" selection-end-column="90" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" selection-start-line="11" selection-end-line="11" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="34" column="26" lean-forward="true" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
+        <state relative-caret-position="-2737">
+          <caret line="80" column="45" selection-start-line="80" selection-start-column="45" selection-end-line="80" selection-end-column="45" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-            <element signature="e#13267#13303#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/orm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="176" column="30" lean-forward="true" selection-start-line="176" selection-start-column="30" selection-end-line="176" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="216" column="22" lean-forward="true" selection-start-line="216" selection-start-column="22" selection-end-line="216" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -161,6 +161,7 @@ class App extends Component {
         console.log('this is the state of the log-in page', this.state);
         let dataObj ={...this.state};
         dataObj.password = funcs_.encryptPW(this.state.password);
+        console.log("this is the hashed password, ", dataObj.password);
         axios.post('/register', dataObj).then((res, err) => {
             console.log('just wanted to see the error ', err);
             if(err){

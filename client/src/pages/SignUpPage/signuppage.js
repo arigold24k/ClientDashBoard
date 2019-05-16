@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import axios from "axios";
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+import funcs_ from "../../functions/functions";
 
 
 
@@ -85,7 +86,9 @@ class signuppage extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('/register', this.state).then((req, res) => {
+        let dataObj ={...this.state};
+        dataObj.password = funcs_.encryptPW(this.state.password);
+        axios.post('/register', dataObj).then((req, res) => {
             console.log("This is the response to the front end from the register api ", req);
             if(req.data.data === true) {
                 this.setState({open1: true});
@@ -100,7 +103,7 @@ class signuppage extends React.Component {
     };
     handleClose1 = (event) => {
         this.setState({open1: false});
-        window.location.href = '/login'
+        window.location.href = '/login1'
     };
 
     handleChange = (event) => {
