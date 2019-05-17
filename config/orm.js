@@ -233,6 +233,16 @@ const orm = {
             cb(error, null);
         })
     },
+    getCurrentCount : (compCode, cb) => {
+      const strSql = `select count(*) count from kcardsses a where date_format(scandate, '%Y%m%d') = date_format(sysdate(), '%Y%m%d') and (code  like '%CONSUME%' or code like '%RECEIVED%') and customer like ('%${compCode}%');`;
+      db.sequelize.query(strSql).then((results) => {
+          cb(null, results);
+      }).catch((err) => {
+          cb(err, null);
+      })
+
+
+    },
 };
 
 module.exports = orm;

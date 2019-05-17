@@ -371,6 +371,18 @@ class Checkout extends React.Component {
 
 
     };
+    getCount = () => {
+        const headerObj = {
+            'Authorization': "bearer " + sessionStorage.getItem("token")
+        };
+      axios.post('/api/getcount',{},{headers: headerObj}).then((res, err) => {
+          console.log('This is the response to the get count, ', res.data.count[0][0].count);
+          const cnt = res.data.count[0][0].count || 0;
+          if (cnt > 0) {
+              this.setState({count: cnt});
+          }
+      })
+    };
 
     handleBack = () => {
         this.setState(state => ({
@@ -409,6 +421,7 @@ class Checkout extends React.Component {
         // this.setState({companyName: this.props});
 
         console.log('the state in teh comp will mount, ', this.props);
+        this.getCount();
 
     }
 

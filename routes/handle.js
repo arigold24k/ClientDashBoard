@@ -116,6 +116,22 @@ router.post('/api/verify', function(req, res) {
     }
 });
 
+router.post('/api/getcount', verifyToken, (req, res) => {
+    jwt.verify(req.token, process.env.SECRETE_KEY_OR_SO, (err, decoded) => {
+        if(err){
+            res.status(403).json({message: "Token invalid", data: 'INVALIDTOKEN'});
+        }else {
+            orm.getCurrentCount(decoded.user.companycode, (err, count) => {
+                if(count !== null) {
+                    res.json({count})
+                }else{
+                    res.json({count: 0})
+                }
+            })
+        }
+    });
+});
+
 router.post('/api/processScan', verifyToken ,(req, res) => {
     // console.log("hitting the api process scan route, ", req);
 
