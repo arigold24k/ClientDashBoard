@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       allowNull: false,
     },
-    user_code: {
+    UserCode: {
       type: DataTypes.STRING,
       allowNull: false,
     }
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     CompUser.belongsTo(models.Company, {
       foreignKey: {
-        name: "CompCode"
+        name: "comp_code"
       },
       onDelete: 'CASCADE'
     });

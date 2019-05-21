@@ -14,7 +14,6 @@ router.get("/", function(req, res) {
        message: "this is the router being hit"
    });
 });
-
 router.get("/data", function(req, res) {
     orm.findoneUser("jDoe",((error, data)=>{
         if(error) {
@@ -22,16 +21,15 @@ router.get("/data", function(req, res) {
                message:'Unable to query database'
             });
         }
-        console.log('this is the data', data)
+        // console.log('this is the data', data)
     }))
 });
-
 router.post('/register', function(req, res) {
     console.log('Register API is being hit');
     orm.addoneUser(req.body.userName, req.body.password, req.body.email, req.body.companyCode, (err, data) => {
-        console.log('---data is coming back from query---', data);
+        // console.log('---data is coming back from query---', data);
         if(data && (data !==0 && data !== 3)){
-            console.log('this is the data that came back from the call ', data);
+            // console.log('this is the data that came back from the call ', data);
             res.json({message:'Data has been inserted', data: data})
         }else if(data === 0 || !data) {
             res.json({message: 'user already exists', data: 0});
@@ -40,7 +38,6 @@ router.post('/register', function(req, res) {
         }
     })
 });
-
 router.post('/verify/api', (req, res) => {
     const check = req.body.check;
     if(check) {
@@ -51,8 +48,7 @@ router.post('/verify/api', (req, res) => {
             companycode: req.body.comp,
             compName: req.body.compname
         };
-
-        console.log("This is the data in the verify/api being created as an object, ", tokenObj);
+        // console.log("This is the data in the verify/api being created as an object, ", tokenObj);
         func.createToken(tokenObj, (err, data) => {
             if(err){
                 res.status(502).json({message: 'error creating token'});
@@ -62,17 +58,16 @@ router.post('/verify/api', (req, res) => {
         })
     }
 });
-
 router.post('/login', (req, res) => {
-   console.log('Login API is being Hit ', req.body);
+   // console.log('Login API is being Hit ', req.body);
    if(req.body.password) {
        orm.findoneUser(req.body.usrname, (err, data) => {
-           console.log('handle.js page, login is receiving this data, ', data.data[0]);
+           // console.log('handle.js page, login is receiving this data, ', data.data[0]);
            if (data.data[0]) {
                res.status(200).json(data.data[0][0])
            }
            else {
-               console.log('no user was found');
+               // console.log('no user was found');
                res.status(200).json({message: 'there was an error in finding the user make sure username is correct', data: 'noUser'});
            }
        })
@@ -80,7 +75,6 @@ router.post('/login', (req, res) => {
        res.status(502).json({message:'No Data sent to Login API'});
    }
 });
-
 router.get("/data/:usrdata", function(req, res) {
     orm.findoneUser(req.param('usrdata'),((error, data)=>{
         if(error) {
@@ -88,17 +82,16 @@ router.get("/data/:usrdata", function(req, res) {
                 message:'Unable to query database'
             });
         }
-        console.log('this is the data', data);
+        // console.log('this is the data', data);
         return data;
     }))
 });
-
 router.post('/api/verify', function(req, res) {
-    console.log('this is the toekn in the verify route ', req.body);
+    // console.log('this is the toekn in the verify route ', req.body);
     try {
         let decoded = jwt.verify(req.body.token, process.env.SECRETE_KEY_OR_SO);
         // console.log('decoded value in the new api route, ', decoded);
-        console.log('decoded value in the new api route, ', decoded);
+        // console.log('decoded value in the new api route, ', decoded);
         if (typeof decoded !== 'undefined'){
             const dataObj = {
                 data : true,
@@ -115,7 +108,6 @@ router.post('/api/verify', function(req, res) {
         res.json({message: 'There was an error', dataObj})
     }
 });
-
 router.post('/api/getcount', verifyToken, (req, res) => {
     jwt.verify(req.token, process.env.SECRETE_KEY_OR_SO, (err, decoded) => {
         if(err){
@@ -131,25 +123,18 @@ router.post('/api/getcount', verifyToken, (req, res) => {
         }
     });
 });
-
 router.post('/api/processScan', verifyToken ,(req, res) => {
     // console.log("hitting the api process scan route, ", req);
-
         jwt.verify(req.token, process.env.SECRETE_KEY_OR_SO, (err, decoded) => {
         if(err){
             res.status(403).json({message: "Token invalid", data: 'INVALIDTOKEN'});
         }else {
-
-            console.log("This is the request in the process scan route, ", req.body);
+            // console.log("This is the request in the process scan route, ", req.body);
             // put in code if the token is good
-
-
                 orm.findOneTag(req.body.tagnum,(err, results) => {
-                    console.log("This is the log from the findontTag orm -- handle.js, ", results);
-                    console.log("This is the error from the findontTag orm -- handle.js, ", err);
-
+                    // console.log("This is the log from the findontTag orm -- handle.js, ", results);
+                    // console.log("This is the error from the findontTag orm -- handle.js, ", err);
                     if(results !== null) {
-
                         if (req.body.purpose === 'CONSUME') {
                         orm.insertToKCardss(decoded.user.companycode,req.body.purpose, req.body.partnum, req.body.quantity, req.body.tagnum, (err, data) => {
                             if(err) {
@@ -164,7 +149,6 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
                                     if(data !== null) {
                                         res.json({message: "data was added successfully", data: data});
                                     }else{
-
                                         console.log("error in the delete, ", err);
                                     }
                                 })
@@ -183,7 +167,6 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
                             res.json({message: 'no action needed as Inventory Item Tag has not been removed from Inventory', data: 'NOERROR'})
                         }
                     }
-
                     else if (results === null) {
                      if (req.body.purpose === 'ERROR') {
                             // have to find a row in the kcard_yoda_raw and insert into kcard_yoda and remove from kcards
@@ -202,17 +185,14 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
                                  console.log("error in the runError, ", err);
                              }
                          })
-
                         }else {
                          res.json({message: "data was not added", data: 'TAGALREADYCONSUMED'})
                      }
-
                     }
                 })
         }
     });
 });
-
 router.post('/api/consumed', verifyToken , (req, res) => {
     jwt.verify(req.token, process.env.SECRETE_KEY_OR_SO, (err, decoded) => {
         if(err){
@@ -228,7 +208,6 @@ router.post('/api/consumed', verifyToken , (req, res) => {
         }
     });
 });
-
 router.post('/api/consumedTable', verifyToken , (req, res) => {
     jwt.verify(req.token, process.env.SECRETE_KEY_OR_SO, (err, decoded) => {
         if(err){
@@ -244,7 +223,6 @@ router.post('/api/consumedTable', verifyToken , (req, res) => {
         }
     });
 });
-
 router.post('/reporting', verifyToken, (req, res) => {
     jwt.verify(req.token, process.env.SECRETE_KEY_OR_SO, (err, decoded) => {
         if(err){
@@ -310,44 +288,33 @@ router.post('/reporting', verifyToken, (req, res) => {
         }
     });
 });
-
-
-router.post('/139.64.200.80/', function(req, res) {
-    console.log('this is the toekn in the verify route ', req.body);
-    try {
-        let decoded = jwt.verify(req.body.token, process.env.SECRETE_KEY_OR_SO);
-        console.log('decoded value in the new api route, ', decoded);
-        if (typeof decoded !== 'undefined'){
-            res.json({message:'Token Verified', data: true})
-        }
-    } catch(err) {
-        console.log('err value in the new api route, ', err);
-        res.json({message: 'There was an error', error: err})
-    }
-});
-
-
-
+// router.post('/139.64.200.80/', function(req, res) {
+//     console.log('this is the toekn in the verify route ', req.body);
+//     try {
+//         let decoded = jwt.verify(req.body.token, process.env.SECRETE_KEY_OR_SO);
+//         console.log('decoded value in the new api route, ', decoded);
+//         if (typeof decoded !== 'undefined'){
+//             res.json({message:'Token Verified', data: true})
+//         }
+//     } catch(err) {
+//         console.log('err value in the new api route, ', err);
+//         res.json({message: 'There was an error', error: err})
+//     }
+// });
 function verifyToken (req, res, next) {
-
     // console.log("VerifyToken request is the following, ", request);
-    console.log("VerifyToken request header, ", req.headers);
-
+    // console.log("VerifyToken request header, ", req.headers);
     const bearerHeader = req.headers['authorization'];
-
     if(typeof bearerHeader !== 'undefined'){
         const bearer = bearerHeader.split(' ');
         const bearerToken = bearer[1];
-
         req.token = bearerToken;
         console.log("This is the token that is being sent as the header, ", bearerToken);
         next();
-
     }else{
         //forbidden
         res.status(403).json({message: 'token is invalid'});
     }
 }
-
 
 module.exports = router;

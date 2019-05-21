@@ -48,9 +48,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      references: {
-
-      }
     });
   },
   down: (queryInterface, Sequelize) => {

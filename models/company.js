@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    user_code: {
+    UserCode: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true

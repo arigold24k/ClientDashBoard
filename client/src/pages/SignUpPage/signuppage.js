@@ -11,23 +11,18 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import funcs_ from "../../functions/functions";
 
-
-
 function getModalStyle() {
     const top = 50 + rand();
     const left = 50 + rand();
-
     return {
         top: `${top}%`,
         left: `${left}%`,
         transform: `translate(-${top}%, -${left}%)`,
     };
 }
-
 function rand() {
     return Math.round(Math.random() * 20) - 10;
 }
-
 const styles = theme => ({
     modal: {
         position: 'absolute',
@@ -67,8 +62,6 @@ const styles = theme => ({
     },
 });
 
-
-
 class signuppage extends React.Component {
     constructor(props) {
         super(props);
@@ -83,7 +76,6 @@ class signuppage extends React.Component {
             open2: false
         };
     }
-
     handleSubmit = (event) => {
         event.preventDefault();
         let dataObj ={...this.state};
@@ -94,6 +86,8 @@ class signuppage extends React.Component {
                 this.setState({open1: true});
             }else if (req.data.data === 3) {
                 this.setState({open2: true});
+            }else if (req.data.data === 0) {
+                this.setState({open: true});
             }
         });
     };
@@ -105,14 +99,12 @@ class signuppage extends React.Component {
         this.setState({open1: false});
         window.location.href = '/login1'
     };
-
     handleChange = (event) => {
         const {name , value} = event.target;
         this.setState({
             [name] : value
         })
     };
-
     render () {
         const { classes } = this.props;
 
@@ -130,21 +122,16 @@ class signuppage extends React.Component {
                     variant="contained"
                     color="primary"
                     onClick={this.handleSubmit}
-
                 >
                     Sign Up!
                 </Button>
                 ): (
                     <Typography component="h6" variant="h6" align="center">
-
                         Already have an account? Click here to <Link href={'/login1'} className={classes.link}>Sign-In</Link>
-
                     </Typography>
                 )
                 }
             </div>
-
-
             </Paper>
             </main>
                 <Modal
@@ -170,7 +157,7 @@ class signuppage extends React.Component {
                 >
                     <div style={getModalStyle()} className={classes.modal}>
                         <Typography variant="h6" id="modal-title">
-                            User already exist for the current Company
+                            User already exist for the current User Code
                         </Typography>
 
                     </div>
@@ -192,13 +179,9 @@ class signuppage extends React.Component {
 
         </React.Fragment>
         )
-
     }
-
 }
-
 signuppage.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
 export default withStyles(styles)(signuppage);

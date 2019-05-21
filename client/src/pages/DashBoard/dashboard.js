@@ -212,8 +212,8 @@ class Dashboard extends React.Component {
                     holderObjectTable = {
                         id: res.data.data[0][i].PART,
                         name: res.data.data[0][i].PART,
-                        tagcount: res.data.data[0][i].tagcount,
-                        quantity: res.data.data[0][i].quantity
+                        tagcount: res.data.data[0][i].tagcount.toString(),
+                        quantity: res.data.data[0][i].quantity.toString()
                     };
                     holderArrayTable.push(holderObjectTable);
                 }
@@ -321,6 +321,7 @@ class Dashboard extends React.Component {
                                 handleSelAll={this.handleSelectAll.bind(this)}
                                 selected={this.state.selected}
                                 dataPassed={this.state.dataTable}
+                                incCheckBox={true}
                                 tableTitle="Products"
                                 columns={[
                                     {

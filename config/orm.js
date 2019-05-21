@@ -1,17 +1,12 @@
-
 let db = require('../models');
-const func = require( '../functions/functions');
 const table_name = 'usertables';
-const prod_table = 'testProdTable';
-
-
 
 const orm = {
     findoneUser: function(username, cb){
         const queryString ="SELECT a.*, b.comp_name FROM " + table_name + " a, companies b Where LCASE(username)='" + username.toLowerCase() + "' AND b.comp_code = a.compcode;";
         db.sequelize.query(queryString).then((results, metadata) => {
-            console.log("orm.js 12 -this is the results: ", results[0][0]);
-            console.log("orm.js 13 this is the metadata: ", metadata);
+            // console.log("orm.js 12 -this is the results: ", results[0][0]);
+            // console.log("orm.js 13 this is the metadata: ", metadata);
             for(let i = 0 ; i < 1; i++) {
                 if(typeof (results[0][0]) !== 'undefined') {
                     const data = {
@@ -31,35 +26,35 @@ const orm = {
                 [col] : val
             }
         }).then((results) => {
-            console.log('results form the the find one, ', results);
+            // console.log('results form the the find one, ', results);
             if(results === null) {
                 cb(results, null);
             }
             cb(null, results);
         }).catch((e) => {
-            console.log("Error finding the compe code, ", e);
+            // console.log("Error finding the comp code, ", e);
+            cb(e, null)
         })
-
     },
     addoneUser: function(username, pw, email, usercode, cb) {
-        let resp;
         this.findoneUser(username, (err, data) => {
-            console.log("find one user ", data);
+            // console.log("find one user ", data);
             //looking to find a user that has that username code if no user exist go to next line of logic
             if(!data[0]) {
                 //if no user with that company code exist exist proceed.
                 this.find_one('UserTable', "UserCode", usercode, (er, data2) => {
+                    // console.log("message from first find_one, ", data2);
                     if (data2 === null ) {
                         //if company code exist then proceed
-                        this.find_one('Company', 'user_code', usercode, (error, data1) => {
-                            console.log("this is the find one company code ", data1);
+                        this.find_one('CompUser', 'usercode', usercode, (error, data1) => {
+                            // console.log("this is the find one company code ", data1);
                             if(data1 !== null) {
-                                console.log("company code exist");
+                                // console.log("company code exist data: ", data1.comp_code);
                                 const objData = {
                                     username: username,
                                     password: pw,
                                     Email: email,
-                                    CompCode: data1[0][0].comp_code,
+                                    CompCode: data1.comp_code,
                                     UserCode: usercode,
                                 };
                                 db.UserTable.upsert( objData).then((response, metadata) => {
@@ -71,10 +66,9 @@ const orm = {
                             }})
                     }else {
                         //code 2 means there is a user for that company
-                        cb(null, 2);
+                        cb(null, 0);
                     }
                 });
-
             }else{
                 //user exist for that username select a different username.
                 cb(null, 0);
@@ -93,9 +87,7 @@ const orm = {
             'DATE_CREATED': todayDate,
             'DATE_MODIFIED': todayDate,
         };
-
-        console.log("Data being passed into the db KCARDS upsert, ", dataObj);
-
+        // console.log("Data being passed into the db KCARDS upsert, ", dataObj);
         db.KCARDSS.upsert(dataObj).then((res, metadata) => {
             return cb(null, res);
         }).catch((err) => {
@@ -116,9 +108,7 @@ const orm = {
         })
     },
     deleteOneMaster: (table, col, val, cb) => {
-        
-        console.log(`This is the data from delete one value: ${val} table: ${table} col: ${col} `);
-
+        // console.log(`This is the data from delete one value: ${val} table: ${table} col: ${col} `);
         db[table].destroy({
             where: {
                 [col]: val
@@ -145,18 +135,16 @@ const orm = {
     runError: (itemtagNum, cb) => {
         const queryString =`INSERT INTO KCARD_YODAS (SELECT * FROM KCARD_YODA_RAWS WHERE ITEM_TAG_INTEGER = '${itemtagNum}');`;
         db.sequelize.query(queryString).then((results, metadata) => {
-            console.log('this is the metadata: ' + metadata + 'this is the data ' + results);
+            // console.log('this is the metadata: ' + metadata + 'this is the data ' + results);
             if(results) {
                 cb(null, results);
             }
         }).catch((error) => {
-            console.log('error in the run Error ', error);
+            // console.log('error in the run Error ', error);
             cb(error, null);
         });
-
     },
     dashboardData : (compCode, filtered,cb) => {
-
         let condition;
         if(!filtered){
             condition = '';
@@ -165,73 +153,71 @@ const orm = {
         }
         const strSql = `SELECT (CASE WHEN MONTH(a.SCANDATE) = 1 THEN 'JAN' WHEN MONTH(a.SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(a.SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(a.SCANDATE) = 4 THEN 'APR'  WHEN MONTH(a.SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(a.SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(a.SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(a.SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(a.SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(a.SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(a.SCANDATE) = 11 THEN 'NOV'  WHEN MONTH(a.SCANDATE) = 12 THEN 'DEC' ELSE '' END) Month, SUM((CASE WHEN a.CODE LIKE '%CONSUME%' THEN a.QTY ELSE '' END)) Consumed, SUM(b.QTY) Received, year(a.scandate), month(a.scandate)  FROM KCARDSSES a, kcard_yodas b WHERE a.CUSTOMER = '${compCode}' AND a.CUSTOMER = b.BP_CODE AND b.SHIP_DATE >= date_sub(sysdate(), INTERVAL 13 MONTH) AND b.SHIP_DATE <= sysdate() AND a.SCANDATE >= date_sub(sysdate(), INTERVAL 13 MONTH) AND a.SCANDATE <= sysdate() ${condition} GROUP BY (CASE WHEN MONTH(a.SCANDATE) = 1 THEN 'JAN' WHEN MONTH(a.SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(a.SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(a.SCANDATE) = 4 THEN 'APR'  WHEN MONTH(a.SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(a.SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(a.SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(a.SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(a.SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(a.SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(a.SCANDATE) = 11 THEN 'NOV'  WHEN MONTH(a.SCANDATE) = 12 THEN 'DEC' ELSE '' END), year(a.scandate), month(a.scandate) ORDER BY year(a.scandate) ASC, month(a.scandate) ASC;`;
         db.sequelize.query(strSql).then((results) => {
-            console.log('data coming from the dashboard data, ', results);
+            // console.log('data coming from the dashboard data, ', results);
             cb(null, results);
         }).catch((error) => {
-            console.log('error from the dashboard data, ', error);
+            // console.log('error from the dashboard data, ', error);
             cb(error, null);
         })
     },
     dashboardDataTable : (compCode, cb) => {
         const strSql = `SELECT DISTINCT PART, count(item_tag_integer) tagcount, SUM(QTY) quantity FROM KCARD_YODAS WHERE BP_CODE = '${compCode}' GROUP BY PART ORDER BY SUM(QTY) DESC;`;
         db.sequelize.query(strSql).then((results) => {
-            console.log('data coming from the dashboard data, ', results);
+            // console.log('data coming from the dashboard data, ', results);
             cb(null, results);
         }).catch((error) => {
-            console.log('error from the dashboard data, ', error);
+            // console.log('error from the dashboard data, ', error);
             cb(error, null);
         })
     },
     reporting1 : (compCode, cb) => {
         const strSql = `select * from kcardsses where customer = '${compCode}' AND date_format(SCANDATE, '%m/%d/%Y') = date_format(sysdate(), '%m/%d/%Y');`;
         db.sequelize.query(strSql).then((results) => {
-            console.log('data coming from the reporting1 data, ', results);
+            // console.log('data coming from the reporting1 data, ', results);
             cb(null, results);
         }).catch((error) => {
-            console.log('error from the reporting1 data, ', error);
+            // console.log('error from the reporting1 data, ', error);
             cb(error, null);
         })
     },
     reporting2 : (compCode, cb) => {
         const strSql = ` select * from kcardsses where customer = '${compCode}' AND date_format(SCANDATE,'%m/%d/%Y') <= date_format(sysdate(),'%m/%d/%Y')  AND date_format(SCANDATE,'%m/%d/%Y') >= date_format(date_sub(sysdate(),interval  weekday(sysdate()) day), '%m/%d/%Y') order by scandate;`;
         db.sequelize.query(strSql).then((results) => {
-            console.log('data coming from the reporting1 data, ', results);
+            // console.log('data coming from the reporting1 data, ', results);
             cb(null, results);
         }).catch((error) => {
-            console.log('error from the reporting1 data, ', error);
+            // console.log('error from the reporting1 data, ', error);
             cb(error, null);
         })
     },
     reporting3 : (compCode, cb) => {
         const strSql = `select * from kcardsses where customer ='${compCode}' and date_format(scandate, '%m_%Y') = date_format(sysdate(), '%m_%Y') order by scandate;`;
         db.sequelize.query(strSql).then((results) => {
-            console.log('data coming from the reporting1 data, ', results);
+            // console.log('data coming from the reporting1 data, ', results);
             cb(null, results);
         }).catch((error) => {
-            console.log('error from the reporting1 data, ', error);
+            // console.log('error from the reporting1 data, ', error);
             cb(error, null);
         })
     },
     reporting4 : (compCode, cb) => {
         const strSql = `select * from kcardsses where customer ='${compCode}' and date_format(scandate, '%Y') = date_format(sysdate(), '%Y') order by scandate;`;
         db.sequelize.query(strSql).then((results) => {
-            console.log('data coming from the reporting1 data, ', results);
+            // console.log('data coming from the reporting1 data, ', results);
             cb(null, results);
         }).catch((error) => {
-            console.log('error from the reporting1 data, ', error);
+            // console.log('error from the reporting1 data, ', error);
             cb(error, null);
         })
     },
     reporting5 : (compCode,range1, range2, cb) => {
-        // const date1 = new Date(range1);
-        // const date2 = new Date(range2);
         const strSql = `select distinct * from kcardsses where customer ='${compCode}' and date_format(scandate, '%m/%d/%Y') BETWEEN date_format('${range1}', '%m/%d/%Y') AND date_format('${range2}', '%m/%d/%Y') order by scandate;`;
-        console.log("This is the query being passed, ", strSql);
+        // console.log("This is the query being passed, ", strSql);
         db.sequelize.query(strSql).then((results) => {
-            console.log('data coming from the reporting1 data, ', results);
+            // console.log('data coming from the reporting1 data, ', results);
             cb(null, results);
         }).catch((error) => {
-            console.log('error from the reporting1 data, ', error);
+            // console.log('error from the reporting1 data, ', error);
             cb(error, null);
         })
     },
@@ -242,9 +228,6 @@ const orm = {
       }).catch((err) => {
           cb(err, null);
       })
-
-
     },
 };
-
 module.exports = orm;

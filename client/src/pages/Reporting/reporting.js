@@ -383,6 +383,7 @@ class report extends React.Component {
                                             handleSelected={this.updSelected.bind(this)}
                                             handleSelAll={this.handleSelectAll.bind(this)}
                                             selected={this.state.selected}
+                                            incCheckBox={false}
 
                                             columns={[
                                                 {

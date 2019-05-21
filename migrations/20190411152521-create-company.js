@@ -11,7 +11,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      user_code: {
+      UserCode: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true

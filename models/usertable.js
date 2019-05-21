@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
   UserTable.associate = function(models) {
     UserTable.belongsTo(models.CompUser, {
       foreignKey: {
-        name: "user_code"
+        name: "UserCode"
       },
       onDelete: 'CASCADE'
     })

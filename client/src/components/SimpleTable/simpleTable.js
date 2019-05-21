@@ -20,19 +20,20 @@ import TextField from '@material-ui/core/TextField';
 
 class EnhancedTableHead extends React.Component {
     render() {
-        const { onSelectAllClick, order, orderBy, numSelected, rowCount, cols } = this.props;
+        const { onSelectAllClick, order, orderBy, numSelected, rowCount, cols, incCheckBoxHead } = this.props;
         console.log("Enhanced header, Order: " + order + ". OrderBy: " + orderBy);
         console.log("Enhanced header, cols props " + cols[0].id);
         return (
             <TableHead>
                 <TableRow>
                     <TableCell padding="checkbox">
-                        <Checkbox
+                        {incCheckBoxHead ? <Checkbox
                             indeterminate={numSelected > 0 && numSelected < rowCount}
                             checked={numSelected === rowCount}
                             onChange={onSelectAllClick}
                             color='primary'
-                        />
+                        /> : ''}
+
                     </TableCell>
                     {cols.map(
                         cols => (
@@ -157,6 +158,9 @@ const styles = theme => ({
         color: theme.palette.text.primary,
         backgroundColor: theme.palette.primary.dark
     },
+    rowItem: {
+        width: '90%'
+    }
 });
 const initialState = {
         selected: [],
@@ -224,7 +228,7 @@ class EnhancedTable extends React.Component {
     isSelected = id => this.props.selected.indexOf(id) !== -1;
 
     render() {
-        const { classes, columns, tableTitle, selected} = this.props;
+        const { classes, columns, tableTitle, selected, incCheckBox} = this.props;
         const rows = this.props.dataPassed;
         const { sortDirection, columnToSort, rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, (rows != null ? rows.length : 0) - page * rowsPerPage);
@@ -239,6 +243,7 @@ class EnhancedTable extends React.Component {
                 <div className={classes.tableWrapper}>
                     <Table className={classes.table} aria-labelledby={tableTitle}>
                         <EnhancedTableHead
+                            incCheckBoxHead = {incCheckBox}
                             numSelected={selected.length}
                             order={sortDirection}
                             orderBy={columnToSort}
@@ -257,10 +262,11 @@ class EnhancedTable extends React.Component {
                                     onClick={event => this.handleClick(event, row.id)}
                                     role="checkbox"
                                     tabIndex={-1}
+                                    className={classes.rowItem}
                                     selected={this.isSelected(row.id)}
                                 >
                                     <TableCell padding="checkbox">
-                                        <Checkbox color='primary' checked={this.isSelected(row.id)} />
+                                        {incCheckBox ? <Checkbox color='primary' checked={this.isSelected(row.id)} /> : ''}
                                     </TableCell>
                                     {columns.map((col) => (
                                         <TableCell component="th" scope="row" align={col.numeric ? "right" : "left"}>
