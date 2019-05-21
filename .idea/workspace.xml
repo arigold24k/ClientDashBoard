@@ -4,20 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/client/src/App.js" line="193" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bf03c05-fc22-480e-a891-05bede3e6fba" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/Reporting/reporting.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Reporting/reporting.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/SignUpPage/signuppage.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/SignUpPage/signuppage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/orm.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/orm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/20190411152521-create-company.js" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/20190411152521-create-company.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/20190411152757-create-user-table.js" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/20190411152757-create-user-table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/20190521141104-create-comp-user.js" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/20190521141104-create-comp-user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/company.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/company.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/compuser.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/compuser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/usertable.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/usertable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/handle.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/handle.js" afterDir="false" />
-    </list>
+    <list default="true" id="4bf03c05-fc22-480e-a891-05bede3e6fba" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -32,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="91" column="6" lean-forward="true" selection-start-line="91" selection-start-column="6" selection-end-line="91" selection-end-column="6" />
+            <state relative-caret-position="374">
+              <caret line="76" column="24" lean-forward="true" selection-start-line="76" selection-start-column="24" selection-end-line="76" selection-end-column="24" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -324,12 +311,12 @@
       <workItem from="1558036146083" duration="2531000" />
       <workItem from="1558102673462" duration="4203000" />
       <workItem from="1558380121262" duration="1869000" />
-      <workItem from="1558443656784" duration="16808000" />
+      <workItem from="1558443656784" duration="18006000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="561496000" />
+    <option name="totallyTimeSpent" value="562694000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1913" y="-7" width="1550" height="838" extended-state="6" />
@@ -792,8 +779,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="91" column="6" lean-forward="true" selection-start-line="91" selection-start-column="6" selection-end-line="91" selection-end-column="6" />
+        <state relative-caret-position="374">
+          <caret line="76" column="24" lean-forward="true" selection-start-line="76" selection-start-column="24" selection-end-line="76" selection-end-column="24" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
