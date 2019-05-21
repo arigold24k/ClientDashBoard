@@ -28,6 +28,18 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      temp_pw: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+      },
+      UserCode: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        references: {
+          model: 'CompUser',
+          key: 'user_code'
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -35,6 +47,9 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      references: {
+
       }
     });
   },

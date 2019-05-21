@@ -28,12 +28,20 @@ module.exports = (sequelize, DataTypes) => {
     CompCode: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    temp_pw: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    UserCode: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {});
   UserTable.associate = function(models) {
-    UserTable.belongsTo(models.Company, {
+    UserTable.belongsTo(models.CompUser, {
       foreignKey: {
-        name: "CompCode"
+        name: "user_code"
       },
       onDelete: 'CASCADE'
     })

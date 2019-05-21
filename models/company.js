@@ -10,13 +10,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    user_code: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
 
   }, {});
   Company.associate = function(models) {
     // associations can be defined here
-    Company.hasMany(models.UserTable, {
+
+    Company.hasMany(models.CompUser, {
       foreignKey: {
-        name: "CompCode"
+        name: "comp_code"
       }
     })
 

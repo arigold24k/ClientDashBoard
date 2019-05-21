@@ -41,16 +41,17 @@ const orm = {
         })
 
     },
-    addoneUser: function(username, pw, email, compcode, cb) {
+    addoneUser: function(username, pw, email, usercode, cb) {
         let resp;
         this.findoneUser(username, (err, data) => {
             console.log("find one user ", data);
             //looking to find a user that has that username code if no user exist go to next line of logic
             if(!data[0]) {
                 //if no user with that company code exist exist proceed.
-                this.find_one('UserTable', "CompCode", compcode, (er, data2) => {
+                this.find_one('UserTable', "UserCode", usercode, (er, data2) => {
                     if (data2 === null ) {
-                        this.find_one('Company', 'comp_code', compcode, (error, data1) => {
+                        //if company code exist then proceed
+                        this.find_one('Company', 'user_code', usercode, (error, data1) => {
                             console.log("this is the find one company code ", data1);
                             if(data1 !== null) {
                                 console.log("company code exist");
@@ -58,7 +59,8 @@ const orm = {
                                     username: username,
                                     password: pw,
                                     Email: email,
-                                    CompCode: compcode
+                                    CompCode: data1[0][0].comp_code,
+                                    UserCode: usercode,
                                 };
                                 db.UserTable.upsert( objData).then((response, metadata) => {
                                     cb(null, response);

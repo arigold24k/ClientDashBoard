@@ -52,7 +52,7 @@ class signUp extends React.Component {
                         required
                         id="password"
                         name="password"
-                        label="password"
+                        label="Password"
                         fullWidth
                         type="password"
                         autoComplete="current-password"
@@ -66,7 +66,7 @@ class signUp extends React.Component {
                             required
                             id="rePassWord"
                             name="rePassWord"
-                            label="Re-Enter PassWord"
+                            label="Re-Enter Password"
                             fullWidth
                             type="password"
                             autoComplete="current-password"
