@@ -136,19 +136,30 @@ const styles = theme => ({
 const ranges = [{
     value: 1,
     label: 'Today'
-    },{
+},{
     value: 2,
     label: 'Current Week'
-    },{
+},{
     value: 3,
     label: 'MTD'
-    },{
+},{
     value: 4,
     label: 'YTD'
-    },{
+},{
     value: 5,
     label: 'Custom'
-    }];
+}];
+
+const ranges2 = [{
+    value: 0,
+    label: 'No Selection'
+},{
+    value: 1,
+    label: 'Summary Report'
+},{
+    value: 2,
+    label: 'Scanned Report'
+}];
 
 function getModalStyle() {
     const top = 50 + rand();
@@ -179,12 +190,14 @@ class report extends React.Component {
             range2: "",
             columnToSort: "",
             sortDirection: "desc",
-            selected: []
+            selected: [],
+            reportType: 0
         };
     }
     handleClose = () => {
         this.setState({ modalOpen: false });
     };
+
     sortData = (columnName) => {
         console.log("Sort data is being hit Column Name:", columnName);
         this.setState({
@@ -330,48 +343,68 @@ class report extends React.Component {
                                 select
                                 className={classNames(classes.margin, classes.textField)}
                                 variant="outlined"
-                                label="Time Range"
+                                label="Report Type"
                                 align='center'
-                                value={this.state.period}
-                                onChange={this.handleChange('period')}
+                                value={this.state.reportType}
+                                onChange={this.handleChange('reportType')}
                                 InputProps={{
-                                    startAdornment: <InputAdornment position="start">Time</InputAdornment>,
+                                    startAdornment: <InputAdornment position="start">Report Type</InputAdornment>,
                                 }}
                             >
-                                {ranges.map(option => (
-                                    <MenuItem key={option.value} value={option.value}>
-                                        {option.label}
+                                {ranges2.map(option1 => (
+                                    <MenuItem key={option1.value} value={option1.value}>
+                                        {option1.label}
                                     </MenuItem>
                                 ))}
                             </TextField>
+                            {this.state.reportType === 2 ? <div>
+                                    <TextField
+                                        select
+                                        className={classNames(classes.margin, classes.textField)}
+                                        variant="outlined"
+                                        label="Time Range"
+                                        align='center'
+                                        value={this.state.period}
+                                        onChange={this.handleChange('period')}
+                                        InputProps={{
+                                            startAdornment: <InputAdornment position="start">Time</InputAdornment>,
+                                        }}
+                                    >
+                                        {ranges.map(option => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
 
-                            {this.state.period === 5 &&
+                                    {this.state.period === 5 &&
 
-                                <DateBox handleDateChange={this.handleDate.bind(this)} range1={this.state.range1} range2={this.state.range2}/>
+                                    <DateBox handleDateChange={this.handleDate.bind(this)}
+                                             range1={this.state.range1} range2={this.state.range2}/>}
 
 
+                                    {((this.state.period !== "" && this.state.period !== 5) || (this.state.period === 5 && this.state.range1 !=="" && this.state.range2 !== "")) &&
+                                    <div className={classes.buttonHolder}>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={this.handleSubmit}
+                                            className={classes.button}
+                                            align='center'
+                                        >
+                                            Run Report
+                                        </Button>
 
+                                        {this.state.runReport && (this.state.data !== null && <Download dataArray={this.state.data}/>) }
+                                    </div>
+                                    }
 
+                                </div> :
+
+                                <div>
+
+                                </div>
                             }
-
-                            {((this.state.period !== "" && this.state.period !== 5) || (this.state.period === 5 && this.state.range1 !=="" && this.state.range2 !== "")) &&
-                            <div className={classes.buttonHolder}>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={this.handleSubmit}
-                                    className={classes.button}
-                                    align='center'
-                                >
-                                    Run Report
-                                </Button>
-
-                                {this.state.runReport && (this.state.data !== null && <Download dataArray={this.state.data}/>) }
-                            </div>
-                            }
-
-
-
                             <CssBaseline/>
 
                             <div>
