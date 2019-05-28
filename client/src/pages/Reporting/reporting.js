@@ -130,6 +130,9 @@ const styles = theme => ({
     buttonHolder: {
         display: 'flex',
         flexWrap: 'wrap',
+    },
+    margin: {
+        marginTop: theme.spacing.unit * 2
     }
 });
 
@@ -341,7 +344,7 @@ class report extends React.Component {
                         <React.Fragment>
                             <TextField
                                 select
-                                className={classNames(classes.margin, classes.textField)}
+                                className={classNames(classes.textField)}
                                 variant="outlined"
                                 label="Report Type"
                                 align='center'

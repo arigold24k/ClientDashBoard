@@ -9,6 +9,7 @@ import './App.css';
 import { withRouter } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import SignUP from './pages/SignUpPage';
+import passwordRS from './components/PasswordReset';
 import funcs_ from './functions/functions';
 
 const initialState = {open1: false,
@@ -82,6 +83,7 @@ class App extends Component {
         clearTimeout(this.interval);
         this.getKey();
         console.log('This is the state in the component will mount ', this.state);
+        document.title = 'Client Dashboard'
       };
     componentDidMount() {
         console.log("This is the state when the component moutned ", this.state);
@@ -193,6 +195,7 @@ class App extends Component {
                 <Switch>
                     <Route exact path="/login1"><Login1 getValue={this.getValue.bind(this)}  usrname={this.state.usrname} open3={this.state.open3} open4={this.state.open4} open5={this.state.open5} handlesubmit={this.handlesubmit.bind(this)} handleAdd={this.handleAdd.bind(this)} open={this.state.open} open1={this.state.open1} handleClose={this.handleClose.bind(this)}/></Route>
                     <Route exacht path="/signup" component={SignUP}/>
+                    <Route exacht path="/forgotdorwssap" component={passwordRS}/>
                     <PrivateRoute exact path="/home_page" component={this.myDashboardPage} auth={this.state.auth}/>
                     <PrivateRoute exact path="/manage_inv" component={this.myCheckOutPage} auth={this.state.auth}/>
                     <PrivateRoute exact path="/reporting" component={this.myReportingPage} auth={this.state.auth}/>
