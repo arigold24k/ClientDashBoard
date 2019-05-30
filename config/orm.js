@@ -36,6 +36,21 @@ const orm = {
             cb(e, null)
         })
     },
+//used to check if there already was a request to have the password reset
+    in_current_link: (email, cb) => {
+        const sqlString = `SELECT * FROM reststatuses a WHERE date_format(date_add(a.date, interval 1 day), '%m/%d/%Y_%h:%i:%s') > date_format(sysdate(), '%m/%d/%Y_%h:%i:%s') and a.email = ${email} and used = 'N'`;
+        db.sequelize.query(sqlString).then((results, metadata) => {
+            if(typeof (results[0][0]) !== 'undefined') {
+                cb(null, true)
+            }else {
+                cb(null, false)
+            }
+
+        }).catch((err) => {
+            cb(err, null)
+        });
+    },
+
     addoneUser: function(username, pw, email, usercode, cb) {
         this.findoneUser(username, (err, data) => {
             // console.log("find one user ", data);
@@ -72,6 +87,23 @@ const orm = {
             }else{
                 //user exist for that username select a different username.
                 cb(null, 0);
+            }
+        });
+    },
+
+    insertIntoReset: (usrname, _email, cb) => {
+        const todayDate = new Date();
+        db.resetstatus.upsert({
+            username: usrname,
+            email: _email,
+            date: todayDate,
+            used: 'N'
+
+        }).then((res, metadata) => {
+            return cb(null, res);
+        }).catch((err) => {
+            if (err) {
+                return cb(err, null);
             }
         });
     },

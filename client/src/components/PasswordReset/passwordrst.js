@@ -7,6 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from "prop-types";
 import withStyles from '@material-ui/core/styles/withStyles';
+import axios from 'axios';
 
 
 const styles = theme => ({
@@ -56,6 +57,17 @@ class passwordrst extends React.Component {
             email: ''
         }
     }
+    handleSubmit = () => {
+        const dataObj = {
+          username: this.state.username,
+          email: this.state.email
+        };
+      axios.post('/passwordReset', dataObj).then((res) => {
+
+      }).catch((err) => {
+
+      })
+    };
     handleChange = (event) => {
         const {name, value} = event.target;
         this.setState({
@@ -103,7 +115,7 @@ class passwordrst extends React.Component {
                             size="small"
                             variant="contained"
                             color="primary"
-                            onClick={() => {console.log("This is the state from the reset page, ", this.state)}}
+                            onClick={this.handleSubmit}
                         >
                             Submit
                         </Button>

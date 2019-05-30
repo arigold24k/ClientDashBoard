@@ -38,6 +38,27 @@ router.post('/register', function(req, res) {
         }
     })
 });
+
+router.post('/passwordReset', (req, res) => {
+   const {username, email } = req.body;
+   orm.findoneUser(username, ((err, res) => {
+       if(res.data[0]) {
+           console.log("This is the response to the password reset, ", res.data[0][0]);
+            if(email === res.data[0][0].Email) {
+                console.log("Email and username match");
+
+                orm.insertIntoReset(username, email, (err, res) => {
+                    if(res) {
+                        console.log("data would have been added");
+                        //need to have code to send email here
+                        res.json({message:'would have added to table', data: res})
+                    }
+                })
+            }
+       }
+   }))
+});
+
 router.post('/verify/api', (req, res) => {
     const check = req.body.check;
     if(check) {
