@@ -403,10 +403,18 @@ class report extends React.Component {
                                     }
 
                                 </div> :
+                                    <div className={classes.buttonHolder}>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={this.handleSubmit}
+                                            className={classes.button}
+                                            align='center'
+                                        >
+                                            Run Summary Report
+                                        </Button>
+                                    </div>
 
-                                <div>
-
-                                </div>
                             }
                             <CssBaseline/>
 

@@ -63,7 +63,17 @@ class passwordrst extends React.Component {
           email: this.state.email
         };
       axios.post('/passwordReset', dataObj).then((res) => {
+        //value 1 is when the username does not exist
+          if(res.data === 1) {
 
+          }else if (res.data === 2) {
+
+          }else if (res.data === 3) {
+
+          }
+          else if (res.data.data) {
+
+          }
       }).catch((err) => {
 
       })

@@ -6,7 +6,7 @@ const orm = {
         const queryString ="SELECT a.*, b.comp_name FROM " + table_name + " a, companies b Where LCASE(username)='" + username.toLowerCase() + "' AND b.comp_code = a.compcode;";
         db.sequelize.query(queryString).then((results, metadata) => {
             // console.log("orm.js 12 -this is the results: ", results[0][0]);
-            // console.log("orm.js 13 this is the metadata: ", metadata);
+             console.log("orm.js 13 this is the metadata: ", metadata);
             for(let i = 0 ; i < 1; i++) {
                 if(typeof (results[0][0]) !== 'undefined') {
                     const data = {
@@ -37,10 +37,10 @@ const orm = {
         })
     },
 //used to check if there already was a request to have the password reset
-    in_current_link: (email, cb) => {
-        const sqlString = `SELECT * FROM reststatuses a WHERE date_format(date_add(a.date, interval 1 day), '%m/%d/%Y_%h:%i:%s') > date_format(sysdate(), '%m/%d/%Y_%h:%i:%s') and a.email = ${email} and used = 'N'`;
+    in_current_link: (username, cb) => {
+        const sqlString = `SELECT count(*) row_count FROM reststatuses a WHERE date_format(date_add(a.date, interval 1 day), '%m/%d/%Y_%h:%i:%s') > date_format(sysdate(), '%m/%d/%Y_%h:%i:%s') and a.username = ${username} and used = 'N'`;
         db.sequelize.query(sqlString).then((results, metadata) => {
-            if(typeof (results[0][0]) !== 'undefined') {
+            if(results[0][0].row_count > 0) {
                 cb(null, true)
             }else {
                 cb(null, false)
@@ -51,6 +51,20 @@ const orm = {
         });
     },
 
+    get_current_reset_data: (id, cb) => {
+        const sqlString = `SELECT * FROM reststatuses a WHERE a.id = ${id} AND date_format(date_add(a.date, interval 1 day), '%m/%d/%Y_%h:%i:%s') > date_format(sysdate(), '%m/%d/%Y_%h:%i:%s') AND a.used = 'N'`;
+        db.sequelize.query(sqlString).then((results, metadata) => {
+            if(typeof(results[0][0]) !== 'undefined') {
+                const dataObj = {
+                    email: results[0][0].email,
+                    usrname: results[0][0].username
+                };
+                cb(null, dataObj);
+            }
+            cb({error: 'no data to reset'}, null);
+
+        });
+    },
     addoneUser: function(username, pw, email, usercode, cb) {
         this.findoneUser(username, (err, data) => {
             // console.log("find one user ", data);
@@ -90,22 +104,28 @@ const orm = {
             }
         });
     },
-
+//have to test this 05/31/2019
     insertIntoReset: (usrname, _email, cb) => {
         const todayDate = new Date();
-        db.resetstatus.upsert({
-            username: usrname,
-            email: _email,
-            date: todayDate,
-            used: 'N'
+        this.in_current_link(usrname, (err, results) => {
+            if(!results) {
+                db.resetstatus.upsert({
+                    username: usrname,
+                    email: _email,
+                    date: todayDate,
+                    used: 'N'
 
-        }).then((res, metadata) => {
-            return cb(null, res);
-        }).catch((err) => {
-            if (err) {
-                return cb(err, null);
+                }).then((res, metadata) => {
+                    return cb(null, res);
+                }).catch((err) => {
+                    if (err) {
+                        return cb(err, null);
+                    }
+                });
             }
-        });
+            cb(null, 'DataAlreadyInSystem');
+        })
+
     },
     insertToKCardss: (customer, code, part, qty, tag_num, cb) => {
         const todayDate = new Date();
@@ -167,7 +187,7 @@ const orm = {
     runError: (itemtagNum, cb) => {
         const queryString =`INSERT INTO KCARD_YODAS (SELECT * FROM KCARD_YODA_RAWS WHERE ITEM_TAG_INTEGER = '${itemtagNum}');`;
         db.sequelize.query(queryString).then((results, metadata) => {
-            // console.log('this is the metadata: ' + metadata + 'this is the data ' + results);
+             console.log('this is the metadata: ' + metadata + 'this is the data ' + results);
             if(results) {
                 cb(null, results);
             }

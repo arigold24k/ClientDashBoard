@@ -7,6 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from "prop-types";
 import withStyles from '@material-ui/core/styles/withStyles';
+import functions from '../../functions/functions';
 import axios from 'axios';
 
 
@@ -57,9 +58,12 @@ class updatePW extends React.Component {
             repw: ''
         }
     }
-    handleSubmit = () => {
-
-        axios.post('/passwordReset', dataObj).then((res) => {
+    handleSubmit = (id) => {
+        const dataObj = {
+            id,
+            pw: functions.encryptPW(this.state.pw),
+        };
+        axios.post('/updateDrowssap', dataObj).then((res) => {
 
         }).catch((err) => {
 
@@ -73,6 +77,7 @@ class updatePW extends React.Component {
     };
     render () {
         const {classes} = this.props;
+        let id = this.props.match.params.id;
         return (
             <React.Fragment>
                 <CssBaseline />
@@ -114,7 +119,7 @@ class updatePW extends React.Component {
                                             size="small"
                                             variant="contained"
                                             color="primary"
-                                            onClick={this.handleSubmit}
+                                            onClick={this.handleSubmit(id)}
                                         >
                                             Submit
                                         </Button>

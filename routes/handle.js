@@ -41,9 +41,11 @@ router.post('/register', function(req, res) {
 
 router.post('/passwordReset', (req, res) => {
    const {username, email } = req.body;
+   //finds username in table that matches values that was passed
    orm.findoneUser(username, ((err, res) => {
        if(res.data[0]) {
            console.log("This is the response to the password reset, ", res.data[0][0]);
+           //checks if email that was passed matches that which is in the DB
             if(email === res.data[0][0].Email) {
                 console.log("Email and username match");
 
@@ -51,12 +53,59 @@ router.post('/passwordReset', (req, res) => {
                     if(res) {
                         console.log("data would have been added");
                         //need to have code to send email here
+                        //pull the id from here as well
+
                         res.json({message:'would have added to table', data: res})
+                    }else {
+                        //error in adding the values to the table
+                        //sending a value of 3
+                        res.json({
+                            message: "error in adding to the table",
+                            data: 3
+                        })
                     }
                 })
+            }else{
+                //email does not match
+                //value of 2
+                res.json({
+                    message: "email does not match",
+                        data: 2
+                    })
             }
+       }else {
+           //no username exist
+           //value of 2
+           res.json({
+               message: "username does not match",
+               data: 1
+           });
        }
    }))
+});
+
+router.post('/updateDrowssap', (req, res)=> {
+    const {id, pw} = req.body;
+    orm.get_current_reset_data(id, (err, response) => {
+        if(response !== null) {
+            orm.updateOne('usertables', 'username', response.username, 'password', pw , (err_2, response_2) => {
+                if(response_2 !== null) {
+                    orm.updateOne('reststatuses', 'id', id, 'used', 'Y', (err_3, response_3) => {
+                        if(response_3 !== null) {
+                            res.json({message: "data was added successfully", data: "SUCCESS"});
+                        }else{
+                            res.json({message: 'error in updating the rest status'});
+                        }
+                    });
+                }else{
+                    console.log("error in the update of password, ", err_2);
+                }
+            })
+        }else{
+            res.json({error: 'NoData', data: null})
+        }
+    });
+
 });
 
 router.post('/verify/api', (req, res) => {
