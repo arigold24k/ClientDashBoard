@@ -17,6 +17,7 @@ import {mdiLoading} from "@mdi/js";
 import axios from 'axios';
 import DateBox from '../../components/DateSelector';
 import Download from '../../components/ExcelExport';
+import SimpleTable from "../DashBoard/dashboard";
 
 const drawerWidth = 240;
 
@@ -193,23 +194,13 @@ class report extends React.Component {
             range2: "",
             columnToSort: "",
             sortDirection: "desc",
-            selected: [],
-            reportType: 0
+            reportType: 0,
+            selected: []
         };
     }
     handleClose = () => {
         this.setState({ modalOpen: false });
     };
-
-    sortData = (columnName) => {
-        console.log("Sort data is being hit Column Name:", columnName);
-        this.setState({
-            columnToSort: columnName,
-            sortDirection: this.state.columnToSort === columnName ? (this.state.sortDirection === 'desc' ? 'asc' : 'desc') : 'asc'
-        });
-        console.log("State of the state after the update in the sort data function ", this.state);
-    };
-
     handleClose2 = () => {
         this.setState({
             open2: false,
@@ -247,6 +238,41 @@ class report extends React.Component {
         });
         console.log("state once date is changed", this.state);
     };
+    //for the table in order to get the data that has been selected to the parent
+
+    updSelected (newSel) {
+        const { selected } = this.state;
+        const selectedIndex = selected.indexOf(newSel);
+        let newSelected = [];
+
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, newSel);
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(
+                selected.slice(0, selectedIndex),
+                selected.slice(selectedIndex + 1),
+            );
+        }
+        this.setState({
+            selected: newSelected
+        });
+
+        console.log("update selected on dasboard being hit, ", this.state);
+    }
+    handleSelectAll (checked, rows) {
+        if (checked) {
+            this.setState({ selected: rows.map(n => n.id) });
+            // return;
+        }else {
+            this.setState({selected: [], filter: false});
+        }
+    }
+
+    // end
 
     handleSubmit = () => {
         const headerObj = {
@@ -289,46 +315,10 @@ class report extends React.Component {
                     this.setState({data: []
                     });
                 }
-
                 console.log('this is the state after the submit, ', this.state);
             })
 
     };
-
-
-    //maybe should of put this inside the table component
-    updSelected (newSel) {
-        const { selected } = this.state;
-        const selectedIndex = selected.indexOf(newSel);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, newSel);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        this.setState({
-            selected: newSelected
-        });
-        console.log("update selected on dasboard being hit, ", this.state);
-    }
-
-    handleSelectAll (checked, rows) {
-        if (checked) {
-            this.setState({ selected: rows.map(n => n.id) });
-            return;
-        }
-        this.setState({ selected: [] });
-    }
-
     render() {
         const { classes } = this.props;
 
@@ -406,7 +396,7 @@ class report extends React.Component {
 
                                 </div> :
                                     //need to add the code to handle the submit for the summary report
-                                    <div className={classes.buttonHolder}>
+                                (this.state.reportType === 1 && (<div className={classes.buttonHolder}>
                                         <Button
                                             variant="contained"
                                             color="primary"
@@ -416,22 +406,21 @@ class report extends React.Component {
                                         >
                                             Run Summary Report
                                         </Button>
-                                    </div>
+                                    </div>))
 
                             }
                             <CssBaseline/>
 
                             <div>
-                                {this.state.runReport &&
+                                {this.state.runReport && this.state.reportType === 2 &&
                                 (this.state.data !== null ?
                                         <Table
-                                            dataPassed={this.state.data}
-                                            tableTitle={"Report"}
                                             handleSelected={this.updSelected.bind(this)}
                                             handleSelAll={this.handleSelectAll.bind(this)}
                                             selected={this.state.selected}
+                                            dataPassed={this.state.data}
+                                            tableTitle={"Report"}
                                             incCheckBox={false}
-
                                             columns={[
                                                 {
                                                     name: 'Rec Number',

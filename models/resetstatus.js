@@ -30,7 +30,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
 
     }
-  }, {});
+  }, {
+    timestamps: false
+  });
   resetStatus.associate = function(models) {
     // associations can be defined here
   };

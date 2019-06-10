@@ -4,7 +4,7 @@ dotenv.config();
 
 const data = process.env.connection;
 
-let db = new Sequelize('testDB','root' , 'pacesetter', {
+let db = new Sequelize('testDB','root' , process.env.DBKEY, {
     host:'localhost',
     dialect: 'mysql'
 });

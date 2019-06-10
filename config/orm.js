@@ -2,6 +2,24 @@ let db = require('../models');
 const table_name = 'usertables';
 
 const orm = {
+
+    //used to check if there already was a request to have the password reset
+    in_current_link: function (username, cb) {
+        const sqlString = `SELECT count(*) row_count FROM resetstatuses a WHERE date_format(date_add(a.date, interval 1 day), '%m/%d/%Y_%h:%i:%s') > date_format(sysdate(), '%m/%d/%Y_%h:%i:%s') and a.username = '${username}' and used = 'N'`;
+        db.sequelize.query(sqlString).then((results, metadata) => {
+            console.log("This is the data coming back from the check if link exist: ", results);
+            if (results[0][0].row_count > 0) {
+                cb(null, true)
+            } else {
+                cb(null, false)
+            }
+
+        }).catch((err) => {
+            // console.log("This is the data/error coming back from the check if link exist: ", err);
+            cb(err, null)
+        });
+    },
+
     findoneUser: function(username, cb){
         const queryString ="SELECT a.*, b.comp_name FROM " + table_name + " a, companies b Where LCASE(username)='" + username.toLowerCase() + "' AND b.comp_code = a.compcode;";
         db.sequelize.query(queryString).then((results, metadata) => {
@@ -35,20 +53,6 @@ const orm = {
             // console.log("Error finding the comp code, ", e);
             cb(e, null)
         })
-    },
-//used to check if there already was a request to have the password reset
-    in_current_link: (username, cb) => {
-        const sqlString = `SELECT count(*) row_count FROM reststatuses a WHERE date_format(date_add(a.date, interval 1 day), '%m/%d/%Y_%h:%i:%s') > date_format(sysdate(), '%m/%d/%Y_%h:%i:%s') and a.username = ${username} and used = 'N'`;
-        db.sequelize.query(sqlString).then((results, metadata) => {
-            if(results[0][0].row_count > 0) {
-                cb(null, true)
-            }else {
-                cb(null, false)
-            }
-
-        }).catch((err) => {
-            cb(err, null)
-        });
     },
 
     get_current_reset_data: (id, cb) => {
@@ -105,25 +109,30 @@ const orm = {
         });
     },
 //have to test this 05/31/2019
-    insertIntoReset: (usrname, _email, cb) => {
+    insertIntoReset: function (usrname, _email, cb) {
         const todayDate = new Date();
         this.in_current_link(usrname, (err, results) => {
-            if(!results) {
-                db.resetstatus.upsert({
+            console.log("insert into reset table, data: ", results);
+            if(results === false) {
+                db.resetStatus.upsert({
                     username: usrname,
                     email: _email,
                     date: todayDate,
                     used: 'N'
 
-                }).then((res, metadata) => {
-                    return cb(null, res);
+                },).then((res) => {
+                    console.log("after insert: ", res);
+
+                    cb(null, res);
                 }).catch((err) => {
                     if (err) {
-                        return cb(err, null);
+                        cb(err, null);
                     }
                 });
+            }else {
+                cb(null, 'DataAlreadyInSystem');
             }
-            cb(null, 'DataAlreadyInSystem');
+
         })
 
     },

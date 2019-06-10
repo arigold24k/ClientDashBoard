@@ -42,20 +42,28 @@ router.post('/register', function(req, res) {
 router.post('/passwordReset', (req, res) => {
    const {username, email } = req.body;
    //finds username in table that matches values that was passed
-   orm.findoneUser(username, ((err, res) => {
-       if(res.data[0]) {
-           console.log("This is the response to the password reset, ", res.data[0][0]);
+   orm.findoneUser(username, ((err, res1) => {
+       if(res1.data[0]) {
+           console.log("This is the response to the password reset, ", res1.data[0][0]);
            //checks if email that was passed matches that which is in the DB
-            if(email === res.data[0][0].Email) {
+            if(email === res1.data[0][0].Email) {
                 console.log("Email and username match");
 
-                orm.insertIntoReset(username, email, (err, res) => {
-                    if(res) {
-                        console.log("data would have been added");
-                        //need to have code to send email here
-                        //pull the id from here as well
+                orm.insertIntoReset(username, email, (err, res2) => {
+                    if(res2) {
+                        console.log("Response to the insert into reset handle.js, data: ", res2);
+                        if(res === 'DataAlreadyInSystem') {
+                            console.log("data was not added. data: ", res2);
+                        }else {
+                            console.log("data would have been added.  Added data: ", res2);
+                            //need to have code to send email here
+                            //pull the id from here as well
 
-                        res.json({message:'would have added to table', data: res})
+                            res.json({
+                                message:'would have added to table',
+                                data: res2})
+                        }
+
                     }else {
                         //error in adding the values to the table
                         //sending a value of 3

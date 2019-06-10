@@ -51,23 +51,31 @@ const styles = theme => ({
 });
 class updatePW extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            pw: '',
-            repw: ''
-        }
-    }
-    handleSubmit = (id) => {
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         password: '',
+    //         repassword: ''
+    //     }
+    // }
+
+    state = {
+            password: '',
+            repassword: ''
+    };
+
+    handleSubmit = (event, id) => {
+        const encrypPW = functions.encryptPW(this.state.password);
         const dataObj = {
             id,
-            pw: functions.encryptPW(this.state.pw),
+            pw: encrypPW,
         };
         axios.post('/updateDrowssap', dataObj).then((res) => {
-
+            console.log("Area where the data is coming back from updating password")
         }).catch((err) => {
 
-        })
+        });
+        return false;
     };
     handleChange = (event) => {
         const {name, value} = event.target;
@@ -92,52 +100,62 @@ class updatePW extends React.Component {
                                     required
                                     id="password"
                                     name="password"
+                                    type="password"
                                     label="New Password"
                                     fullWidth
                                     autoComplete="password"
                                     onChange={this.handleChange}
-                                    value={this.state.username}
+                                    value={this.state.password}
                                 />
                             </Grid>
-                            { (this.state.pw === this.state.repw) ?
-                                <div>
-                                    <Grid item xs={12}>
-                                        <TextField
-                                            required
-                                            id="repassword"
-                                            name="repassword"
-                                            label="Please re-enter your password."
-                                            fullWidth
-                                            autoComplete="password"
-                                            onChange={this.handleChange}
-                                            value={this.state.email}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Button
-                                            className={classes.button}
-                                            size="small"
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={this.handleSubmit(id)}
-                                        >
-                                            Submit
-                                        </Button>
-                                    </Grid>
-                                </div>
-                                :
-                                <Grid item xs={12}>
-                                    <TextField
-                                        error
-                                        id="repassword"
-                                        name="repassword"
-                                        label="Please re-enter your password."
-                                        fullWidth
-                                        autoComplete="password"
-                                        onChange={this.handleChange}
-                                        value={this.state.email}
-                                    />
-                                </Grid>
+                            {(this.state.password === this.state.repassword) &&
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    id="repassword"
+                                    name="repassword"
+                                    type="password"
+                                    label="Please re-enter your password."
+                                    fullWidth
+                                    autoComplete="password"
+                                    onChange={this.handleChange}
+                                    value={this.state.repassword}
+                                />
+                            </Grid>
+
+                            }
+
+
+
+                            { (this.state.password !== this.state.repassword)  &&
+                            <Grid item xs={12}>
+                                <TextField
+                                    error
+                                    id="repassword"
+                                    name="repassword"
+                                    type="password"
+                                    label="Please re-enter your password."
+                                    fullWidth
+                                    autoComplete="password"
+                                    onChange={this.handleChange}
+                                    value={this.state.repassword}
+                                />
+                            </Grid>
+                            }
+
+                            {this.state.password === this.state.repassword ?
+                            <Button
+                                className={classes.button}
+                                size="small"
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                disabled={false}
+                                onClick={(event) => {this.handleSubmit(id)}}
+                            >
+                                Submit
+                            </Button> :
+                                <div></div>
 
                             }
 

@@ -45,29 +45,29 @@ class EnhancedTableHead extends React.Component {
                                 sortDirection={orderBy === cols.id ? order : false}
                             >
                                 <div display='block'>
-                                <Tooltip
-                                    title="Sort"
-                                    placement={cols.numeric ? 'bottom-end' : 'bottom-start'}
-                                    enterDelay={300}
-                                >
-                                    <TableSortLabel
-                                        active={orderBy === cols.id}
-                                        direction={order}
-                                        onClick={(event) => this.props.handleSort1(event, cols.id)}
+                                    <Tooltip
+                                        title="Sort"
+                                        placement={cols.numeric ? 'bottom-end' : 'bottom-start'}
+                                        enterDelay={300}
                                     >
-                                        {cols.label}
-                                    </TableSortLabel>
-                                </Tooltip>
+                                        <TableSortLabel
+                                            active={orderBy === cols.id}
+                                            direction={order}
+                                            onClick={(event) => this.props.handleSort1(event, cols.id)}
+                                        >
+                                            {cols.label}
+                                        </TableSortLabel>
+                                    </Tooltip>
                                 </div>
                                 <div display='block'>
-                                <TextField
-                                    name={cols.id}
-                                    hintText="Query"
-                                    floatingLabelText="Query"
-                                    value={this.props.query}
-                                    onChange={(e) => this.props.handleQueryChange(e)}
+                                    <TextField
+                                        name={cols.id}
+                                        hintText="Query"
+                                        floatingLabelText="Query"
+                                        value={this.props.query}
+                                        onChange={(e) => this.props.handleQueryChange(e)}
 
-                                />
+                                    />
                                 </div>
                             </TableCell>
                         ),
@@ -163,13 +163,13 @@ const styles = theme => ({
     }
 });
 const initialState = {
-        selected: [],
-        page: 0,
-        rowsPerPage: 5,
-        columnToSort: '',
-        sortDirection: 'desc',
-        query: '',
-        columnToQuery: '',
+    selected: [],
+    page: 0,
+    rowsPerPage: 5,
+    columnToSort: '',
+    sortDirection: 'desc',
+    query: '',
+    columnToQuery: '',
 
 };
 class EnhancedTable extends React.Component {
@@ -179,7 +179,7 @@ class EnhancedTable extends React.Component {
         const {dataPassed} = this.props;
         //const {dataPassed, selected} = this.props;
         this.state = {
-             ...initialState,
+            ...initialState,
             rows: dataPassed,
             selected: []
         };
