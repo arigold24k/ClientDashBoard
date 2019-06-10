@@ -295,6 +295,8 @@ class report extends React.Component {
 
     };
 
+
+    //maybe should of put this inside the table component
     updSelected (newSel) {
         const { selected } = this.state;
         const selectedIndex = selected.indexOf(newSel);
@@ -403,6 +405,7 @@ class report extends React.Component {
                                     }
 
                                 </div> :
+                                    //need to add the code to handle the submit for the summary report
                                     <div className={classes.buttonHolder}>
                                         <Button
                                             variant="contained"

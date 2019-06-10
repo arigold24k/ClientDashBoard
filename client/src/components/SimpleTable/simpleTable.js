@@ -176,11 +176,12 @@ class EnhancedTable extends React.Component {
     state = initialState;
     constructor (props) {
         super(props);
-        const {dataPassed, selected} = this.props;
+        const {dataPassed} = this.props;
+        //const {dataPassed, selected} = this.props;
         this.state = {
              ...initialState,
             rows: dataPassed,
-            selected: selected
+            selected: []
         };
     };
     handleSort = (event, columnName) => {
