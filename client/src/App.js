@@ -12,6 +12,7 @@ import SignUP from './pages/SignUpPage';
 import passwordRS from './components/PasswordReset';
 import funcs_ from './functions/functions';
 import update from './pages/updatePW';
+import Link from '@material-ui/core/Link';
 
 const initialState = {open1: false,
     open3: false,
@@ -84,10 +85,12 @@ class App extends Component {
         // clearTimeout(this.interval);
         this.getKey();
         console.log('This is the state in the component will mount ', this.state);
-        document.title = 'Client Dashboard'
+        document.title = 'Client Dashboard';
+
       };
     componentDidMount() {
         console.log("This is the state when the component moutned ", this.state);
+        // window.location.href = '/login1';
     }
     getValue = (event) => {
         // Updates the input state

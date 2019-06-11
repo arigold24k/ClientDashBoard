@@ -1,8 +1,9 @@
 {
-  "name": "project2",
+  "name": "Client_Dashboard",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3001/",
+  "homepage" : "http://localhost:3000/login1/",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",

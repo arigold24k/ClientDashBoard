@@ -108,7 +108,24 @@ const orm = {
             }
         });
     },
+
+    pullResetId : function(usrname, _email, cb) {
+        const strSql = `SELECT id FROM resetstatuses a WHERE date_format(date_add(a.date, interval 1 day), '%m/%d/%Y_%h:%i:%s') > date_format(sysdate(), '%m/%d/%Y_%h:%i:%s') and a.username = '${usrname}' and used = 'N' and email = '${_email}'`;
+        db.sequelize.query(strSql).then((results)=> {
+            if(typeof(results[0][0]) !== 'undefined') {
+                const dataObj = {
+                    id: results[0][0].id
+                };
+                cb(null, dataObj);
+            }
+            cb({error: 'no data to reset'}, null);
+
+        }).catch((err) => {
+            cb({error: 'error in executing the query'}, null)
+        })
+    },
 //have to test this 05/31/2019
+//tested on 06/10/2019
     insertIntoReset: function (usrname, _email, cb) {
         const todayDate = new Date();
         this.in_current_link(usrname, (err, results) => {
@@ -122,15 +139,31 @@ const orm = {
 
                 },).then((res) => {
                     console.log("after insert: ", res);
+                    if(res) {
+                       this.pullResetId(usrname, _email, (err2, res2) => {
+                           if(res2) {
+                               cb(null, res2)
+                           }else{
+                               cb(err2,null)
+                           }
+                       })
+                    }
 
                     cb(null, res);
-                }).catch((err) => {
-                    if (err) {
-                        cb(err, null);
+                }).catch((err1) => {
+                    if (err1) {
+                        cb(err1, null);
                     }
                 });
             }else {
-                cb(null, 'DataAlreadyInSystem');
+                this.pullResetId(usrname, _email, (err2, res2) => {
+                    if(res2) {
+                        cb(null, {message: 'DataAlreadyInSystem', data: res2})
+                    }else{
+                        cb(err2,null)
+                    }
+                });
+                // cb(null, 'DataAlreadyInSystem');
             }
 
         })

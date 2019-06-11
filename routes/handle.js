@@ -52,19 +52,26 @@ router.post('/passwordReset', (req, res) => {
                 orm.insertIntoReset(username, email, (err, res2) => {
                     if(res2) {
                         console.log("Response to the insert into reset handle.js, data: ", res2);
-                        if(res === 'DataAlreadyInSystem') {
-                            console.log("data was not added. data: ", res2);
-                        }else {
-                            console.log("data would have been added.  Added data: ", res2);
-                            //need to have code to send email here
-                            //pull the id from here as well
-
+                        // if(res2 === 'DataAlreadyInSystem') {
+                        //     console.log("data was not added. data: ", res2);
                             res.json({
-                                message:'would have added to table',
-                                data: res2})
-                        }
+                                message: 'data in table',
+                                data: res2
+                            })
+                        // }
+                        // else {
+                        //     console.log("data would have been added.  Added data: ", res2);
+                        //     //need to have code to send email here
+                        //     //pull the id from here as well
+                        //
+                        //     res.json({
+                        //         message:'would have added to table',
+                        //         data: res2})
+                        // }
 
-                    }else {
+
+                    }
+                    else {
                         //error in adding the values to the table
                         //sending a value of 3
                         res.json({
@@ -83,7 +90,7 @@ router.post('/passwordReset', (req, res) => {
             }
        }else {
            //no username exist
-           //value of 2
+           //value of 1
            res.json({
                message: "username does not match",
                data: 1

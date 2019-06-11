@@ -8,6 +8,8 @@ import Paper from '@material-ui/core/Paper';
 import PropTypes from "prop-types";
 import withStyles from '@material-ui/core/styles/withStyles';
 import axios from 'axios';
+import Modal from '@material-ui/core/Modal';
+import Link from '@material-ui/core/Link';
 
 
 const styles = theme => ({
@@ -48,14 +50,36 @@ const styles = theme => ({
 
     },
 });
+
+function getModalStyle() {
+    const top = 50 + rand();
+    const left = 50 + rand();
+
+    return {
+        top: `${top}%`,
+        left: `${left}%`,
+        transform: `translate(-${top}%, -${left}%)`,
+    };
+}
+
+function rand() {
+    return Math.round(Math.random() * 20) - 10;
+}
+
+const initial_State = {
+    username: '',
+    email: '',
+    open1: false,
+    open2: false,
+    open3: false,
+    open4: false
+};
+
 class passwordrst extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            username: '',
-            email: ''
-        }
+        this.state = initial_State;
     }
     handleSubmit = () => {
         const dataObj = {
@@ -64,16 +88,22 @@ class passwordrst extends React.Component {
         };
       axios.post('/passwordReset', dataObj).then((res) => {
         //value 1 is when the username does not exist
-          console.log("This is the reponse to the password reset, ", res);
-          if(res.data === 1) {
+          console.log("This is the reponse to the password reset, ", res.data);
+          if(res.status === 200) {
+              if(res.data.data === 1) {
+                  //username does not match
+                  this.setState({open1: true})
+              }else if (res.data.data === 2) {
+                  //email does not match
+                  this.setState({open2: true})
+              }else if (res.data.data === 3) {
+                  //error adding the data
+                  this.setState({open3: true})
+              }
+              else if (res.data.data) {
+                  this.setState({id: res.data.data.data.id, open4: true})
 
-          }else if (res.data === 2) {
-
-          }else if (res.data === 3) {
-
-          }
-          else if (res.data.data) {
-
+              }
           }
       }).catch((err) => {
 
@@ -84,6 +114,9 @@ class passwordrst extends React.Component {
         this.setState({
             [name] : value
         })
+    };
+    handlemodalClose = () => {
+          this.setState(initial_State);
     };
     render () {
         const {classes} = this.props;
@@ -134,6 +167,66 @@ class passwordrst extends React.Component {
                 </Grid>
             </Paper>
         </main>
+        <Modal
+            aria-labelledby="simple-modal-title"
+            aria-describedby="simple-modal-description"
+            open={this.state.open1}
+            onClose={() => {this.handlemodalClose()}}
+        >
+            <div style={getModalStyle()} className={classes.modal}>
+                <Typography variant="h6" id="modal-title">
+                    Error
+                </Typography>
+                <Typography variant="subtitle1" id="simple-modal-description">
+                    {this.state.username} is not a valid username. Provide a valid Username.
+                </Typography>
+            </div>
+        </Modal>
+            <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.state.open2}
+                onClose={() => {this.handlemodalClose()}}
+            >
+                <div style={getModalStyle()} className={classes.modal}>
+                    <Typography variant="h6" id="modal-title">
+                        Error
+                    </Typography>
+                    <Typography variant="subtitle1" id="simple-modal-description">
+                        {this.state.email} is not a valid E-Mail. Provide a valid E-Mail.
+                    </Typography>
+                </div>
+            </Modal>
+            <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.state.open3}
+                onClose={() => {this.handlemodalClose()}}
+            >
+                <div style={getModalStyle()} className={classes.modal}>
+                    <Typography variant="h6" id="modal-title">
+                        Error
+                    </Typography>
+                    <Typography variant="subtitle1" id="simple-modal-description">
+                        There was an error processing your request.  Please try close the browser and retry.
+                    </Typography>
+                </div>
+            </Modal>
+            <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.state.open4}
+                onClose={() => {this.handlemodalClose()}}
+            >
+                <div style={getModalStyle()} className={classes.modal}>
+                    <Typography variant="h6" id="modal-title">
+                        Click on Link below
+                    </Typography>
+                    <Typography variant="subtitle1" id="simple-modal-description">
+                        <Link href={`/updateinfo/${this.state.id}`} className={classes.link}>Click Here</Link>
+                    </Typography>
+                </div>
+            </Modal>
     </React.Fragment>
         )
     }
