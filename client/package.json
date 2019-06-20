@@ -2,6 +2,7 @@
   "name": "Client_Dashboard",
   "version": "0.1.0",
   "private": true,
+  "host": "0.0.0.0",
   "proxy": "http://localhost:3001/",
   "homepage" : "http://localhost:3000/login1/",
   "dependencies": {
