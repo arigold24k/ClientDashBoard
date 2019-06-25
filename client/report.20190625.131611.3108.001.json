@@ -1,0 +1,367 @@
+
+{
+  "header": {
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20190625.131611.3108.001.json",
+    "dumpEventTime": "2019-06-25T13:16:11Z",
+    "processId": 3108,
+    "commandLine": [
+      "C:\\Program Files\\nodejs\\\\node.exe",
+      "C:\\Program Files\\nodejs\\\\node_modules\\npm\\bin\\npm-cli.js",
+      "start"
+    ],
+    "nodejsVersion": "v11.11.0",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "win32",
+    "componentVersions": {
+      "node": "11.11.0",
+      "v8": "7.0.276.38-node.18",
+      "uv": "1.26.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "67",
+      "nghttp2": "1.34.0",
+      "napi": "4",
+      "llhttp": "1.1.1",
+      "http_parser": "2.8.0",
+      "openssl": "1.1.1a",
+      "cldr": "34.0",
+      "icu": "63.1",
+      "tz": "2018e",
+      "unicode": "11.0"
+    },
+    "release": {
+      "name": "node",
+      "headersUrl": "https://nodejs.org/download/release/v11.11.0/node-v11.11.0-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v11.11.0/node-v11.11.0.tar.gz",
+      "libUrl": "https://nodejs.org/download/release/v11.11.0/win-x64/node.lib"
+    },
+    "osName": "Windows_NT",
+    "osRelease": "10.0.14393",
+    "osVersion": "Windows 10 Pro",
+    "osMachine": "x86_64",
+    "host": "lmoon"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x00007ff61be4bc4e",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff61be4ab04",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff61be4a336",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff61bf3703a",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff61c31e49e",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff61c31e3d7",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff61c3c91a4",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff61c3befc8",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff61c3bd7c8",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff61c3c70f7",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff61c3c7176",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff61c552095",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff61c5bc732",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff61c5b369a",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00007ff61c752495",
+      "symbol": ""
+    },
+    {
+      "pc": "0x0000001f5d750481",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 3358720,
+    "totalCommittedMemory": 3358720,
+    "usedMemory": 784920,
+    "availableMemory": 1524848800,
+    "memoryLimit": 1526909922,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 524288,
+        "committedMemory": 524288,
+        "capacity": 515584,
+        "used": 33520,
+        "available": 482064
+      },
+      "new_space": {
+        "memorySize": 1048576,
+        "committedMemory": 1048576,
+        "capacity": 1031168,
+        "used": 23664,
+        "available": 1007504
+      },
+      "old_space": {
+        "memorySize": 724992,
+        "committedMemory": 724992,
+        "capacity": 316408,
+        "used": 316408,
+        "available": 0
+      },
+      "code_space": {
+        "memorySize": 524288,
+        "committedMemory": 524288,
+        "capacity": 381088,
+        "used": 381088,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 536576,
+        "committedMemory": 536576,
+        "capacity": 30240,
+        "used": 30240,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 1523359232,
+        "used": 0,
+        "available": 1523359232
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 0,
+        "used": 0,
+        "available": 0
+      }
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "=C:": "C:\\Users\\avidal\\Documents\\WebApps\\clientDashboard\\ClientDashBoard\\client",
+    "ACLOCAL_PATH": "C:\\Program Files\\Git\\mingw64\\share\\aclocal;C:\\Program Files\\Git\\usr\\share\\aclocal",
+    "ALLUSERSPROFILE": "C:\\ProgramData",
+    "ANDROID_HOME": "C:\\Users\\avidal\\AppData\\Local\\Android\\Sdk",
+    "APPDATA": "C:\\Users\\avidal\\AppData\\Roaming",
+    "ChocolateyInstall": "C:\\ProgramData\\chocolatey",
+    "ChocolateyLastPathUpdate": "Tue Mar 12 14:41:09 2019",
+    "CLASSPATH": ".;",
+    "COMMONPROGRAMFILES": "C:\\Program Files\\Common Files",
+    "CommonProgramFiles(x86)": "C:\\Program Files (x86)\\Common Files",
+    "CommonProgramW6432": "C:\\Program Files\\Common Files",
+    "COMPUTERNAME": "LMOON",
+    "COMSPEC": "C:\\windows\\system32\\cmd.exe",
+    "CONFIG_SITE": "C:/Program Files/Git/mingw64/etc/config.site",
+    "DISPLAY": "needs-to-be-defined",
+    "EXEPATH": "C:\\Program Files\\Git",
+    "FORCE_COLOR": "2",
+    "FPS_BROWSER_APP_PROFILE_STRING": "Internet Explorer",
+    "FPS_BROWSER_USER_PROFILE_STRING": "Default",
+    "HOME": "C:\\Users\\avidal",
+    "HOMEDRIVE": "C:",
+    "HOMEPATH": "\\Users\\avidal",
+    "HOSTNAME": "lmoon",
+    "INFOPATH": "C:\\Program Files\\Git\\usr\\local\\info;C:\\Program Files\\Git\\usr\\share\\info;C:\\Program Files\\Git\\usr\\info;C:\\Program Files\\Git\\share\\info",
+    "INIT_CWD": "C:\\Users\\avidal\\Documents\\WebApps\\clientDashboard\\ClientDashBoard",
+    "JAVA_HOME": "C:\\Program Files\\Java\\jdk1.8.0_201",
+    "LANG": "en_US.UTF-8",
+    "LOCALAPPDATA": "C:\\Users\\avidal\\AppData\\Local",
+    "LOGONSERVER": "\\\\PACE-DC2",
+    "MANPATH": "C:\\Program Files\\Git\\mingw64\\local\\man;C:\\Program Files\\Git\\mingw64\\share\\man;C:\\Program Files\\Git\\usr\\local\\man;C:\\Program Files\\Git\\usr\\share\\man;C:\\Program Files\\Git\\usr\\man;C:\\Program Files\\Git\\share\\man",
+    "MINGW_CHOST": "x86_64-w64-mingw32",
+    "MINGW_PACKAGE_PREFIX": "mingw-w64-x86_64",
+    "MINGW_PREFIX": "C:/Program Files/Git/mingw64",
+    "MSYSTEM": "MINGW64",
+    "MSYSTEM_CARCH": "x86_64",
+    "MSYSTEM_CHOST": "x86_64-w64-mingw32",
+    "MSYSTEM_PREFIX": "C:/Program Files/Git/mingw64",
+    "NODE": "C:\\Program Files\\nodejs\\node.exe",
+    "NODE_EXE": "C:\\Program Files\\nodejs\\\\node.exe",
+    "NPM_CLI_JS": "C:\\Program Files\\nodejs\\\\node_modules\\npm\\bin\\npm-cli.js",
+    "npm_config_argv": "{\"remain\":[],\"cooked\":[\"run\",\"dev\"],\"original\":[\"dev\"]}",
+    "npm_config_bin_links": "true",
+    "npm_config_ignore_optional": "",
+    "npm_config_ignore_scripts": "",
+    "npm_config_init_license": "MIT",
+    "npm_config_init_version": "1.0.0",
+    "npm_config_python": "C:Python27",
+    "npm_config_registry": "https://registry.yarnpkg.com",
+    "npm_config_save_prefix": "^",
+    "npm_config_strict_ssl": "true",
+    "npm_config_user_agent": "yarn/1.13.0 npm/? node/v11.11.0 win32 x64",
+    "npm_config_version_commit_hooks": "true",
+    "npm_config_version_git_message": "v%s",
+    "npm_config_version_git_sign": "",
+    "npm_config_version_git_tag": "true",
+    "npm_config_version_tag_prefix": "v",
+    "npm_execpath": "C:\\Users\\avidal\\AppData\\Roaming\\npm\\node_modules\\yarn\\bin\\yarn.js",
+    "npm_lifecycle_event": "dev",
+    "npm_lifecycle_script": "concurrently \"nodemon server.js\" \" cd ./client && npm start\"",
+    "npm_node_execpath": "C:\\Program Files\\nodejs\\node.exe",
+    "npm_package_dependencies_axios": "^0.18.0",
+    "npm_package_dependencies_bcrypt_nodejs": "0.0.3",
+    "npm_package_dependencies_body_parser": "^1.18.3",
+    "npm_package_dependencies_cookie_parser": "^1.4.4",
+    "npm_package_dependencies_debug": "~4.1.1",
+    "npm_package_dependencies_dotenv": "^7.0.0",
+    "npm_package_dependencies_express": "^4.16.4",
+    "npm_package_dependencies_jade": "^1.11.0",
+    "npm_package_dependencies_jsonwebtoken": "^8.5.1",
+    "npm_package_dependencies_loadash": "^1.0.0",
+    "npm_package_dependencies_material_ui": "^0.20.2",
+    "npm_package_dependencies_method_override": "^3.0.0",
+    "npm_package_dependencies_mongoose": "^5.4.19",
+    "npm_package_dependencies_morgan": "~1.9.1",
+    "npm_package_dependencies_multer": "^1.4.1",
+    "npm_package_dependencies_mysql": "^2.16.0",
+    "npm_package_dependencies_mysql2": "^1.6.5",
+    "npm_package_dependencies_path": "^0.12.7",
+    "npm_package_dependencies_prop_types": "^15.7.2",
+    "npm_package_dependencies_react": "^16.8.4",
+    "npm_package_dependencies_reactstrap": "^7.1.0",
+    "npm_package_dependencies_react_barcode": "^1.3.4",
+    "npm_package_dependencies_react_bootstrap": "^0.32.4",
+    "npm_package_dependencies_react_dom": "^16.8.4",
+    "npm_package_dependencies_react_number_format": "^4.0.7",
+    "npm_package_dependencies_sequelize": "^5.3.1",
+    "npm_package_dependencies_serve_favicon": "~2.5.0",
+    "npm_package_dependencies_tedious": "^5.0.3",
+    "npm_package_dependencies_tempa_xlsx": "0.0.1",
+    "npm_package_dependencies_uglify_js": "^3.4.10",
+    "npm_package_dependencies__material_ui_core": "^3.9.2",
+    "npm_package_dependencies__material_ui_icons": "^3.0.2",
+    "npm_package_description": "Dashboard for our clients",
+    "npm_package_devDependencies_concurrently": "^4.1.0",
+    "npm_package_license": "ISC",
+    "npm_package_main": "server.js",
+    "npm_package_name": "project2",
+    "npm_package_private": "true",
+    "npm_package_readmeFilename": "README.md",
+    "npm_package_scripts_dev": "concurrently \"nodemon server.js\" \" cd ./client && npm start\"",
+    "npm_package_scripts_postinstall": "(cd client && yarn install && yarn build)",
+    "npm_package_scripts_start": "node server.js",
+    "npm_package_version": "0.0.1",
+    "NUMBER_OF_PROCESSORS": "4",
+    "OLDPWD": "C:/Users/avidal",
+    "OneDrive": "C:\\Users\\avidal\\OneDrive",
+    "ORACLE_HOME": "C:\\app\\AVidal\\product\\11.2.0\\client_1",
+    "ORIGINAL_PATH": "C:\\Program Files\\Git\\mingw64\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\Users\\avidal\\bin;C:\\Python27;C:\\Python27\\Scripts;C:\\app\\AVidal\\product\\11.2.0\\client_1\\bin;C:\\DevSuiteHome_1\\jdk\\jre\\bin\\classic;C:\\DevSuiteHome_1\\jdk\\jre\\bin;C:\\DevSuiteHome_1\\jdk\\jre\\bin\\client;C:\\DevSuiteHome_1\\jlib;C:\\DevSuiteHome_1\\bin;C:\\DevSuiteHome_1\\jre\\1.4.2\\bin\\client;C:\\DevSuiteHome_1\\jre\\1.4.2\\bin;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0;C:\\Program Files\\Git\\cmd;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\nodejs;C:\\Program Files\\Java\\jdk1.8.0_201\\bin;C:\\users\\avidal\\bin;C:\\app\\AVidal\\product\\11.2.0\\client_1\\bin;C:\\app\\instantclient_12_2;C:\\Users\\avidal\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\heroku\\bin;C:\\Users\\avidal\\AppData\\Roaming\\npm;C:\\Users\\avidal\\AppData\\Local\\Android\\Sdk\\platform-tools;C:\\Users\\bin",
+    "ORIGINAL_TEMP": "C:/Users/avidal/AppData/Local/Temp",
+    "ORIGINAL_TMP": "C:/Users/avidal/AppData/Local/Temp",
+    "OS": "Windows_NT",
+    "PATH": "C:\\Users\\avidal\\AppData\\Local\\Temp\\yarn--1561482971118-0.08544064292985531;C:\\Users\\avidal\\Documents\\WebApps\\clientDashboard\\ClientDashBoard\\node_modules\\.bin;C:\\Users\\avidal\\AppData\\Local\\Yarn\\Data\\link\\node_modules\\.bin;C:\\Users\\avidal\\Documents\\WebApps\\clientDashboard\\ClientDashBoard\\node_modules\\.bin;C:\\Users\\avidal\\AppData\\Local\\Yarn\\Data\\link\\node_modules\\.bin;C:\\Users\\avidal\\AppData\\Local\\Yarn\\bin;C:\\Program Files\\libexec\\lib\\node_modules\\npm\\bin\\node-gyp-bin;C:\\Program Files\\lib\\node_modules\\npm\\bin\\node-gyp-bin;C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\node-gyp-bin;C:\\Users\\avidal\\bin;C:\\Program Files\\Git\\mingw64\\bin;C:\\Program Files\\Git\\usr\\local\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\Program Files\\Git\\mingw64\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\Users\\avidal\\bin;C:\\Python27;C:\\Python27\\Scripts;C:\\app\\AVidal\\product\\11.2.0\\client_1\\bin;C:\\DevSuiteHome_1\\jdk\\jre\\bin\\classic;C:\\DevSuiteHome_1\\jdk\\jre\\bin;C:\\DevSuiteHome_1\\jdk\\jre\\bin\\client;C:\\DevSuiteHome_1\\jlib;C:\\DevSuiteHome_1\\bin;C:\\DevSuiteHome_1\\jre\\1.4.2\\bin\\client;C:\\DevSuiteHome_1\\jre\\1.4.2\\bin;C:\\windows\\system32;C:\\windows;C:\\windows\\System32\\Wbem;C:\\windows\\System32\\WindowsPowerShell\\v1.0;C:\\Program Files\\Git\\cmd;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files\\nodejs;C:\\Program Files\\Java\\jdk1.8.0_201\\bin;C:\\users\\avidal\\bin;C:\\app\\AVidal\\product\\11.2.0\\client_1\\bin;C:\\app\\instantclient_12_2;C:\\Users\\avidal\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\heroku\\bin;C:\\Users\\avidal\\AppData\\Roaming\\npm;C:\\Users\\avidal\\AppData\\Local\\Android\\Sdk\\platform-tools;C:\\Users\\bin;C:\\Program Files\\Git\\usr\\bin\\vendor_perl;C:\\Program Files\\Git\\usr\\bin\\core_perl",
+    "PATHEXT": ".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JSE;.WSF;.WSH;.MSC",
+    "PKG_CONFIG_PATH": "C:\\Program Files\\Git\\mingw64\\lib\\pkgconfig;C:\\Program Files\\Git\\mingw64\\share\\pkgconfig",
+    "PLINK_PROTOCOL": "ssh",
+    "PROCESSOR_ARCHITECTURE": "AMD64",
+    "PROCESSOR_IDENTIFIER": "Intel64 Family 6 Model 78 Stepping 3, GenuineIntel",
+    "PROCESSOR_LEVEL": "6",
+    "PROCESSOR_REVISION": "4e03",
+    "ProgramData": "C:\\ProgramData",
+    "PROGRAMFILES": "C:\\Program Files",
+    "ProgramFiles(x86)": "C:\\Program Files (x86)",
+    "ProgramW6432": "C:\\Program Files",
+    "PROMPT": "$P$G",
+    "PSModulePath": "C:\\Program Files\\WindowsPowerShell\\Modules;C:\\windows\\system32\\WindowsPowerShell\\v1.0\\Modules",
+    "PUBLIC": "C:\\Users\\Public",
+    "PWD": "C:/Users/avidal/Documents/WebApps/clientDashboard/ClientDashBoard",
+    "SESSIONNAME": "Console",
+    "SHELL": "C:\\Program Files\\Git\\usr\\bin\\bash.exe",
+    "SHLVL": "2",
+    "SSH_ASKPASS": "C:/Program Files/Git/mingw64/libexec/git-core/git-gui--askpass",
+    "SYSTEMDRIVE": "C:",
+    "SYSTEMROOT": "C:\\windows",
+    "TEMP": "C:\\Users\\avidal\\AppData\\Local\\Temp",
+    "TERM": "cygwin",
+    "TMP": "C:\\Users\\avidal\\AppData\\Local\\Temp",
+    "TMPDIR": "C:\\Users\\avidal\\AppData\\Local\\Temp",
+    "TNS_ADMIN": "C:\\app\\instantclient_12_2",
+    "USERDNSDOMAIN": "PSSI.LOCAL",
+    "USERDOMAIN": "PSSI",
+    "USERDOMAIN_ROAMINGPROFILE": "PSSI",
+    "USERNAME": "avidal",
+    "USERPROFILE": "C:\\Users\\avidal",
+    "WINDIR": "C:\\windows",
+    "YARN_WRAP_OUTPUT": "false",
+    "_": "C:/Program Files/nodejs/node"
+  },
+  "sharedObjects": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "C:\\windows\\SYSTEM32\\ntdll.dll",
+    "C:\\windows\\System32\\KERNEL32.DLL",
+    "C:\\windows\\System32\\KERNELBASE.dll",
+    "C:\\windows\\System32\\PSAPI.DLL",
+    "C:\\windows\\System32\\WS2_32.dll",
+    "C:\\windows\\System32\\sechost.dll",
+    "C:\\windows\\System32\\RPCRT4.dll",
+    "C:\\windows\\System32\\ADVAPI32.dll",
+    "C:\\windows\\System32\\msvcrt.dll",
+    "C:\\windows\\SYSTEM32\\dbghelp.dll",
+    "C:\\windows\\System32\\USER32.dll",
+    "C:\\windows\\System32\\win32u.dll",
+    "C:\\windows\\System32\\GDI32.dll",
+    "C:\\windows\\System32\\ucrtbase.dll",
+    "C:\\windows\\System32\\gdi32full.dll",
+    "C:\\windows\\System32\\CRYPT32.dll",
+    "C:\\windows\\System32\\MSASN1.dll",
+    "C:\\windows\\SYSTEM32\\IPHLPAPI.DLL",
+    "C:\\windows\\SYSTEM32\\USERENV.dll",
+    "C:\\windows\\SYSTEM32\\bcrypt.dll",
+    "C:\\windows\\SYSTEM32\\WINMM.dll",
+    "C:\\windows\\System32\\profapi.dll",
+    "C:\\windows\\SYSTEM32\\WINMMBASE.dll",
+    "C:\\windows\\System32\\cfgmgr32.dll",
+    "C:\\windows\\System32\\IMM32.DLL",
+    "C:\\windows\\System32\\powrprof.dll",
+    "C:\\windows\\system32\\mswsock.dll",
+    "C:\\windows\\System32\\kernel.appcore.dll",
+    "C:\\windows\\System32\\bcryptprimitives.dll",
+    "C:\\windows\\system32\\napinsp.dll",
+    "C:\\windows\\system32\\pnrpnsp.dll",
+    "C:\\windows\\system32\\NLAapi.dll",
+    "C:\\windows\\SYSTEM32\\DNSAPI.dll",
+    "C:\\windows\\System32\\NSI.dll",
+    "C:\\windows\\System32\\winrnr.dll",
+    "C:\\windows\\System32\\wshbth.dll"
+  ]
+}
