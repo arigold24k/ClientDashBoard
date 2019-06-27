@@ -4,27 +4,35 @@ module.exports = (sequelize, DataTypes) => {
     comp_code: {
       type: DataTypes.STRING,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      unique: true,
     },
     comp_name: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    UserCode: {
+    parentCompany: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
+      allowNull: false
     },
 
   }, {});
   Company.associate = function(models) {
     // associations can be defined here
-
+    //adds a column attribute to the CompUser table called comp_code, can get user with getUsers and setUsers
     Company.hasMany(models.CompUser, {
-      foreignKey: {
-        name: "comp_code"
-      }
-    })
+    foreignKey: {
+      name: 'comp_code',
+      allowNull: false
+    },
+    onDelete: 'CASCADE',
+    as: 'userCodes'
+    });
+
+    // Company.hasMany(models.CompUser, {
+    //   foreignKey: 'comp_code',
+    //   onDelete: 'CASCADE'
+    // })
 
   };
   return Company;

@@ -2,18 +2,25 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('CompUsers', {
-      comp_code: {
-        type:DataTypes.STRING,
-        primaryKey: true,
+      // id : {
+      //   type: Sequelize.INTEGER,
+      //   allowNull: false,
+      //   autoIncrement: true,
+      //   primaryKey: true
+      // },
+      // comp_code: {
+      //   type:Sequelize.STRING,
+      //   allowNull: false,
+      //   references: {
+      //    model: 'Companies',
+      //    key: 'comp_code'
+      //   }
+      // },
+      UserCode: {
+        type: Sequelize.STRING,
+        unique: true,
         allowNull: false,
-        references: {
-          model: 'company',
-          key: 'comp_code',
-        }
-      },
-      user_code: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        primaryKey: true
       },
       createdAt: {
         allowNull: false,

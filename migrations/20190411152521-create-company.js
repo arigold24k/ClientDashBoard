@@ -5,16 +5,16 @@ module.exports = {
       comp_code: {
         type: Sequelize.STRING,
         allowNull: false,
-        primaryKey: true
+        primaryKey: true,
+        unique: true,
       },
       comp_name: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      UserCode: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+      parentCompany: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

@@ -1,11 +1,16 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('KCARDSS', {
+    return queryInterface.createTable('KCARDS', {
       CUSTOMER: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: "HolderCompany"
+        defaultValue: "HolderCompany",
+        // primaryKey: true,
+        references: {
+         model: 'UserTables',
+         key: 'CompCode'
+        }
       },
       SCANDATE: {
         type: Sequelize.DATE,
@@ -37,13 +42,13 @@ module.exports = {
       DATE_CREATED: Sequelize.DATE,
       DATE_MODIFIED: Sequelize.DATE,
       STATUS: Sequelize.STRING,
-      PSESSION: Sequelize.INTEGER,
+      // PSESSION: Sequelize.INTEGER,
       PROCESSED: Sequelize.STRING,
     }, {
       timestamp: false
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('KCARDSS');
+    return queryInterface.dropTable('KCARDS');
   }
 };

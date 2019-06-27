@@ -221,7 +221,7 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
                     // console.log("This is the error from the findontTag orm -- handle.js, ", err);
                     if(results !== null) {
                         if (req.body.purpose === 'CONSUME') {
-                        orm.insertToKCardss(decoded.user.companycode,req.body.purpose, req.body.partnum, req.body.quantity, req.body.tagnum, (err, data) => {
+                        orm.insertToKCards(decoded.user.companycode,req.body.purpose, req.body.partnum, req.body.quantity, req.body.tagnum, decoded.user.username,  (err, data) => {
                             if(err) {
                                 console.log("Error in adding activity to kcards ", err);
                                 res.json({message: "data was not added", data: null})
@@ -229,7 +229,7 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
                             }else{
                                 //code out if it inserted.
                                 console.log("Data should have been added, ", data);
-                                orm.deleteOneMaster("KCARD_YODA", "ITEM_TAG_INTEGER", req.body.tagnum, (err, data) => {
+                                orm.deleteOneMaster("KCARD_MASTER", "ITEM_TAG_INTEGER", req.body.tagnum, (err, data) => {
                                     console.log("data from delete, ", data);
                                     if(data !== null) {
                                         res.json({message: "data was added successfully", data: data});
@@ -241,7 +241,7 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
                         })
                         }else if (req.body.purpose === 'RECEIPT') {
                             // have to updated record in kcards master
-                            orm.updateOne('KCARD_YODA', 'ITEM_TAG_INTEGER', req.body.tagnum, 'DATE_MODIFIED', new Date(), (err, data) => {
+                            orm.updateOne('KCARD_MASTER', 'ITEM_TAG_INTEGER', req.body.tagnum, 'DATE_MODIFIED', new Date(), (err, data) => {
                                 if(data !== null) {
                                     res.json({message: "data was added successfully", data: "RECEIPT"});
                                 }else{
@@ -254,11 +254,11 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
                     }
                     else if (results === null) {
                      if (req.body.purpose === 'ERROR') {
-                            // have to find a row in the kcard_yoda_raw and insert into kcard_yoda and remove from kcards
+                            // have to find a row in the kcard_master_raw and insert into kcard_master and remove from kcards
                          orm.runError(req.body.tagnum, (error, data) => {
                              console.log('run error, data: ', data);
                              if(data !== null) {
-                                 orm.deleteOneMaster('KCARDSS', 'TAG_NUM', req.body.tagnum, (error, data) => {
+                                 orm.deleteOneMaster('KCARDS', 'TAG_NUM', req.body.tagnum, (error, data) => {
                                      if(data !== null) {
                                          res.json({data: data})
                                      }else{

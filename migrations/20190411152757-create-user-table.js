@@ -3,10 +3,10 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('UserTables', {
       id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+       allowNull: false,
+       autoIncrement: true,
+       type: Sequelize.INTEGER,
+       primaryKey: true
       },
       username: {
         type: Sequelize.STRING,
@@ -24,22 +24,23 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      CompCode: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      temp_pw: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-      },
-      UserCode: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        references: {
-          model: 'CompUser',
-          key: 'user_code'
-        }
-      },
+      // CompCode: {
+      //   type: Sequelize.STRING,
+      //   allowNull: false
+      // },
+      // temp_pw: {
+      //   type: DataTypes.BOOLEAN,
+      //   allowNull: false
+      // },
+      // UserCode: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      //   unique: true,
+      //   references: {
+      //   model: 'CompUsers',
+      //   key: 'UserCode'
+      //   }
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

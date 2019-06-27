@@ -169,7 +169,7 @@ const orm = {
         })
 
     },
-    insertToKCardss: (customer, code, part, qty, tag_num, cb) => {
+    insertToKCards: (customer, code, part, qty, tag_num, user,  cb) => {
         const todayDate = new Date();
         const dataObj = {
             'CUSTOMER': customer,
@@ -180,9 +180,10 @@ const orm = {
             'TAG_NUM': tag_num,
             'DATE_CREATED': todayDate,
             'DATE_MODIFIED': todayDate,
+            'PSISSION': user,
         };
         // console.log("Data being passed into the db KCARDS upsert, ", dataObj);
-        db.KCARDSS.upsert(dataObj).then((res, metadata) => {
+        db.KCARDS.upsert(dataObj).then((res, metadata) => {
             return cb(null, res);
         }).catch((err) => {
             if (err) {
@@ -191,7 +192,7 @@ const orm = {
         });
     },
     findOneTag: (tagNumber, cb) => {
-        db.KCARD_YODA.findOne({
+        db.KCARD_MASTER.findOne({
             where: {
                 'ITEM_TAG_INTEGER': tagNumber
             }
@@ -227,7 +228,7 @@ const orm = {
         })
     },
     runError: (itemtagNum, cb) => {
-        const queryString =`INSERT INTO KCARD_YODAS (SELECT * FROM KCARD_YODA_RAWS WHERE ITEM_TAG_INTEGER = '${itemtagNum}');`;
+        const queryString =`INSERT INTO KCARD_MASTERS (SELECT * FROM KCARD_MASTER_RAWS WHERE ITEM_TAG_INTEGER = '${itemtagNum}');`;
         db.sequelize.query(queryString).then((results, metadata) => {
              console.log('this is the metadata: ' + metadata + 'this is the data ' + results);
             if(results) {
@@ -245,7 +246,7 @@ const orm = {
         }else{
             condition = `AND a.part in (${filtered})`;
         }
-        const strSql = `SELECT (CASE WHEN MONTH(a.SCANDATE) = 1 THEN 'JAN' WHEN MONTH(a.SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(a.SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(a.SCANDATE) = 4 THEN 'APR'  WHEN MONTH(a.SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(a.SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(a.SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(a.SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(a.SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(a.SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(a.SCANDATE) = 11 THEN 'NOV'  WHEN MONTH(a.SCANDATE) = 12 THEN 'DEC' ELSE '' END) Month, SUM((CASE WHEN a.CODE LIKE '%CONSUME%' THEN a.QTY ELSE '' END)) Consumed, SUM(b.QTY) Received, year(a.scandate), month(a.scandate)  FROM KCARDSSES a, kcard_yodas b WHERE a.CUSTOMER = '${compCode}' AND a.CUSTOMER = b.BP_CODE AND b.SHIP_DATE >= date_sub(sysdate(), INTERVAL 13 MONTH) AND b.SHIP_DATE <= sysdate() AND a.SCANDATE >= date_sub(sysdate(), INTERVAL 13 MONTH) AND a.SCANDATE <= sysdate() ${condition} GROUP BY (CASE WHEN MONTH(a.SCANDATE) = 1 THEN 'JAN' WHEN MONTH(a.SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(a.SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(a.SCANDATE) = 4 THEN 'APR'  WHEN MONTH(a.SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(a.SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(a.SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(a.SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(a.SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(a.SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(a.SCANDATE) = 11 THEN 'NOV'  WHEN MONTH(a.SCANDATE) = 12 THEN 'DEC' ELSE '' END), year(a.scandate), month(a.scandate) ORDER BY year(a.scandate) ASC, month(a.scandate) ASC;`;
+        const strSql = `SELECT (CASE WHEN MONTH(a.SCANDATE) = 1 THEN 'JAN' WHEN MONTH(a.SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(a.SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(a.SCANDATE) = 4 THEN 'APR'  WHEN MONTH(a.SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(a.SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(a.SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(a.SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(a.SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(a.SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(a.SCANDATE) = 11 THEN 'NOV'  WHEN MONTH(a.SCANDATE) = 12 THEN 'DEC' ELSE '' END) Month, SUM((CASE WHEN a.CODE LIKE '%CONSUME%' THEN a.QTY ELSE '' END)) Consumed, SUM(b.QTY) Received, year(a.scandate), month(a.scandate)  FROM KCARDS a, KCARD_MASTERs b WHERE a.CUSTOMER = '${compCode}' AND a.CUSTOMER = b.BP_CODE AND b.SHIP_DATE >= date_sub(sysdate(), INTERVAL 13 MONTH) AND b.SHIP_DATE <= sysdate() AND a.SCANDATE >= date_sub(sysdate(), INTERVAL 13 MONTH) AND a.SCANDATE <= sysdate() ${condition} GROUP BY (CASE WHEN MONTH(a.SCANDATE) = 1 THEN 'JAN' WHEN MONTH(a.SCANDATE) = 2 THEN 'FEB'  WHEN MONTH(a.SCANDATE) = 3 THEN 'MAR'  WHEN MONTH(a.SCANDATE) = 4 THEN 'APR'  WHEN MONTH(a.SCANDATE) = 5 THEN 'MAY'  WHEN MONTH(a.SCANDATE) = 6 THEN 'JUN'  WHEN MONTH(a.SCANDATE) = 7 THEN 'JUL'  WHEN MONTH(a.SCANDATE) = 8 THEN 'AUG'  WHEN MONTH(a.SCANDATE) = 9 THEN 'SEP'  WHEN MONTH(a.SCANDATE) = 10 THEN 'OCT'  WHEN MONTH(a.SCANDATE) = 11 THEN 'NOV'  WHEN MONTH(a.SCANDATE) = 12 THEN 'DEC' ELSE '' END), year(a.scandate), month(a.scandate) ORDER BY year(a.scandate) ASC, month(a.scandate) ASC;`;
         db.sequelize.query(strSql).then((results) => {
             // console.log('data coming from the dashboard data, ', results);
             cb(null, results);
@@ -255,7 +256,7 @@ const orm = {
         })
     },
     dashboardDataTable : (compCode, cb) => {
-        const strSql = `SELECT DISTINCT PART, count(item_tag_integer) tagcount, SUM(QTY) quantity FROM KCARD_YODAS WHERE BP_CODE = '${compCode}' GROUP BY PART ORDER BY SUM(QTY) DESC;`;
+        const strSql = `SELECT DISTINCT PART, count(item_tag_integer) tagcount, SUM(QTY) quantity FROM KCARD_MASTERS WHERE BP_CODE = '${compCode}' GROUP BY PART ORDER BY SUM(QTY) DESC;`;
         db.sequelize.query(strSql).then((results) => {
             // console.log('data coming from the dashboard data, ', results);
             cb(null, results);
@@ -265,7 +266,7 @@ const orm = {
         })
     },
     reporting1 : (compCode, cb) => {
-        const strSql = `select * from kcardsses where customer = '${compCode}' AND date_format(SCANDATE, '%m/%d/%Y') = date_format(sysdate(), '%m/%d/%Y');`;
+        const strSql = `select * from KCARDS where customer = '${compCode}' AND date_format(SCANDATE, '%m/%d/%Y') = date_format(sysdate(), '%m/%d/%Y');`;
         db.sequelize.query(strSql).then((results) => {
             // console.log('data coming from the reporting1 data, ', results);
             cb(null, results);
@@ -275,7 +276,7 @@ const orm = {
         })
     },
     reporting2 : (compCode, cb) => {
-        const strSql = ` select * from kcardsses where customer = '${compCode}' AND date_format(SCANDATE,'%m/%d/%Y') <= date_format(sysdate(),'%m/%d/%Y')  AND date_format(SCANDATE,'%m/%d/%Y') >= date_format(date_sub(sysdate(),interval  weekday(sysdate()) day), '%m/%d/%Y') order by scandate;`;
+        const strSql = ` select * from KCARDS where customer = '${compCode}' AND date_format(SCANDATE,'%m/%d/%Y') <= date_format(sysdate(),'%m/%d/%Y')  AND date_format(SCANDATE,'%m/%d/%Y') >= date_format(date_sub(sysdate(),interval  weekday(sysdate()) day), '%m/%d/%Y') order by scandate;`;
         db.sequelize.query(strSql).then((results) => {
             // console.log('data coming from the reporting1 data, ', results);
             cb(null, results);
@@ -285,7 +286,7 @@ const orm = {
         })
     },
     reporting3 : (compCode, cb) => {
-        const strSql = `select * from kcardsses where customer ='${compCode}' and date_format(scandate, '%m_%Y') = date_format(sysdate(), '%m_%Y') order by scandate;`;
+        const strSql = `select * from KCARDS where customer ='${compCode}' and date_format(scandate, '%m_%Y') = date_format(sysdate(), '%m_%Y') order by scandate;`;
         db.sequelize.query(strSql).then((results) => {
             // console.log('data coming from the reporting1 data, ', results);
             cb(null, results);
@@ -295,7 +296,7 @@ const orm = {
         })
     },
     reporting4 : (compCode, cb) => {
-        const strSql = `select * from kcardsses where customer ='${compCode}' and date_format(scandate, '%Y') = date_format(sysdate(), '%Y') order by scandate;`;
+        const strSql = `select * from KCARDS where customer ='${compCode}' and date_format(scandate, '%Y') = date_format(sysdate(), '%Y') order by scandate;`;
         db.sequelize.query(strSql).then((results) => {
             // console.log('data coming from the reporting1 data, ', results);
             cb(null, results);
@@ -305,7 +306,7 @@ const orm = {
         })
     },
     reporting5 : (compCode,range1, range2, cb) => {
-        const strSql = `select distinct * from kcardsses where customer ='${compCode}' and date_format(scandate, '%m/%d/%Y') BETWEEN date_format('${range1}', '%m/%d/%Y') AND date_format('${range2}', '%m/%d/%Y') order by scandate;`;
+        const strSql = `select distinct * from KCARDS where customer ='${compCode}' and date_format(scandate, '%m/%d/%Y') BETWEEN date_format('${range1}', '%m/%d/%Y') AND date_format('${range2}', '%m/%d/%Y') order by scandate;`;
         // console.log("This is the query being passed, ", strSql);
         db.sequelize.query(strSql).then((results) => {
             // console.log('data coming from the reporting1 data, ', results);
@@ -316,7 +317,7 @@ const orm = {
         })
     },
     getCurrentCount : (compCode, cb) => {
-      const strSql = `select count(*) count from kcardsses a where date_format(scandate, '%Y%m%d') = date_format(sysdate(), '%Y%m%d') and (code  like '%CONSUME%' or code like '%RECEIVED%') and customer like ('%${compCode}%');`;
+      const strSql = `select count(*) count from KCARDS a where date_format(scandate, '%Y%m%d') = date_format(sysdate(), '%Y%m%d') and (code  like '%CONSUME%' or code like '%RECEIVED%') and customer like ('%${compCode}%');`;
       db.sequelize.query(strSql).then((results) => {
           cb(null, results);
       }).catch((err) => {

@@ -2,11 +2,10 @@
 module.exports = (sequelize, DataTypes) => {
   const UserTable = sequelize.define('UserTable', {
     id: {
-      type: DataTypes.INTEGER,
-      unique: true,
-      autoIncrement: true,
-      primaryKey: true
-
+     type: DataTypes.INTEGER,
+     unique: true,
+     autoIncrement: true,
+     primaryKey: true,
       // defaultValue: "A"
     },
     username: {
@@ -23,27 +22,48 @@ module.exports = (sequelize, DataTypes) => {
     },
     Email: {
       type: DataTypes.STRING,
+      unique: true,
       allowNull: false
     },
-    CompCode: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    temp_pw: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false
-    },
-    UserCode: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }
+    // CompCode: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false
+    // },
+    // temp_pw: {
+    //   type: DataTypes.BOOLEAN,
+    //   allowNull: false
+    // }
+    // ,
+    // UserCode: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   unique: true
+    //
+    // }
   }, {});
   UserTable.associate = function(models) {
-    UserTable.belongsTo(models.CompUser, {
+    //this adds the primary key of compUser to this table
+    // UserTable.belongsTo(models.CompUser, {
+    //   foreignKey: {
+    //     name: 'UserCode',
+    //     allowNull: false
+    //   },
+    //  onDelete: 'CASCADE'
+    // });
+
+      //this adds company primary key to User table
+    UserTable.belongsTo(models.Company, {
       foreignKey: {
-        name: "UserCode"
+          name: 'CompCode',
+          allowNull: false
       },
       onDelete: 'CASCADE'
+    });
+
+    UserTable.hasMany(models.KCARDS, {
+      foreignKey: {name: 'PSESSION'},
+      onDelete: 'CASCADE',
+      as: 'Users'
     })
     // associations can be defined here
   };

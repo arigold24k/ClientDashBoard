@@ -1,10 +1,11 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const KCARDSS = sequelize.define('KCARDSS', {
+  const KCARDS = sequelize.define('KCARDS', {
     CUSTOMER: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "HolderCompany"
+      defaultValue: "HolderCompany",
+     // primaryKey: true,
     },
     SCANDATE: {
       type: DataTypes.DATE,
@@ -36,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     DATE_CREATED: DataTypes.DATE,
     DATE_MODIFIED: DataTypes.DATE,
     STATUS: DataTypes.STRING,
-    PSESSION: DataTypes.INTEGER,
+    // PSESSION: DataTypes.INTEGER,
     PROCESSED: DataTypes.STRING
   }, {
     indexes: [{
@@ -45,10 +46,14 @@ module.exports = (sequelize, DataTypes) => {
     }],
     timestamps: false
   },);
-  KCARDSS.associate = function(models) {
+  KCARDS.associate = function(models) {
     // associations can be defined here
+    //KCARDS.belongsTo(models.UserTable, {
+    //  foreignKey: 'CompCode',
+    //  onDelete: 'CASCADE'
+    //})
   };
 
 
-  return KCARDSS;
+  return KCARDS;
 };

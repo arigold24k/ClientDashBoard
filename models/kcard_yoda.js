@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const KCARD_YODA = sequelize.define('KCARD_YODA', {
+  const KCARD_MASTER = sequelize.define('KCARD_MASTER', {
     KCARD: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -38,10 +38,10 @@ module.exports = (sequelize, DataTypes) => {
     }],
     timestamps: false
   });
-  KCARD_YODA.associate = function(models) {
+  KCARD_MASTER.associate = function(models) {
     // associations can be defined here
   };
 
 
-  return KCARD_YODA;
+  return KCARD_MASTER;
 };

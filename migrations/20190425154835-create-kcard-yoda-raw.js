@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('kcard_yoda_raws', {
+    return queryInterface.createTable('kcard_master_raws', {
       KCARD: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -34,6 +34,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('kcard_yoda_raws');
+    return queryInterface.dropTable('kcard_master_raws');
   }
 };
