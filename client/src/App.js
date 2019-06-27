@@ -85,7 +85,7 @@ class App extends Component {
         // clearTimeout(this.interval);
         this.getKey();
         console.log('This is the state in the component will mount ', this.state);
-        document.title = 'Client Dashboard';
+        // document.title = 'Client Dashboard';
 
       };
     componentDidMount() {
