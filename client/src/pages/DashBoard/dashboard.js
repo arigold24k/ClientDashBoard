@@ -6,13 +6,15 @@ import Typography from '@material-ui/core/Typography';
 import SimpleLineChart from '../../components/SimpleLineChart';
 import SimpleTable from '../../components/SimpleTable';
 import Navbar from '../../components/Navbar2';
+
+// var axios = require('axios');
 import axios from 'axios';
 import Icon from '@mdi/react';
 import { mdiLoading } from '@mdi/js';
 import Paper from '@material-ui/core/Paper';
 import orderBy from 'lodash/orderBy';
 import Button from "@material-ui/core/Button";
-
+require('es6-promise').polyfill();
 const drawerWidth = 240;
 
 const styles = theme => ({

@@ -10,6 +10,7 @@ import axios from "axios";
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import funcs_ from "../../functions/functions";
+require('es6-promise').polyfill();
 
 function getModalStyle() {
     const top = 50 + rand();

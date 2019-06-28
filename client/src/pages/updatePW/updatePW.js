@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import withStyles from '@material-ui/core/styles/withStyles';
 import functions from '../../functions/functions';
 import axios from 'axios';
+require('es6-promise').polyfill();
 
 
 const styles = theme => ({
