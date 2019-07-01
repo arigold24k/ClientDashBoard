@@ -9,7 +9,7 @@ const orm = require('../config/orm');
 //middleware to protect routes
 
 router.get("/", function(req, res) {
-    console.log("Route was hit.");
+    // console.log("Route was hit.");
    res.json({
        message: "this is the router being hit"
    });
@@ -25,7 +25,7 @@ router.get("/data", function(req, res) {
     }))
 });
 router.post('/register', function(req, res) {
-    console.log('Register API is being hit');
+    // console.log('Register API is being hit');
     orm.addoneUser(req.body.userName, req.body.password, req.body.email, req.body.companyCode, (err, data) => {
         // console.log('---data is coming back from query---', data);
         if(data && (data !==0 && data !== 3)){
@@ -44,14 +44,14 @@ router.post('/passwordReset', (req, res) => {
    //finds username in table that matches values that was passed
    orm.findoneUser(username, ((err, res1) => {
        if(res1.data[0]) {
-           console.log("This is the response to the password reset, ", res1.data[0][0]);
+           // console.log("This is the response to the password reset, ", res1.data[0][0]);
            //checks if email that was passed matches that which is in the DB
             if(email === res1.data[0][0].Email) {
-                console.log("Email and username match");
+                // console.log("Email and username match");
 
                 orm.insertIntoReset(username, email, (err, res2) => {
                     if(res2) {
-                        console.log("Response to the insert into reset handle.js, data: ", res2);
+                        // console.log("Response to the insert into reset handle.js, data: ", res2);
                         // if(res2 === 'DataAlreadyInSystem') {
                         //     console.log("data was not added. data: ", res2);
                             res.json({
@@ -113,7 +113,7 @@ router.post('/updateDrowssap', (req, res)=> {
                         }
                     });
                 }else{
-                    console.log("error in the update of password, ", err_2);
+                    // console.log("error in the update of password, ", err_2);
                 }
             })
         }else{
@@ -188,7 +188,7 @@ router.post('/api/verify', function(req, res) {
             res.json({message:'Token Verified', dataObj})
         }
     } catch(err) {
-        console.log('err value in the new api route, ', err);
+        // console.log('err value in the new api route, ', err);
         const dataObj = {data: false, error: err};
         res.json({message: 'There was an error', dataObj})
     }
@@ -223,18 +223,18 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
                         if (req.body.purpose === 'CONSUME') {
                         orm.insertToKCards(decoded.user.companycode,req.body.purpose, req.body.partnum, req.body.quantity, req.body.tagnum, decoded.user.username,  (err, data) => {
                             if(err) {
-                                console.log("Error in adding activity to kcards ", err);
+                                // console.log("Error in adding activity to kcards ", err);
                                 res.json({message: "data was not added", data: null})
                                 //put in code if it was not inserted
                             }else{
                                 //code out if it inserted.
-                                console.log("Data should have been added, ", data);
+                                // console.log("Data should have been added, ", data);
                                 orm.deleteOneMaster("KCARD_MASTER", "ITEM_TAG_INTEGER", req.body.tagnum, (err, data) => {
-                                    console.log("data from delete, ", data);
+                                    // console.log("data from delete, ", data);
                                     if(data !== null) {
                                         res.json({message: "data was added successfully", data: data});
                                     }else{
-                                        console.log("error in the delete, ", err);
+                                        // console.log("error in the delete, ", err);
                                     }
                                 })
                             }
@@ -245,7 +245,7 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
                                 if(data !== null) {
                                     res.json({message: "data was added successfully", data: "RECEIPT"});
                                 }else{
-                                    console.log("error in the delete, ", err);
+                                    // console.log("error in the delete, ", err);
                                 }
                             })
                         }else if (req.body.purpose === 'ERROR') {
@@ -256,7 +256,7 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
                      if (req.body.purpose === 'ERROR') {
                             // have to find a row in the kcard_master_raw and insert into kcard_master and remove from kcards
                          orm.runError(req.body.tagnum, (error, data) => {
-                             console.log('run error, data: ', data);
+                             // console.log('run error, data: ', data);
                              if(data !== null) {
                                  orm.deleteOneMaster('KCARDS', 'TAG_NUM', req.body.tagnum, (error, data) => {
                                      if(data !== null) {
@@ -267,7 +267,7 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
                                  });
                                  // res.json({message: "data was added successfully", data: data});
                              }else{
-                                 console.log("error in the runError, ", err);
+                                 // console.log("error in the runError, ", err);
                              }
                          })
                         }else {
@@ -357,7 +357,7 @@ router.post('/reporting', verifyToken, (req, res) => {
                       break;
                   case 5:
                       //run code
-                      console.log("this is the handle.js dataObj: ", req.body);
+                      // console.log("this is the handle.js dataObj: ", req.body);
                       orm.reporting5(decoded.user.companycode, req.body.range1, req.body.range2, (err, data) => {
                           if(err) {
                               res.status(403).json({message: 'error in getting the data', data: err})
@@ -394,7 +394,7 @@ function verifyToken (req, res, next) {
         const bearer = bearerHeader.split(' ');
         const bearerToken = bearer[1];
         req.token = bearerToken;
-        console.log("This is the token that is being sent as the header, ", bearerToken);
+        // console.log("This is the token that is being sent as the header, ", bearerToken);
         next();
     }else{
         //forbidden

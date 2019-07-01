@@ -35,18 +35,54 @@ class signUp extends React.Component {
                         value={this.props.UN}
                     />
                 </Grid>
-                <Grid item xs={12}>
+
+
+                { this.props.email1 == '' ?
+                    <Grid item xs={12}>
+                        <TextField
+                            required
+                            id="email"
+                            name="email"
+                            label="Email"
+                            fullWidth
+                            autoComplete="email"
+                            onChange={this.props.updateval}
+                            value={this.props.email1}
+                        />
+                    </Grid> :
+                    (
+
+                    (this.props.validE) ?
+                    <Grid item xs={12}>
                     <TextField
-                        required
-                        id="email"
-                        name="email"
-                        label="Email"
-                        fullWidth
-                        autoComplete="email"
-                        onChange={this.props.updateval}
-                        value={this.props.email1}
+                    required
+                    id="email"
+                    name="email"
+                    label="Email"
+                    fullWidth
+                    autoComplete="email"
+                    onChange={this.props.updateval}
+                    value={this.props.email1}
                     />
-                </Grid>
+                    </Grid>
+                :
+                    <Grid item xs={12}>
+                    <TextField
+                    error
+                    id="email"
+                    name="email"
+                    label="Email"
+                    fullWidth
+                    autoComplete="email"
+                    onChange={this.props.updateval}
+                    value={this.props.email1}
+                    />
+                    </Grid>
+
+                    )}
+
+
+
                 <Grid item xs={12}>
                     <TextField
                         required

@@ -24,6 +24,13 @@ function getModalStyle() {
 function rand() {
     return Math.round(Math.random() * 20) - 10;
 }
+
+function checkEmail(email) {
+    var emailRGEX = /[\w.]+@\w+\.(net|com|edu|gov)/;
+
+    return emailRGEX.test(email);
+}
+
 const styles = theme => ({
     modal: {
         position: 'absolute',
@@ -74,23 +81,33 @@ class signuppage extends React.Component {
             rePassWord: '',
             open1: false,
             open: false,
-            open2: false
+            open2: false,
+            open3: false,
+            validEM: true,
         };
     }
     handleSubmit = (event) => {
         event.preventDefault();
         let dataObj ={...this.state};
         dataObj.password = funcs_.encryptPW(this.state.password);
-        axios.post('/register', dataObj).then((req, res) => {
-            console.log("This is the response to the front end from the register api ", req);
-            if(req.data.data === true) {
-                this.setState({open1: true});
-            }else if (req.data.data === 3) {
-                this.setState({open2: true});
-            }else if (req.data.data === 0) {
-                this.setState({open: true});
-            }
-        });
+        let v_Email = this.state.validEM;
+
+        if (checkEmail(this.state.email)) {
+            axios.post('/register', dataObj).then((req, res) => {
+                // console.log("This is the response to the front end from the register api ", req);
+                if(req.data.data === true) {
+                    this.setState({open1: true});
+                }else if (req.data.data === 3) {
+                    this.setState({open2: true});
+                }else if (req.data.data === 0) {
+                    this.setState({open: true});
+                }
+            });
+        }else {
+            this.setState({open3: true})
+        }
+
+
     };
     handleClose = (event) => {
       this.setState({open: false, open2: false});
@@ -99,6 +116,11 @@ class signuppage extends React.Component {
     handleClose1 = (event) => {
         this.setState({open1: false});
         window.location.href = '/login1'
+    };
+
+    handleClose3 = (event) => {
+        this.setState({open3: false, email: ''});
+        // window.location.reload();
     };
     handleChange = (event) => {
         const {name , value} = event.target;
@@ -114,7 +136,7 @@ class signuppage extends React.Component {
             <CssBaseline />
             <main className={classes.layout}>
             <Paper className={classes.paper}>
-            <SignUp updateval={this.handleChange.bind(this)} CC={this.state.companyCode} UN={this.state.userName} PW={this.state.password} REPW={this.state.rePassWord} email1={this.state.email}/>
+            <SignUp updateval={this.handleChange.bind(this)} CC={this.state.companyCode} UN={this.state.userName} PW={this.state.password} REPW={this.state.rePassWord} email1={this.state.email} validE={checkEmail(this.state.email)}/>
             <div>
                 {((this.state.password === this.state.rePassWord) && (this.state.password !== '' && this.state.companyCode !== '' && this.state.userName !== '' && this.state.email !== '')) ? (
                 <Button
@@ -165,14 +187,28 @@ class signuppage extends React.Component {
                 </Modal>
 
                 <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.state.open2}
+                onClose={this.handleClose}
+            >
+                <div style={getModalStyle()} className={classes.modal}>
+                    <Typography variant="h6" id="modal-title">
+                        No Company Code exist.
+                    </Typography>
+
+                </div>
+            </Modal>
+
+                <Modal
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
-                    open={this.state.open2}
-                    onClose={this.handleClose}
+                    open={this.state.open3}
+                    onClose={this.handleClose3}
                 >
                     <div style={getModalStyle()} className={classes.modal}>
                         <Typography variant="h6" id="modal-title">
-                            No Company Code exist.
+                            Please Provide a valid email address.
                         </Typography>
 
                     </div>

@@ -21,8 +21,8 @@ import TextField from '@material-ui/core/TextField';
 class EnhancedTableHead extends React.Component {
     render() {
         const { onSelectAllClick, order, orderBy, numSelected, rowCount, cols, incCheckBoxHead } = this.props;
-        console.log("Enhanced header, Order: " + order + ". OrderBy: " + orderBy);
-        console.log("Enhanced header, cols props " + cols[0].id);
+        // console.log("Enhanced header, Order: " + order + ". OrderBy: " + orderBy);
+        // console.log("Enhanced header, cols props " + cols[0].id);
         return (
             <TableHead>
                 <TableRow>
@@ -185,13 +185,13 @@ class EnhancedTable extends React.Component {
         };
     };
     handleSort = (event, columnName) => {
-        console.log("sort event object: ");
-        console.log("Sort data is being hit Column Name:", columnName);
+        // console.log("sort event object: ");
+        // console.log("Sort data is being hit Column Name:", columnName);
         this.setState({
             columnToSort: columnName,
             sortDirection: this.state.columnToSort === columnName ? (this.state.sortDirection === 'desc' ? 'asc' : 'desc') : 'asc'
         });
-        console.log("State of the state after the update in the sort data function ", this.state);
+        // console.log("State of the state after the update in the sort data function ", this.state);
     };
 
     handleQueryChange1 = (event) => {
@@ -202,9 +202,9 @@ class EnhancedTable extends React.Component {
     };
 
     componentDidMount () {
-        console.log("Component Did Mount");
+        // console.log("Component Did Mount");
         const { dataPassed } = this.props;
-        console.log(`component will moutn has this array being passed to it ${dataPassed}`);
+        // console.log(`component will moutn has this array being passed to it ${dataPassed}`);
         this.setState({
             rows: dataPassed
         })
@@ -234,9 +234,9 @@ class EnhancedTable extends React.Component {
         const { sortDirection, columnToSort, rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, (rows != null ? rows.length : 0) - page * rowsPerPage);
         const formQuery = this.state.query.toLowerCase();
-        console.log("data being passed to table", this.state.columnToSort);
-        console.log("data being passed to table, columns", columns);
-        console.log("State in the table, ", this.state);
+        // console.log("data being passed to table", this.state.columnToSort);
+        // console.log("data being passed to table, columns", columns);
+        // console.log("State in the table, ", this.state);
 
         return (
             <Paper className={classes.root}>
@@ -418,9 +418,9 @@ export default withStyles(styles)(EnhancedTable);
 //         };
 //     }
 //     componentDidMount () {
-//         console.log("Component Did Mount");
+//         // console.log("Component Did Mount");
 //         const { dataPassed } = this.props;
-//         console.log(`component will moutn has this array being passed to it ${dataPassed}`);
+//         // console.log(`component will moutn has this array being passed to it ${dataPassed}`);
 //         this.setState({
 //             rows: dataPassed
 //         })
@@ -436,7 +436,7 @@ export default withStyles(styles)(EnhancedTable);
 //         const rows = this.props.dataPassed;
 //         const { rowsPerPage, page } = this.state;
 //         const emptyRows = rowsPerPage - Math.min(rowsPerPage, (rows != null ? rows.length : 0) - page * rowsPerPage);
-//         console.log("This is the props " + sortDirection + " " + columnToSort);
+//         // console.log("This is the props " + sortDirection + " " + columnToSort);
 //         return (
 //             <Paper className={classes.root}>
 //                 <div className={classes.tableWrapper}>

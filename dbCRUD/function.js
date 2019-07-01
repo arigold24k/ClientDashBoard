@@ -2,7 +2,7 @@ const db = require("../models");
 
 module.exports ={
     add: (req, res) => {
-        console.log('This is what is being added', req);
+        // console.log('This is what is being added', req);
         db.testUserTable.create(req.body)
             .then(
                 mess => res.json(mess)

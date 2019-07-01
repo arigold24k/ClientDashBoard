@@ -7,7 +7,7 @@ const orm = {
     in_current_link: function (username, cb) {
         const sqlString = `SELECT count(*) row_count FROM resetstatuses a WHERE date_format(date_add(a.date, interval 1 day), '%m/%d/%Y_%h:%i:%s') > date_format(sysdate(), '%m/%d/%Y_%h:%i:%s') and a.username = '${username}' and used = 'N'`;
         db.sequelize.query(sqlString).then((results, metadata) => {
-            console.log("This is the data coming back from the check if link exist: ", results);
+            // console.log("This is the data coming back from the check if link exist: ", results);
             if (results[0][0].row_count > 0) {
                 cb(null, true)
             } else {
@@ -24,7 +24,7 @@ const orm = {
         const queryString ="SELECT a.*, b.comp_name FROM " + table_name + " a, companies b Where LCASE(username)='" + username.toLowerCase() + "' AND b.comp_code = a.compcode;";
         db.sequelize.query(queryString).then((results, metadata) => {
             // console.log("orm.js 12 -this is the results: ", results[0][0]);
-             console.log("orm.js 13 this is the metadata: ", metadata);
+             // console.log("orm.js 13 this is the metadata: ", metadata);
             for(let i = 0 ; i < 1; i++) {
                 if(typeof (results[0][0]) !== 'undefined') {
                     const data = {
@@ -129,7 +129,7 @@ const orm = {
     insertIntoReset: function (usrname, _email, cb) {
         const todayDate = new Date();
         this.in_current_link(usrname, (err, results) => {
-            console.log("insert into reset table, data: ", results);
+            // console.log("insert into reset table, data: ", results);
             if(results === false) {
                 db.resetStatus.upsert({
                     username: usrname,
@@ -138,7 +138,7 @@ const orm = {
                     used: 'N'
 
                 },).then((res) => {
-                    console.log("after insert: ", res);
+                    // console.log("after insert: ", res);
                     if(res) {
                        this.pullResetId(usrname, _email, (err2, res2) => {
                            if(res2) {
@@ -230,7 +230,7 @@ const orm = {
     runError: (itemtagNum, cb) => {
         const queryString =`INSERT INTO KCARD_MASTERS (SELECT * FROM KCARD_MASTER_RAWS WHERE ITEM_TAG_INTEGER = '${itemtagNum}');`;
         db.sequelize.query(queryString).then((results, metadata) => {
-             console.log('this is the metadata: ' + metadata + 'this is the data ' + results);
+             // console.log('this is the metadata: ' + metadata + 'this is the data ' + results);
             if(results) {
                 cb(null, results);
             }

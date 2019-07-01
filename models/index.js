@@ -11,7 +11,7 @@ dotenv.config({path: path.join(__dirname, '.env')});
 const db = {};
 const config_v1 = require(__dirname + '/../config/config.js')[env];
 
-console.log("this is from index.js in models folder.  Value of config_v1 is: ", config_v1);
+// console.log("this is from index.js in models folder.  Value of config_v1 is: ", config_v1);
 
 // if (config.use_env_variable) {
 //  const sequelize = new Sequelize(process.env[config.use_env_variable], config);

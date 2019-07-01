@@ -4,7 +4,7 @@ import React from "react";
 
 function PrivateRoute({ component: Component, auth, ...rest }) {
 
-    console.log('this is what is being passed to private router constructor, ' + auth);
+    // console.log('this is what is being passed to private router constructor, ' + auth);
 
     return (
         <Route

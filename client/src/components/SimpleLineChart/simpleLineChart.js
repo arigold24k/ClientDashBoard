@@ -15,7 +15,7 @@ function SimpleLineChart(passData) {
       data.push(passData.passData[i]);
     }
 
-    console.log('passdata that is being passed, ', passData);
+    // console.log('passdata that is being passed, ', passData);
     return (
         // 99% per https://github.com/recharts/recharts/issues/172
         <ResponsiveContainer width="99%" height={320}>

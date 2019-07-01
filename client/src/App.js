@@ -54,19 +54,19 @@ class App extends Component {
     }
     getKey (){
         const token = window.sessionStorage.getItem('token');
-        console.log('before it hits the api verify route ', token);
-        console.log("This is the path, ", window.location);
+        // console.log('before it hits the api verify route ', token);
+        // console.log("This is the path, ", window.location);
         if(token !== null) {
             axios.post('/api/verify', {token}).then((res, err) => {
 
-                console.log('This is the response from the getkey route ', res.data);
-                console.log('This is the type of for the res.data ', typeof res.data);
-                console.log('this is the data for res.data.data ', res.data.dataObj);
+                // console.log('This is the response from the getkey route ', res.data);
+                // console.log('This is the type of for the res.data ', typeof res.data);
+                // console.log('this is the data for res.data.data ', res.data.dataObj);
 
                 // return res.data.data === true;
                 if(res.data.dataObj.data === true){
                     this.setState({companyCode : res.data.dataObj.compCD, email: res.data.dataObj.email, auth: true, compName: res.data.dataObj.compName});
-                    console.log("state ", this.state);
+                    // console.log("state ", this.state);
                 }else{
                     this.setState({auth:false})
                 }
@@ -74,7 +74,7 @@ class App extends Component {
                     this.props.history.push('/home_page');
 
                     //creating a timeout to reload page once the token has expired
-                    console.log('value being passed to the set time out ', (res.data.dataObj.expires - new Date().getTime() ));
+                    // console.log('value being passed to the set time out ', (res.data.dataObj.expires - new Date().getTime() ));
                     // this.interval = setTimeout(this.reload, + res.data.dataObj.expires + new Date().getTime() );
                 }
             });
@@ -85,12 +85,12 @@ class App extends Component {
     componentWillMount(){
         // clearTimeout(this.interval);
         this.getKey();
-        console.log('This is the state in the component will mount ', this.state);
+        // console.log('This is the state in the component will mount ', this.state);
         // document.title = 'Client Dashboard';
 
       };
     componentDidMount() {
-        console.log("This is the state when the component moutned ", this.state);
+        // console.log("This is the state when the component moutned ", this.state);
         // window.location.href = '/login1';
     }
     getValue = (event) => {
@@ -122,11 +122,11 @@ class App extends Component {
             let dataObj ={...this.state};
             dataObj.password = funcs_.encryptPW(pwHolder);
 
-        console.log("created data object app.js page line 118 ", dataObj);
+        // console.log("created data object app.js page line 118 ", dataObj);
 
         axios.post('/login', dataObj).then((res, err) => {
-            console.log('this is the response for the login', res);
-            console.log('this is the response for the login', res.data);
+            // console.log('this is the response for the login', res);
+            // console.log('this is the response for the login', res.data);
             if(typeof (res.data.password) !== 'undefined' ){
                 const check = funcs_.checkPW(this.state.password, res.data.password);
                 this.setState({password: ''});
@@ -142,12 +142,12 @@ class App extends Component {
                 if (check) {
                     //creating token
                     axios.post('/verify/api', tokenObj).then((res, err) => {
-                        console.log("app. js handle submit verify request response, res: ", res);
+                        // console.log("app. js handle submit verify request response, res: ", res);
                         if(typeof res.data.token !== 'undefined') {
                             //save this on local storage
                             sessionStorage.setItem('token', res.data.token);
                             this.setState({auth: true, email: res.data.email, compName: res.data.compName});
-                            console.log('this is the state after the auth was udpated ', this.state);
+                            // console.log('this is the state after the auth was udpated ', this.state);
                             this.props.history.push('/home_page');
                         }else{
                             this.setState({open: true});
@@ -160,36 +160,36 @@ class App extends Component {
                 this.setState({open5: true});
             }
         }).catch((e) => {
-            console.log('Error: ', e);
+            // console.log('Error: ', e);
         });}
     };
     handleAdd = (event) => {
         event.preventDefault();
-        console.log('this is the state of the log-in page', this.state);
+        // console.log('this is the state of the log-in page', this.state);
         let dataObj ={...this.state};
         dataObj.password = funcs_.encryptPW(this.state.password);
-        console.log("this is the hashed password, ", dataObj.password);
+        // console.log("this is the hashed password, ", dataObj.password);
         axios.post('/register', dataObj).then((res, err) => {
-            console.log('just wanted to see the error ', err);
+            // console.log('just wanted to see the error ', err);
             if(err){
-                console.log('There was an error ', err);
+                // console.log('There was an error ', err);
             }else{
                 // res.status(200).json({message: 'this is the data' + res});
                 if(res.data.data === 0) {
-                    console.log('Data was not Added.  User already exist ', res);
+                    // console.log('Data was not Added.  User already exist ', res);
                     this.setState({open1: true});
                 }
                 else if(res.data.data === 3 ) {
-                    console.log('Data was not Added.  User already exist ', res);
+                    // console.log('Data was not Added.  User already exist ', res);
                     this.setState({open1: true});
                 }
                 else {
-                    console.log('Data was added ', res);
+                    // console.log('Data was added ', res);
                     this.setState({open4: true});
                 }
             }
         }).catch((e) => {
-            console.log('Error: ', e);
+            // console.log('Error: ', e);
         });
     };
     render() {

@@ -159,7 +159,7 @@ class Dashboard extends React.Component {
             selected: newSelected
         });
 
-        console.log("update selected on dasboard being hit, ", this.state);
+        // console.log("update selected on dasboard being hit, ", this.state);
     }
     handleSelectAll (checked, rows) {
         if (checked) {
@@ -174,11 +174,11 @@ class Dashboard extends React.Component {
             'Authorization': "bearer " + sessionStorage.getItem("token")
         };
         let holderArray = [];
-        console.log('chart data is function is being hit');
+        // console.log('chart data is function is being hit');
         axios.post('/api/consumed', {email: this.state.email, filtered: conditions || false}, {headers: headerObj}).then((res) => {
             let holderObject = {};
             if(res.data.data !== null) {
-                console.log('Data that is coming back from the consumption, ', res.data.data[0]);
+                // console.log('Data that is coming back from the consumption, ', res.data.data[0]);
                 //have the array built here
                 holderArray = [];
                 for (let i = 0; i < res.data.data[0].length; i++) {
@@ -193,9 +193,9 @@ class Dashboard extends React.Component {
                 this.setState({data: holderArray});
                 holderArray = [];
             }
-            console.log('Holder Array for the data, ', this.state.data);
+            // console.log('Holder Array for the data, ', this.state.data);
         }).catch((err) => {
-            console.log('Error: ', err);
+            // console.log('Error: ', err);
         });
 
     };
@@ -207,7 +207,7 @@ class Dashboard extends React.Component {
         axios.post('/api/consumedTable', this.state.email, {headers: headerObj}).then((res) => {
             let holderObjectTable = {};
             if(res.data.data !== null) {
-                console.log('Data that is coming back from the consumption, ', res.data.data[0]);
+                // console.log('Data that is coming back from the consumption, ', res.data.data[0]);
                 //have the array built here
                 holderArrayTable = [];
                 for (let i = 0; i < res.data.data[0].length; i++) {
@@ -223,7 +223,7 @@ class Dashboard extends React.Component {
                 holderArrayTable = [];
             }
         }).catch((err) => {
-            console.log('error in getting the table data, ', err);
+            // console.log('error in getting the table data, ', err);
         })
     };
     handleSubmit = () => {
@@ -241,8 +241,8 @@ class Dashboard extends React.Component {
             this.setState({
                 filtered: holdQueryString
             });
-            console.log("Data in teh handle submit in the dasboard page, ", holdQueryString);
-            console.log("Data in teh handle submit in the dasboard page, ", this.state);
+            // console.log("Data in teh handle submit in the dasboard page, ", holdQueryString);
+            // console.log("Data in teh handle submit in the dasboard page, ", this.state);
 
             this.getChartData(holdQueryString);
         }else{
@@ -251,10 +251,10 @@ class Dashboard extends React.Component {
     };
 
     render() {
-        console.log('Holder Array for the data,1 ', this.state.data);
+        // console.log('Holder Array for the data,1 ', this.state.data);
         const { classes } = this.props;
-        console.log('data being passed to the line chart befroe the return, ', this.state.data);
-        console.log('data being passed to the order by', orderBy(this.state.dataTable, this.state.columnToSort, this.state.sortDirection));
+        // console.log('data being passed to the line chart befroe the return, ', this.state.data);
+        // console.log('data being passed to the order by', orderBy(this.state.dataTable, this.state.columnToSort, this.state.sortDirection));
         return (
 
                 <div className={classes.root}>

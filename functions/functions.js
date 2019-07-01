@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 
 const func_ = {
     encryptPW: function(password) {
-        console.log('This is the data being passed to the encryp function, password ', password);
+        // console.log('This is the data being passed to the encryp function, password ', password);
         let hash = bcrypt.hashSync(password, salt);
         if (hash) {
             return hash;
@@ -23,10 +23,10 @@ const func_ = {
 
     },
     createToken: function(objPass, cb){
-        console.log("Create Token Function object that is being passed, ", objPass);
+        // console.log("Create Token Function object that is being passed, ", objPass);
         jwt.sign({user: {id: objPass.id, username: objPass.username, email: objPass.email, 'companycode': objPass.companycode, companyName: objPass.compName}}, process.env.SECRETE_KEY_OR_SO, {expiresIn: 60*15}, (err, token) => {
-            console.log('data for the token', token);
-            console.log('data for the error', err);
+            // console.log('data for the token', token);
+            // console.log('data for the error', err);
             if(err){
                 cb(err, null);
             }

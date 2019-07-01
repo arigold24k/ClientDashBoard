@@ -227,7 +227,7 @@ class report extends React.Component {
         })
     };
     handleDate = (event) => {
-        console.log("the event target object beign passed to the handledate, ", event.target.value);
+        // console.log("the event target object beign passed to the handledate, ", event.target.value);
         const { value, id} = event.target;
         if(id === 'range2') {
             if(this.state.range1 > value) {
@@ -237,7 +237,7 @@ class report extends React.Component {
         this.setState({
             [id] : value
         });
-        console.log("state once date is changed", this.state);
+        // console.log("state once date is changed", this.state);
     };
     //for the table in order to get the data that has been selected to the parent
 
@@ -262,7 +262,7 @@ class report extends React.Component {
             selected: newSelected
         });
 
-        console.log("update selected on dasboard being hit, ", this.state);
+        // console.log("update selected on dasboard being hit, ", this.state);
     }
     handleSelectAll (checked, rows) {
         if (checked) {
@@ -290,14 +290,14 @@ class report extends React.Component {
         let holderArray = [];
             axios.post('/reporting', dataObj, {headers: headerObj}).then((res, err) => {
                 if(err) {
-                    console.log('Error in getting data from database for reporting ', err);
+                    // console.log('Error in getting data from database for reporting ', err);
                 }
-                console.log('this is the response from the reporting 1', res.data.data[0]);
+                // console.log('this is the response from the reporting 1', res.data.data[0]);
                 if(res.data.data[0] !== null && res.data.data[0].length > 0) {
                     for (let i = 0; i < res.data.data[0].length; i++) {
                         let holderDate = res.data.data[0][i].SCANDATE + '';
                         let holderArr =  holderDate.split('T');
-                        console.log("Splitting the date, ", holderArr);
+                        // console.log("Splitting the date, ", holderArr);
                         let dObj = {
                             'id' : res.data.data[0][i].RECNO,
                             'recno': res.data.data[0][i].RECNO.toString(),
@@ -316,7 +316,7 @@ class report extends React.Component {
                     this.setState({data: []
                     });
                 }
-                console.log('this is the state after the submit, ', this.state);
+                // console.log('this is the state after the submit, ', this.state);
             })
 
     };

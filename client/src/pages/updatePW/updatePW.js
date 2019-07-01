@@ -72,7 +72,7 @@ class updatePW extends React.Component {
             pw: encrypPW,
         };
         axios.post('/updateDrowssap', dataObj).then((res) => {
-            console.log("Area where the data is coming back from updating password")
+            // console.log("Area where the data is coming back from updating password")
         }).catch((err) => {
 
         });

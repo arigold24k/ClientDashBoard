@@ -296,7 +296,7 @@ class Checkout extends React.Component {
         // this.setState(state => ({
         //     activeStep: state.activeStep + 1,
         // }));
-        console.log("curent state: ", this.state);
+        // console.log("curent state: ", this.state);
     };
 
     handleSubmit = () => {
@@ -311,7 +311,7 @@ class Checkout extends React.Component {
             'Authorization': "bearer " + sessionStorage.getItem("token")
         };
         axios.post("/api/processScan",dataObj, {headers: headerObj}).then((res, err) => {
-            console.log("Added submit to the client checkout page ", res);
+            // console.log("Added submit to the client checkout page ", res);
             if((res.data.data !== null && res.data.data === true) || (res.data.data === 1)){
                 if(this.state.purposedetails.purpose === 3) {
                     this.setState({count: this.state.count - 1});
@@ -376,7 +376,7 @@ class Checkout extends React.Component {
             'Authorization': "bearer " + sessionStorage.getItem("token")
         };
       axios.post('/api/getcount',{},{headers: headerObj}).then((res, err) => {
-          console.log('This is the response to the get count, ', res.data.count[0][0].count);
+          // console.log('This is the response to the get count, ', res.data.count[0][0].count);
           const cnt = res.data.count[0][0].count || 0;
           if (cnt > 0) {
               this.setState({count: cnt});
@@ -388,7 +388,7 @@ class Checkout extends React.Component {
         this.setState(state => ({
             activeStep: state.activeStep - 1,
         }));
-        console.log("curent state: ", this.state);
+        // console.log("curent state: ", this.state);
     };
     getStepContent = (step) => {
         switch (step) {
@@ -420,7 +420,7 @@ class Checkout extends React.Component {
     componentWillMount() {
         // this.setState({companyName: this.props});
 
-        console.log('the state in teh comp will mount, ', this.props);
+        // console.log('the state in teh comp will mount, ', this.props);
         this.getCount();
 
     }

@@ -4,7 +4,7 @@ const salt = bcrypt.genSaltSync(saltRounds);
 
 const func_ = {
     encryptPW: function(password) {
-        console.log('This is the data being passed to the encryp function, password ', password);
+        // console.log('This is the data being passed to the encryp function, password ', password);
         let hash = bcrypt.hashSync(password, salt);
         // bcrypt.hash(password, saltRounds).then(function(hash) {
         //
