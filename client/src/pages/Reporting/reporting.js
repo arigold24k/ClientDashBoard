@@ -304,7 +304,7 @@ class report extends React.Component {
                             'scandate': holderArr[0],
                             'scancode': res.data.data[0][i].CODE,
                             'product': res.data.data[0][i].PART,
-                            'quantity': res.data.data[0][i].QTY.toString(),
+                            'quantity': res.data.data[0][i].QTY,
                             'tagnum': res.data.data[0][i].TAG_NUM,
                         };
 

@@ -62,8 +62,8 @@ class EnhancedTableHead extends React.Component {
                                 <div display='block'>
                                     <TextField
                                         name={cols.id}
-                                        hintText="Query"
-                                        floatingLabelText="Query"
+                                        hinttext="Query"
+                                        floatinglabeltext="Query"
                                         value={this.props.query}
                                         onChange={(e) => this.props.handleQueryChange(e)}
 
@@ -270,7 +270,7 @@ class EnhancedTable extends React.Component {
                                         {incCheckBox ? <Checkbox color='primary' checked={this.isSelected(row.id)} /> : ''}
                                     </TableCell>
                                     {columns.map((col) => (
-                                        <TableCell component="th" scope="row" align={col.numeric ? "right" : "left"}>
+                                        <TableCell component="th" scope="row" align={col.numeric ? "right" : "left"} key={col.id}>
                                             {col.numeric ? row[col.id].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : row[col.id]}
                                         </TableCell>
                                     ))}
