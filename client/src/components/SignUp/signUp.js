@@ -37,7 +37,7 @@ class signUp extends React.Component {
                 </Grid>
 
 
-                { this.props.email1 == '' ?
+                { this.props.email1 === '' ?
                     <Grid item xs={12}>
                         <TextField
                             required

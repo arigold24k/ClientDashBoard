@@ -17,7 +17,6 @@ import {mdiLoading} from "@mdi/js";
 import axios from 'axios';
 import DateBox from '../../components/DateSelector';
 import Download from '../../components/ExcelExport';
-import SimpleTable from "../DashBoard/dashboard";
 require('es6-promise').polyfill();
 
 const drawerWidth = 240;

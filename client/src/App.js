@@ -12,7 +12,6 @@ import SignUP from './pages/SignUpPage';
 import passwordRS from './components/PasswordReset';
 import funcs_ from './functions/functions';
 import update from './pages/updatePW';
-import Link from '@material-ui/core/Link';
 require('es6-promise').polyfill();
 
 const initialState = {open1: false,
