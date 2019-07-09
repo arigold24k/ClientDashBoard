@@ -21,13 +21,121 @@ const styles = theme => ({
 class Download extends React.Component {
     render() {
         const { classes, dataArray } = this.props;
-        const data = [];
+        const data = [[{
+                        value: "Rec Number",
+                        style: {
+                            font: {
+                                    sz: "18",
+                                    bold: true
+                                },
+                            fill: {
+                                    patternType: "solid",
+                                    fgColor:{
+                                            rgb: "86af49"
+                                            }
+                                    },
+                            alignment: {
+                                    vertical: "center",
+                                    horizontal: "center"}
+                                }
+                        },
+            {
+                value: "Scan Date",
+                style: {
+                    font: {
+                        sz: "18",
+                        bold: true
+                    },
+                    fill: {
+                        patternType: "solid",
+                        fgColor:{
+                            rgb: "86af49"
+                        }
+                    },
+                    alignment: {
+                        vertical: "center",
+                        horizontal: "center"}
+                }
+            },
+            {
+                value: "Scan Code",
+                style: {
+                    font: {
+                        sz: "18",
+                        bold: true
+                    },
+                    fill: {
+                        patternType: "solid",
+                        fgColor:{
+                            rgb: "86af49"
+                        }
+                    },
+                    alignment: {
+                        vertical: "center",
+                        horizontal: "center"}
+                }
+            },
+            {
+                value: "Product",
+                style: {
+                    font: {
+                        sz: "18",
+                        bold: true
+                    },
+                    fill: {
+                        patternType: "solid",
+                        fgColor:{
+                            rgb: "86af49"
+                        }
+                    },
+                    alignment: {
+                        vertical: "center",
+                        horizontal: "center"}
+                }
+            },
+            {
+                value: "Quantity",
+                style: {
+                    font: {
+                        sz: "18",
+                        bold: true
+                    },
+                    fill: {
+                        patternType: "solid",
+                        fgColor:{
+                            rgb: "86af49"
+                        }
+                    },
+                    alignment: {
+                        vertical: "center",
+                        horizontal: "center"}
+                }
+            },
+            {
+                value: "Tag Number",
+                style: {
+                    font: {
+                        sz: "18",
+                        bold: true
+                    },
+                    fill: {
+                        patternType: "solid",
+                        fgColor:{
+                            rgb: "86af49"
+                        },
+                        alignment: {
+                            vertical: "center",
+                            horizontal: "center"}
+                    }
+                }
+            }
+                    ]];
         const multiDataSet = [];
         let keyHolder = [];
         let dataHolder = [];
 
         const columnsArray = [
-            {title: "Rec Number", width: {wch: 12}, background: "FF00FF00",
+            // {title: "Rec Number", width: {wch: 12}, background: "FF00FF00"
                 // style: {
                 //     fill: {patternType: "solid", bgColor: {rgb: "FF00FF00"}},
                 //     font:{sz: "14", bold: true},
@@ -36,59 +144,59 @@ class Download extends React.Component {
                 //     numFmt: "0"
                 //
                 // }
-            },
-            {title: "Scan Date", width: {wch: 12},
-                style: {
-                    fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
-                    font:{sz: "14", bold: true},
-                    alignment: {vertical: "center", horizontal: "center"},
-                    border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}},
-                    numFmt: "yyyy-mm-dd"
-
-                }
-            },
-            {title: "Scan Code", width: {wch: 12},
-                style: {
-                    fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
-                    font:{sz: "14", bold: true},
-                    alignment: {vertical: "center", horizontal: "center"},
-                    border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}}
-
-                }
-            },
-            {title: "Product", width: {wch: 12},
-                style: {
-                    fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
-                    font:{sz: "14", bold: true},
-                    alignment: {vertical: "center", horizontal: "center"},
-                    border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}}
-
-                }
-            },
-            {title: "Quantity", width: {wch: 12},
-                style: {
-                    fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
-                    font:{sz: "14", bold: true},
-                    alignment: {vertical: "center", horizontal: "center"},
-                    border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}},
-                    numFmt: "#,##0"
-
-                }
-            },
-            {title: "Tag Number", width: {wch: 12},
-                style: {
-                    fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
-                    font:{sz: "14", bold: true},
-                    alignment: {vertical: "center", horizontal: "center"},
-                    border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}},
-                    numFmt: "#,##0"
-
-                }
-            }
+            // },
+            // {title: "Scan Date", width: {wch: 12},
+                // style: {
+                //     fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
+                //     font:{sz: "14", bold: true},
+                //     alignment: {vertical: "center", horizontal: "center"},
+                //     border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}},
+                //     numFmt: "yyyy-mm-dd"
+                //
+                // }
+            // },
+            // {title: "Scan Code", width: {wch: 12},
+                // style: {
+                //     fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
+                //     font:{sz: "14", bold: true},
+                //     alignment: {vertical: "center", horizontal: "center"},
+                //     border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}}
+                //
+                // }
+            // },
+            // {title: "Product", width: {wch: 12},
+                // style: {
+                //     fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
+                //     font:{sz: "14", bold: true},
+                //     alignment: {vertical: "center", horizontal: "center"},
+                //     border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}}
+                //
+                // }
+            // },
+            // {title: "Quantity", width: {wch: 12},
+                // style: {
+                //     fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
+                //     font:{sz: "14", bold: true},
+                //     alignment: {vertical: "center", horizontal: "center"},
+                //     border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}},
+                //     numFmt: "#,##0"
+                //
+                // }
+            // },
+            // {title: "Tag Number", width: {wch: 12},
+                // style: {
+                //     fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
+                //     font:{sz: "14", bold: true},
+                //     alignment: {vertical: "center", horizontal: "center"},
+                //     border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}},
+                //     numFmt: "#,##0"
+                //
+                // }
+            // }
         ];
 
-        multiDataSet.push({ySteps: 1, columns: columnsArray});
-
+        // multiDataSet.push({ySteps: 1, columns: columnsArray});
+        multiDataSet.push({columns: columnsArray});
 
         //have to loop through data being passed and create an array of objects
 
@@ -98,14 +206,22 @@ class Download extends React.Component {
             keyHolder = [];
             //putting all the keys of the object into an array
             keyHolder = Object.keys(dataArray[i]);
-                for (let j = 1; j < keyHolder.length; j++) {
+            for (let j = 1; j < keyHolder.length; j++) {
+                if ((i+1) % 2 === 1) {
                     if( j === 5 ) {
                         dataHolder.push({value: dataArray[i][keyHolder[j]], style: {font: {sz: "12"}, numFmt: "#,##0", alignment: {vertical: "center", horizontal: "center"}}});
                     }else {
                         dataHolder.push({value: dataArray[i][keyHolder[j]], style: {font: {sz: "12"}, alignment: {vertical: "center", horizontal: "center"}}});
                     }
-
                 }
+                else {
+                    if( j === 5 ) {
+                        dataHolder.push({value: dataArray[i][keyHolder[j]], style: {font: {sz: "12"}, fill: {patternType: "solid", fgColor:{rgb: "b5e7a0"}}, numFmt: "#,##0", alignment: {vertical: "center", horizontal: "center"}}});
+                    }else {
+                        dataHolder.push({value: dataArray[i][keyHolder[j]], style: {font: {sz: "12"}, fill: {patternType: "solid", fgColor:{rgb: "b5e7a0"}}, alignment: {vertical: "center", horizontal: "center"}}});
+                    }
+                }
+            }
             data.push(dataHolder);
 
         }
