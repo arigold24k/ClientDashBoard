@@ -101,14 +101,30 @@ class passwordrst extends React.Component {
                   this.setState({open3: true})
               }
               else if (res.data.data) {
-                  this.setState({id: res.data.data.data.id, open4: true})
-
+                  //add code to send email to client
+                  this.setState({id: res.data.data.data.id});
+                  this.handleSendEmail(this.state.email, "Inventroy Summary Report", `Please follow the link below to Reset Password. \n  http://localhost:3000/updateinfo/${this.state.id}`);
               }
           }
       }).catch((err) => {
 
       })
     };
+
+    handleSendEmail = (v_to_email, v_subject, v_body) => {
+        const dataObj = {
+            SEND_TO: v_to_email,
+            SUBJECT: v_subject,
+            MESSAGE: v_body
+        };
+
+        axios.post('/sendEmail', dataObj).then((res) => {
+            if (res.data.data && res.data.data !== 3) {
+                this.setState({open4: true});
+            }
+        }).catch()
+    };
+
     handleChange = (event) => {
         const {name, value} = event.target;
         this.setState({
@@ -223,7 +239,8 @@ class passwordrst extends React.Component {
                         Click on Link below
                     </Typography>
                     <Typography variant="subtitle1" id="simple-modal-description">
-                        <Link href={`/updateinfo/${this.state.id}`} className={classes.link}>Click Here</Link>
+                        An email has been sent to the email address on file with directions on how to reset your password.
+                        {/*<Link href={`/updateinfo/${this.state.id}`} className={classes.link}>Click Here</Link>*/}
                     </Typography>
                 </div>
             </Modal>

@@ -324,5 +324,18 @@ const orm = {
           cb(err, null);
       })
     },
+    sendEmail: (v_to_email, v_subject, v_body, cb) => {
+            const dataObj = {
+                SEND_TO: v_to_email,
+                SUBJECT: v_subject,
+                MESSAGE: `Please follow the link below to Reset Password. \n  http://localhost:3000/updateinfo/${v_guid}`
+            };
+
+            db.PSSI_EMAIL_SEND.upsert(dataObj).then((res) => {
+                return cb(null, res);
+            }).catch((err) => {
+                return cb(err, null);
+            })
+    },
 };
 module.exports = orm;

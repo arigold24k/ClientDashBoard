@@ -373,6 +373,19 @@ router.post('/reporting', verifyToken, (req, res) => {
         }
     });
 });
+
+router.post('/sendEmail', (req, res) => {
+    const {SEND_TO, SUBJECT, MESSAGE} = req.body;
+
+    orm.sendEmail(SEND_TO, SUBJECT, MESSAGE, (err, data) => {
+        if (data !== null) {
+            res.status(200).json({data: data})
+        }else{
+            res.status(403).json({message: 'Error in adding to table', data: 3})
+        }
+    })
+});
+
 // router.post('/139.64.200.80/', function(req, res) {
 //     console.log('this is the toekn in the verify route ', req.body);
 //     try {
