@@ -337,5 +337,17 @@ const orm = {
                 return cb(err, null);
             })
     },
+    insertToReport: (v_cust_code, cb) => {
+        const dataObj = {
+            CUST_CODE: v_cust_code
+        };
+
+        db.PSSI_SUMMARY_RPT_WEB.upsert(dataObj).then((res) => {
+            return cb(null, res);
+        }).catch((err) => {
+            return cb(err, null);
+        })
+
+    },
 };
 module.exports = orm;

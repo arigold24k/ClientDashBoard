@@ -386,6 +386,26 @@ router.post('/sendEmail', (req, res) => {
     })
 });
 
+router.post('/summaryreporting', verifyToken, (req, res) => {
+    jwt.verify(req.token, process.env.SECRETE_KEY_OR_SO, (err, decoded) => {
+        if(err) {
+            res.status(403).json({message: "Token invalid", data: 'INVALIDTOKEN'});
+        }else{
+            const {companycode} = decoded.user;
+
+            orm.insertToReport(companycode, (err, data) => {
+                if (data !== null) {
+                    res.status(200).json({data: data})
+                }else{
+                    res.status(403).json({message: 'Error in adding to table', data: 3})
+                }
+            })
+
+
+        }
+    })
+});
+
 // router.post('/139.64.200.80/', function(req, res) {
 //     console.log('this is the toekn in the verify route ', req.body);
 //     try {

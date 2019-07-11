@@ -180,23 +180,28 @@ function rand() {
     return Math.round(Math.random() * 20) - 10;
 }
 
+const initialState = {
+    period : "",
+    runReport: false,
+    open: false,
+    modalOpen: false,
+    open2: false,
+    open3: false,
+    open4: false,
+    open5: false,
+    data: null,
+    range1: "",
+    range2: "",
+    columnToSort: "",
+    sortDirection: "desc",
+    reportType: 0,
+    selected: []
+};
+
 class report extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            period : "",
-            runReport: false,
-            open: false,
-            modalOpen: false,
-            open2: false,
-            data: null,
-            range1: "",
-            range2: "",
-            columnToSort: "",
-            sortDirection: "desc",
-            reportType: 0,
-            selected: []
-        };
+        this.state = initialState;
     }
     handleClose = () => {
         this.setState({ modalOpen: false });
@@ -208,6 +213,12 @@ class report extends React.Component {
             range2: ""
         })
     };
+
+    handleClose345 = () => {
+        this.setState(initialState);
+
+    };
+
 
     openModal = () => {
         this.setState({open: true})
@@ -273,6 +284,27 @@ class report extends React.Component {
     }
 
     // end
+
+    handleSummarySubmit = () => {
+        const headerObj = {
+            'Authorization': "bearer " + sessionStorage.getItem("token")
+        };
+
+        axios.post('/summaryreporting',{},{headers: headerObj}).then((res, err) => {
+                if (err) {
+                    //coding if error making call
+                    this.setState({open3: true})
+                }else {
+                    console.log('this is the resonse from summary reporting', res.data.data);
+                    if(res.data.data && res.data.data !== 3) {
+                        this.setState({open5: true})
+                    }else if (res.data.data === 3) {
+                        //coding for if error adding to table
+                        this.setState({open4:true})
+                    }
+                }
+        })
+    };
 
     handleSubmit = () => {
         const headerObj = {
@@ -400,7 +432,7 @@ class report extends React.Component {
                                         <Button
                                             variant="contained"
                                             color="primary"
-                                            //onClick={this.handleSubmit}
+                                            onClick={this.handleSummarySubmit}
                                             className={classes.button}
                                             align='center'
                                         >
@@ -517,6 +549,57 @@ class report extends React.Component {
                             </Typography>
                             <Typography variant="subtitle1" id="simple-modal-description">
                                 Invalid Date Range.
+                            </Typography>
+                        </div>
+                    </Modal>
+                </div>
+                <div>
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={this.state.open3}
+                        onClose={this.handleClose345}
+                    >
+                        <div style={getModalStyle()} className={classes.paper1}>
+                            <Typography variant="h6" id="modal-title">
+                                Error
+                            </Typography>
+                            <Typography variant="subtitle1" id="simple-modal-description">
+                                There was an error with your request.  Please refresh your page and try again.
+                            </Typography>
+                        </div>
+                    </Modal>
+                </div>
+                <div>
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={this.state.open4}
+                        onClose={this.handleClose345}
+                    >
+                        <div style={getModalStyle()} className={classes.paper1}>
+                            <Typography variant="h6" id="modal-title">
+                                Error
+                            </Typography>
+                            <Typography variant="subtitle1" id="simple-modal-description">
+                                There was an error with your request.
+                            </Typography>
+                        </div>
+                    </Modal>
+                </div>
+                <div>
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={this.state.open5}
+                        onClose={this.handleClose345}
+                    >
+                        <div style={getModalStyle()} className={classes.paper1}>
+                            <Typography variant="h6" id="modal-title">
+                                Success!
+                            </Typography>
+                            <Typography variant="subtitle1" id="simple-modal-description">
+                                An email will be sent to the email on file with the report.
                             </Typography>
                         </div>
                     </Modal>
