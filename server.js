@@ -16,14 +16,14 @@ let http = require('http').Server(app);
 // Serve up static assets
 // app.use(express.static("public"));
 
-// if (process.env.NODE_ENV === 'production') {
-//     // Serve any static files
-//     app.use(express.static(path.join(__dirname, 'client/build')));
-//     // Handle React routing, return all requests to React app
-//     app.get('*', function(req, res) {
-//         res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-//     });
-// }
+if (process.env.NODE_ENV === 'production') {
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, 'client/build')));
+    // Handle React routing, return all requests to React app
+    app.get('/*', function(req, res) {
+        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    });
+}
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -45,7 +45,7 @@ db.sequelize.sync({ force: false })
 
     .then(function() {
         http.listen(PORT, function() {
-            // console.log('http listening on *:', PORT);
+           // console.log('http listening on *:', PORT);
         });
     });
 

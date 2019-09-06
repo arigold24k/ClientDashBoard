@@ -26,7 +26,7 @@ function rand() {
 }
 
 function checkEmail(email) {
-    var emailRGEX = /[\w.]+@\w+\.(net|com|edu|gov)/;
+    let emailRGEX = /[\w.]+@\w+\.(net|com|edu|gov)/;
 
     return emailRGEX.test(email);
 }

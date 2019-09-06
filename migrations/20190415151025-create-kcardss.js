@@ -44,6 +44,7 @@ module.exports = {
       STATUS: Sequelize.STRING,
       // PSESSION: Sequelize.INTEGER,
       PROCESSED: Sequelize.STRING,
+      SYNCHED: Sequelize.STRING
     }, {
       timestamp: false
     });

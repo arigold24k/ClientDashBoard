@@ -38,7 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     DATE_MODIFIED: DataTypes.DATE,
     STATUS: DataTypes.STRING,
     // PSESSION: DataTypes.INTEGER,
-    PROCESSED: DataTypes.STRING
+    PROCESSED: DataTypes.STRING,
+    SYNCHED: DataTypes.STRING
   }, {
     indexes: [{
       unique: true,
