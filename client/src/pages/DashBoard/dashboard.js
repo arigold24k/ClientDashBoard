@@ -333,7 +333,7 @@ class Dashboard extends React.Component {
                                     {
                                         name: 'Tag Count',
                                         id: 'tagcount',
-                                        numeric: false,
+                                        numeric: true,
                                         disablePadding: false,
                                         label: "Tag Count"
                                     },
