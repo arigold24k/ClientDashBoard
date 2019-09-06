@@ -1,14 +1,14 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-const PORT = process.env.PORT || 443;
+const PORT = process.env.PORT || 3001;
 //const PORT = process.env.PORT || 3001;
 const app = express();
 const methodOverride = require('method-override');
 const routes = require('./routes/handle');
 const db = require("./models");
 // const db = require('./config/connection');
-let http = require('https').Server(app);
+let http = require('http').Server(app);
 
 
 //need to include my routes here

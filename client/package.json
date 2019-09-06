@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "host": "0.0.0.0",
-  "proxy": "https://localhost:443/",
+  "proxy": "http://localhost:3001/",
   "homepage": "https://localhost:3000/login1/",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
