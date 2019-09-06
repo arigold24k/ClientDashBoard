@@ -327,21 +327,21 @@ class Dashboard extends React.Component {
                                         name: 'Product',
                                         id: 'name',
                                         numeric: false,
-                                        disablePadding: true,
+                                        disablePadding: false,
                                         label: "Product"
                                     },
                                     {
                                         name: 'Tag Count',
                                         id: 'tagcount',
                                         numeric: false,
-                                        disablePadding: true,
+                                        disablePadding: false,
                                         label: "Tag Count"
                                     },
                                     {
                                         name: 'Quantity in Inventory',
                                         id: 'quantity',
                                         numeric: true,
-                                        disablePadding: true,
+                                        disablePadding: false,
                                         label: 'Quantity in Inventory'
                                     }
                                 ]}
