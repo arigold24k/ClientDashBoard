@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     PART: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
       //primaryKey: true
     },
     INV_ITEM_CODE: DataTypes.INTEGER,
@@ -40,4 +40,5 @@ module.exports = (sequelize, DataTypes) => {
   KCARD_MASTER_TEMP.associate = function(models) {
     // associations can be defined here
   };
+  return KCARD_MASTER_TEMP;
 };
