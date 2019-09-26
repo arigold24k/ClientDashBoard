@@ -4,8 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     KCARD: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
+      primaryKey: true
     },
     PART: {
       type: DataTypes.STRING,

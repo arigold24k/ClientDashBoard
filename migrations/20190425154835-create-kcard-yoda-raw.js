@@ -3,34 +3,34 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('kcard_master_raws', {
       KCARD: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
+        primaryKey: true
+        //autoIncrement: true
       },
       PART: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
         primaryKey: true
       },
-      INV_ITEM_CODE: DataTypes.INTEGER,
-      ITEM_TAG_INTEGER: DataTypes.STRING,
+      INV_ITEM_CODE: Sequelize.INTEGER,
+      ITEM_TAG_INTEGER: Sequelize.STRING,
       DATE_CREATED: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false
       },
       DATE_MODIFIED: {
-        type: DataTypes.DATE,
+        type: Sequelize.DATE,
         allowNull: false
       },
-      QTY: DataTypes.INTEGER,
+      QTY: Sequelize.INTEGER,
       BP_CODE: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
         primaryKey: true
       },
-      SHIP_DATE: DataTypes.DATE,
-      PIECES: DataTypes.INTEGER
+      SHIP_DATE: Sequelize.DATE,
+      PIECES: Sequelize.INTEGER
     });
   },
   down: (queryInterface, Sequelize) => {

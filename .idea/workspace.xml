@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4bf03c05-fc22-480e-a891-05bede3e6fba" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/20190425154835-create-kcard-yoda-raw.js" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/20190425154835-create-kcard-yoda-raw.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/20190913125946-create-kcard-master-temp.js" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/20190913125946-create-kcard-master-temp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/kcard_master_temp.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/kcard_master_temp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/kcard_yoda_raw.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/kcard_yoda_raw.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +67,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Projects/webAppMiddleWare" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -204,6 +208,7 @@
       <workItem from="1568044348278" duration="2396000" />
       <workItem from="1568124505604" duration="153000" />
       <workItem from="1568379182499" duration="820000" />
+      <workItem from="1569504556152" duration="1147000" />
     </task>
     <servers />
   </component>
@@ -224,7 +229,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

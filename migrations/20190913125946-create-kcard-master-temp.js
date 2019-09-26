@@ -2,26 +2,35 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('KCARD_MASTER_TEMPs', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
       KCARD: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true
+        //autoIncrement: true
       },
       PART: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
+        //primaryKey: true
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+      INV_ITEM_CODE: Sequelize.INTEGER,
+      ITEM_TAG_INTEGER: Sequelize.STRING,
+      DATE_CREATED: {
+        type: Sequelize.DATE,
+        allowNull: false
       },
-      updatedAt: {
+      DATE_MODIFIED: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      QTY: Sequelize.INTEGER,
+      BP_CODE: {
+        type: Sequelize.STRING,
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        //primaryKey: true
+      },
+      SHIP_DATE: Sequelize.DATE,
+      PIECES: Sequelize.INTEGER
     });
   },
   down: (queryInterface, Sequelize) => {
