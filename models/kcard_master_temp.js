@@ -4,12 +4,12 @@ module.exports = (sequelize, DataTypes) => {
     KCARD: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
+      primaryKey: true
     },
     PART: {
       type: DataTypes.STRING,
       allowNull: false,
-      primaryKey: true
+      //primaryKey: true
     },
     INV_ITEM_CODE: DataTypes.INTEGER,
     ITEM_TAG_INTEGER: DataTypes.STRING,
@@ -25,8 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     BP_CODE: {
       type: DataTypes.STRING,
 
-      allowNull: false,
-      primaryKey: true
+      allowNull: false
+      //primaryKey: true
     },
     SHIP_DATE: DataTypes.DATE,
     PIECES: DataTypes.INTEGER
