@@ -204,7 +204,7 @@ class Dashboard extends React.Component {
         axios.post('/api/consumedTable', this.state.email, {headers: headerObj}).then((res) => {
             let holderObjectTable = {};
             if(res.data.data !== null) {
-                // console.log('Data that is coming back from the consumption, ', res.data.data[0]);
+                 //console.log('Data that is coming back from the consumption, ', res.data.data[0]);
                 //have the array built here
                 holderArrayTable = [];
                 for (let i = 0; i < res.data.data[0].length; i++) {

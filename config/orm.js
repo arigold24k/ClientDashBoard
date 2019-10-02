@@ -256,7 +256,7 @@ const orm = {
         })
     },
     dashboardDataTable : (compCode, cb) => {
-        const strSql = `SELECT DISTINCT PART, count(item_tag_integer) tagcount, SUM(QTY) quantity FROM KCARD_MASTERS WHERE BP_CODE = '${compCode}' GROUP BY PART ORDER BY SUM(QTY) DESC;`;
+        const strSql = `SELECT DISTINCT PART, count(item_tag_integer) tagcount, SUM(QTY) quantity FROM KCARD_MASTERS WHERE BP_CODE = '${compCode}' GROUP BY PART HAVING count(item_tag_integer) > 0 ORDER BY SUM(QTY) DESC;`;
         db.sequelize.query(strSql).then((results) => {
             // console.log('data coming from the dashboard data, ', results);
             cb(null, results);

@@ -90,7 +90,7 @@ class signuppage extends React.Component {
         event.preventDefault();
         let dataObj ={...this.state};
         dataObj.password = funcs_.encryptPW(this.state.password);
-        let v_Email = this.state.validEM;
+        //let v_Email = this.state.validEM;
 
         if (checkEmail(this.state.email)) {
             axios.post('/register', dataObj).then((req, res) => {

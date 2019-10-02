@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "postinstall": "(cd client && yarn install && yarn build)",
-    "dev": "concurrently \"nodemon server.js\" \" cd ./client && npm start\"",
+    "dev": "concurrently \"nodemon server.js\" \" cd ./client && yarn start\"",
     "start": "node server.js"
   },
   "dependencies": {
@@ -39,7 +39,8 @@
     "serve-favicon": "~2.5.0",
     "tedious": "^5.0.3",
     "tempa-xlsx": "0.0.1",
-    "uglify-js": "^3.4.10"
+    "uglify-js": "^3.4.10",
+    "yarn": "^1.19.0"
   },
   "devDependencies": {
     "concurrently": "^4.1.0"
