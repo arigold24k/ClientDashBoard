@@ -22,7 +22,7 @@ const theme = createMuiTheme({
 });
 
 ReactDOM.render((
-    <Router>
+    <Router basename={'/login1'}>
         <MuiThemeProvider theme={theme}>
             <App />
         </MuiThemeProvider>
