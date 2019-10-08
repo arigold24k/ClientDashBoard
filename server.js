@@ -48,7 +48,9 @@ db.sequelize.sync({ force: false })
         http.listen(PORT, function() {
             console.log('http listening on *:', PORT);
         });
-    });
+    }).catch((err) => {
+        console.log('Error connecting: ', err);
+});
 
 // app.listen(PORT, function() {
 //     console.log(`🌎 ==> Server now on port ${PORT}!`);
