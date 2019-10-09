@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import withStyles from '@material-ui/core/styles/withStyles';
 import functions from '../../functions/functions';
 import axios from 'axios';
+import Modal from "@material-ui/core/Modal";
 require('es6-promise').polyfill();
 
 
@@ -50,6 +51,21 @@ const styles = theme => ({
 
     },
 });
+
+function getModalStyle() {
+    const top = 50 + rand();
+    const left = 50 + rand();
+
+    return {
+        top: `${top}%`,
+        left: `${left}%`,
+        transform: `translate(-${top}%, -${left}%)`,
+    };
+}
+function rand() {
+    return Math.round(Math.random() * 20) - 10;
+}
+
 class updatePW extends React.Component {
 
     // constructor(props) {
@@ -62,21 +78,30 @@ class updatePW extends React.Component {
 
     state = {
             password: '',
-            repassword: ''
+            repassword: '',
+            open: false,
+            open1: false
     };
 
     handleSubmit = (event, id) => {
-        const encrypPW = functions.encryptPW(this.state.password);
-        const dataObj = {
-            id,
-            pw: encrypPW,
-        };
-        axios.post('/updateDrowssap', dataObj).then((res) => {
-            // console.log("Area where the data is coming back from updating password")
-        }).catch((err) => {
-
-        });
-        return false;
+        if ((this.state.password === this.state.repassword) && this.state.password !== '') {
+            const encrypPW = functions.encryptPW(this.state.password);
+            const dataObj = {
+                id,
+                pw: encrypPW,
+            };
+            axios.post('/updateDrowssap', dataObj).then((res) => {
+                if (res.data === 'SUCCESS') {
+                    this.setState({open: true});
+                }
+                // console.log("Area where the data is coming back from updating password")
+            }).catch((err) => {
+                if(err) {
+                    this.setState({open1: true});
+                }
+            });
+            return false;
+        }
     };
     handleChange = (event) => {
         const {name, value} = event.target;
@@ -84,6 +109,15 @@ class updatePW extends React.Component {
             [name] : value
         })
     };
+    handleClose = () => {
+        this.setState({open: false});
+        window.location.href = '/#/login1'
+    };
+
+    handleClose1 = () => {
+        this.setState({open1: false})
+    };
+
     render () {
         const {classes} = this.props;
         let id = this.props.match.params.id;
@@ -162,6 +196,44 @@ class updatePW extends React.Component {
 
                         </Grid>
                     </Paper>
+
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={this.state.open}
+                        onClose={this.handleClose()}
+                    >
+                        <div style={getModalStyle()} className={classes.paper1}>
+                            <Typography variant="h6" id="modal-title">
+                                Success
+                            </Typography>
+                            <Typography variant="subtitle1" id="simple-modal-description">
+                                Password has successfully been updated.
+                            </Typography>
+                            <Button onClick={this.handleClose()} className={classes.button}>
+                            Close
+                        </Button>
+                        </div>
+                    </Modal>
+                    <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={this.state.open1}
+                        onClose={this.handleClose1}
+                    >
+                        <div style={getModalStyle()} className={classes.paper1}>
+                            <Typography variant="h6" id="modal-title">
+                                Error
+                            </Typography>
+                            <Typography variant="subtitle1" id="simple-modal-description">
+                                Password Was not updated.
+                            </Typography>
+                            <Button onClick={this.handleClose1()}>
+                                Close
+                            </Button>
+                        </div>
+                    </Modal>
+
                 </main>
             </React.Fragment>
         )

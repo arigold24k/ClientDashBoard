@@ -83,7 +83,7 @@ class App extends Component {
             this.setState({auth:false})
         }
     }
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
         // clearTimeout(this.interval);
         this.getKey();
         // console.log('This is the state in the component will mount ', this.state);

@@ -109,11 +109,12 @@ router.post('/updateDrowssap', (req, res)=> {
                         if(response_3 !== null) {
                             res.json({message: "data was added successfully", data: "SUCCESS"});
                         }else{
-                            res.json({message: 'error in updating the rest status'});
+                            res.json({message: `error in updating the rest status\n Error: ${err_3}`, data: null});
                         }
                     });
                 }else{
                     // console.log("error in the update of password, ", err_2);
+                    res.json({error: err_2, data: null})
                 }
             })
         }else{

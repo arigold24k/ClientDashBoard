@@ -72,7 +72,8 @@ const initial_State = {
     open1: false,
     open2: false,
     open3: false,
-    open4: false
+    open4: false,
+    openerror: false
 };
 
 class passwordrst extends React.Component {
@@ -86,29 +87,33 @@ class passwordrst extends React.Component {
           username: this.state.username,
           email: this.state.email
         };
-      axios.post('/passwordReset', dataObj).then((res) => {
-        //value 1 is when the username does not exist
-          // console.log("This is the reponse to the password reset, ", res.data);
-          if(res.status === 200) {
-              if(res.data.data === 1) {
-                  //username does not match
-                  this.setState({open1: true})
-              }else if (res.data.data === 2) {
-                  //email does not match
-                  this.setState({open2: true})
-              }else if (res.data.data === 3) {
-                  //error adding the data
-                  this.setState({open3: true})
-              }
-              else if (res.data.data) {
-                  //add code to send email to client
-                  this.setState({id: res.data.data.data.id});
-                  this.handleSendEmail(this.state.email, "Inventroy Summary Report", `Please follow the link below to Reset Password. \n  http://localhost:3000/updateinfo/${this.state.id}`);
-              }
-          }
-      }).catch((err) => {
-
-      })
+        if (this.state.username !== '' && this.state.email !== '') {
+            axios.post('/passwordReset', dataObj).then((res) => {
+                //value 1 is when the username does not exist
+                // console.log("This is the reponse to the password reset, ", res.data);
+                if(res.status === 200) {
+                    if(res.data.data === 1) {
+                        //username does not match
+                        this.setState({open1: true})
+                    }else if (res.data.data === 2) {
+                        //email does not match
+                        this.setState({open2: true})
+                    }else if (res.data.data === 3) {
+                        //error adding the data
+                        this.setState({open3: true})
+                    }
+                    else if (res.data.data) {
+                        //add code to send email to client
+                        this.setState({id: res.data.data.data.id});
+                        this.handleSendEmail(this.state.email, "Password Reset", `Please follow the link below to Reset Password. \n  ${window.location.origin}/updateinfo/${this.state.id}`);
+                    }
+                }
+            }).catch((err) => {
+                if(err) {
+                    this.setState({openerror: true})
+                }
+            })
+        }
     };
 
     handleSendEmail = (v_to_email, v_subject, v_body) => {
@@ -134,6 +139,7 @@ class passwordrst extends React.Component {
     handlemodalClose = () => {
           this.setState(initial_State);
     };
+
     render () {
         const {classes} = this.props;
         return (
@@ -240,6 +246,22 @@ class passwordrst extends React.Component {
                     </Typography>
                     <Typography variant="subtitle1" id="simple-modal-description">
                         An email has been sent to the email address on file with directions on how to reset your password.
+                        {/*<Link href={`/updateinfo/${this.state.id}`} className={classes.link}>Click Here</Link>*/}
+                    </Typography>
+                </div>
+            </Modal>
+            <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.state.openerror}
+                onClose={() => {this.handlemodalClose()}}
+            >
+                <div style={getModalStyle()} className={classes.modal}>
+                    <Typography variant="h6" id="modal-title">
+                        Error
+                    </Typography>
+                    <Typography variant="subtitle1" id="simple-modal-description">
+                        There was an Error.  Please try again.
                         {/*<Link href={`/updateinfo/${this.state.id}`} className={classes.link}>Click Here</Link>*/}
                     </Typography>
                 </div>

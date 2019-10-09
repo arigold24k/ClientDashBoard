@@ -115,7 +115,7 @@ class signuppage extends React.Component {
     };
     handleClose1 = (event) => {
         this.setState({open1: false});
-        window.location.href = '/login1'
+        window.location.href = '/#/login1'
     };
 
     handleClose3 = (event) => {
@@ -150,7 +150,7 @@ class signuppage extends React.Component {
                 </Button>
                 ): (
                     <Typography component="h6" variant="h6" align="center">
-                        Already have an account? Click here to <Link href={'/login1'} className={classes.link}>Sign-In</Link>
+                        Already have an account? Click here to <Link href={'/#/login1'} className={classes.link}>Sign-In</Link>
                     </Typography>
                 )
                 }
