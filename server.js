@@ -21,8 +21,11 @@ if (process.env.NODE_ENV === 'production') {
     // Serve any static files
     app.use(express.static(path.join(__dirname, 'client/build')));
     // Handle React routing, return all requests to React app
-    app.get('/*', function(req, res) {
-        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    // app.get('/*', function(req, res) {
+    //     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    // });
+    app.get('*', (res, req) => {
+        res.sendFile(path.join(__dirname+'/client/build/index.html'));
     });
 }
 
@@ -30,9 +33,11 @@ if (process.env.NODE_ENV === 'production') {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(methodOverride("_method"));
+//app.use(express.static(path.join(__dirname, 'client/build')));
 // app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 app.use("/",routes);
+
 // Send every request to the React app
 // Define any API routes before this runs
 
