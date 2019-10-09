@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4bf03c05-fc22-480e-a891-05bede3e6fba" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/components/PasswordReset/passwordrst.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/PasswordReset/passwordrst.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/updatePW/updatePW.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/updatePW/updatePW.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/App.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -176,7 +174,7 @@
       <workItem from="1570626382283" duration="408000" />
       <workItem from="1570628843631" duration="11932000" />
       <workItem from="1570643478595" duration="2740000" />
-      <workItem from="1570654270685" duration="3381000" />
+      <workItem from="1570654270685" duration="4059000" />
     </task>
     <servers />
   </component>

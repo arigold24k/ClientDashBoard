@@ -111,7 +111,7 @@ class App extends Component {
     handleClose = () => {
         this.setState({ open: false, open1: false });
         this.clearState();
-        window.location.href = '/login1'
+        window.location.href = '/#/login1'
     };
 
     handlesubmit = (event) => {
