@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 3001;
 //const PORT = process.env.PORT || 3001;
 const app = express();
+const helmet = require("helmet");
 const methodOverride = require('method-override');
 const routes = require('./routes/handle');
 const db = require("./models");
@@ -33,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
         }
     }));
 
-    app.get("/*", (res, req) => {
+    app.get("*", (res, req) => {
         //res.sendFile(path.join(__dirname+'/client/build/index.html'));
         res.sendfile(path.resolve(__dirname, "client", "build", "index.html"));
     });

@@ -103,9 +103,9 @@ router.post('/updateDrowssap', (req, res)=> {
     const {id, pw} = req.body;
     orm.get_current_reset_data(id, (err, response) => {
         if(response !== null) {
-            orm.updateOne('usertables', 'username', response.username, 'password', pw , (err_2, response_2) => {
+            orm.updateOne('UserTables', 'username', response.username, 'password', pw , (err_2, response_2) => {
                 if(response_2 !== null) {
-                    orm.updateOne('reststatuses', 'id', id, 'used', 'Y', (err_3, response_3) => {
+                    orm.updateOne('resetStatuses', 'id', id, 'used', 'Y', (err_3, response_3) => {
                         if(response_3 !== null) {
                             res.json({message: "data was added successfully", data: "SUCCESS"});
                         }else{

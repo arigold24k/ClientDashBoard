@@ -129,11 +129,12 @@ class Dashboard extends React.Component {
         super(props);
         this.state = initialState;
     };
-    componentWillMount() {
-        if(this.state.dataTable === null) {
-            this.getChartData();
-            this.getTableData();
-        }
+    UNSAFE_componentWillMount() {
+            if(this.state.dataTable === null) {
+                this.getChartData();
+                this.getTableData();
+            }
+
     }
     updSelected (newSel) {
         const { selected } = this.state;
@@ -175,7 +176,7 @@ class Dashboard extends React.Component {
         axios.post('/api/consumed', {email: this.state.email, filtered: conditions || false}, {headers: headerObj}).then((res) => {
             let holderObject = {};
             if(res.data.data !== null) {
-                // console.log('Data that is coming back from the consumption, ', res.data.data[0]);
+                console.log('Data that is coming back from the consumption, ', res.data.data[0]);
                 //have the array built here
                 holderArray = [];
                 for (let i = 0; i < res.data.data[0].length; i++) {
@@ -187,7 +188,9 @@ class Dashboard extends React.Component {
                     // holderArray = this.state.data;
                     holderArray.push(holderObject);
                 }
+
                 this.setState({data: holderArray});
+                //console.log(`this is the chart data ${this.state.data.holderArray}`);
                 holderArray = [];
             }
             // console.log('Holder Array for the data, ', this.state.data);
