@@ -12,5 +12,5 @@
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
-  "content_security_policy": "default-src 'self' https://nameless-sands-37753.herokuapp.com/"
+  "content_security_policy": "default-src 'self' https://hidden-crag-56068.herokuapp.com/"
 }
