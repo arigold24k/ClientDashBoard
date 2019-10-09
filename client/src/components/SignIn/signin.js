@@ -79,11 +79,11 @@ function SignIn(props) {
                     </Button>
 
                     <Typography component="h6" variant="h6" align="center">
-                        <Link href={'/signup'} className={classes.link}>First time user?</Link>
+                        <Link href={'/#/signup'} className={classes.link}>First time user?</Link>
 
                     </Typography>
                     <Typography component="h6" variant="h6" align="center">
-                        <Link href={'/forgotdorwssap'} className={classes.link}>Trouble signing in? </Link>
+                        <Link href={'/#/forgotdorwssap'} className={classes.link}>Trouble signing in? </Link>
 
                     </Typography>
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from "react-router-dom";
+import {Route,  Switch, Redirect} from "react-router-dom";
 import Login1 from "./pages/Login1";
 import Checkout from './pages/ClientCheckout';
 import Report from './pages/Reporting';
@@ -12,6 +12,8 @@ import SignUP from './pages/SignUpPage';
 import passwordRS from './components/PasswordReset';
 import funcs_ from './functions/functions';
 import update from './pages/updatePW';
+//import { Router, Route, IndexRoute, Link, IndexLink, browserHistory, hashHistory, Redirect, Switch } from 'react-router';
+
 require('es6-promise').polyfill();
 
 const initialState = {open1: false,
@@ -196,6 +198,7 @@ class App extends Component {
         return (
             <div>
                 {/*{window.location ==+ '/' ? <Redirect from="/" exact to="/login1" /> : ''}*/}
+
                 <Switch>
                     <Redirect exact from="/" to="/login1"/>
                     <Route exact path="/login1"><Login1 getValue={this.getValue.bind(this)}  usrname={this.state.usrname} open3={this.state.open3} open4={this.state.open4} open5={this.state.open5} handlesubmit={this.handlesubmit.bind(this)} handleAdd={this.handleAdd.bind(this)} open={this.state.open} open1={this.state.open1} handleClose={this.handleClose.bind(this)}/></Route>
