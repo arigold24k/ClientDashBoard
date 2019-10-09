@@ -110,9 +110,11 @@ class passwordrst extends React.Component {
                 }
             }).catch((err) => {
                 if(err) {
-                    this.setState({openerror: true})
+                    this.setState({open3: true})
                 }
             })
+        }else{
+            this.setState({openerror: true})
         }
     };
 
@@ -246,7 +248,6 @@ class passwordrst extends React.Component {
                     </Typography>
                     <Typography variant="subtitle1" id="simple-modal-description">
                         An email has been sent to the email address on file with directions on how to reset your password.
-                        {/*<Link href={`/updateinfo/${this.state.id}`} className={classes.link}>Click Here</Link>*/}
                     </Typography>
                 </div>
             </Modal>
@@ -261,7 +262,7 @@ class passwordrst extends React.Component {
                         Error
                     </Typography>
                     <Typography variant="subtitle1" id="simple-modal-description">
-                        There was an Error.  Please try again.
+                        Please make sure all fields are filled out.
                         {/*<Link href={`/updateinfo/${this.state.id}`} className={classes.link}>Click Here</Link>*/}
                     </Typography>
                 </div>
