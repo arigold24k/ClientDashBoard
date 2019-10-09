@@ -11,6 +11,7 @@ import Legend from 'recharts/lib/component/Legend';
 function SimpleLineChart(passData) {
     const data = [];
 
+
     for (let i = 0; i < passData.passData.length; i++) {
       data.push(passData.passData[i]);
     }
@@ -18,6 +19,7 @@ function SimpleLineChart(passData) {
     // console.log('passdata that is being passed, ', passData);
     return (
         // 99% per https://github.com/recharts/recharts/issues/172
+
         <ResponsiveContainer width="99%" height={320}>
             <LineChart data={data}>
                 <XAxis dataKey="name" />
@@ -29,6 +31,7 @@ function SimpleLineChart(passData) {
                 <Line type="monotone" dataKey="Received" stroke="#8884d8" activeDot={{ r: 8 }} formatter = {(value) => new Intl.NumberFormat('en').format(value)}/>
             </LineChart>
         </ResponsiveContainer>
+
     );
 }
 

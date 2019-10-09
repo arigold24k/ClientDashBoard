@@ -283,6 +283,7 @@ class Dashboard extends React.Component {
                             ?
                                 <SimpleLineChart passData={this.state.data}/>
                             :
+                                <div className={classes.tableContainer}>
                                 <Paper className={classes.paper}>
                                     <Typography variant="h4" gutterBottom component="h2" className={classes.loadSection} align="center">
                                         <Icon path={mdiLoading}
@@ -297,6 +298,7 @@ class Dashboard extends React.Component {
                                         Loading...
                                     </Typography>
                                 </Paper>
+                                </div>
                     }
 
                 </Typography>
@@ -317,7 +319,6 @@ class Dashboard extends React.Component {
 
                     {this.state.dataTable
                         ?
-
                             <SimpleTable
                                 handleSelected={this.updSelected.bind(this)}
                                 handleSelAll={this.handleSelectAll.bind(this)}

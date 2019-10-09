@@ -17,6 +17,7 @@ import classNames from 'classnames';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import orderBy from 'lodash/orderBy';
 import TextField from '@material-ui/core/TextField';
+import ResponsiveContainer from 'recharts/lib/component/ResponsiveContainer';
 
 class EnhancedTableHead extends React.Component {
     render() {
@@ -101,7 +102,7 @@ const toolbarStyles = theme => ({
                 backgroundColor: theme.palette.primary.dark,
             },
     spacer: {
-        flex: '1 1 100%',
+        flex: '1 1 50%',
     },
     actions: {
         color: theme.palette.text.primary,
@@ -148,10 +149,11 @@ const styles = theme => ({
     root: {
         width: '100%',
         marginTop: theme.spacing.unit * 3,
-        hover: 'primary'
+        hover: 'primary',
+        overflowX: 'auto'
     },
     table: {
-        minWidth: 1020,
+        minWidth: 360,
         backgroundColor: 'primary',
     },
     highlight: {
@@ -239,6 +241,7 @@ class EnhancedTable extends React.Component {
         // console.log("State in the table, ", this.state);
 
         return (
+            <ResponsiveContainer width="99%" height={320}>
             <Paper className={classes.root}>
                 <EnhancedTableToolbar numSelected={selected.length} title={tableTitle} />
                 <div className={classes.tableWrapper}>
@@ -300,6 +303,7 @@ class EnhancedTable extends React.Component {
                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
                 />
             </Paper>
+            </ResponsiveContainer>
         );
     }
 }
