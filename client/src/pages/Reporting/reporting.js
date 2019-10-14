@@ -325,14 +325,16 @@ class report extends React.Component {
                 }
                 // console.log('this is the response from the reporting 1', res.data.data[0]);
                 if(res.data.data[0] !== null && res.data.data[0].length > 0) {
+                    //console.log('Data coming back from reporting: ', res.data.data[0]);
                     for (let i = 0; i < res.data.data[0].length; i++) {
-                        let holderDate = res.data.data[0][i].SCANDATE + '';
-                        let holderArr =  holderDate.split('T');
+
+                        // let holderDate = res.data.data[0][i].SCANDATE;
+                        // let holderArr =  holderDate.split('T');
                         // console.log("Splitting the date, ", holderArr);
                         let dObj = {
                             'id' : res.data.data[0][i].RECNO,
                             'recno': res.data.data[0][i].RECNO.toString(),
-                            'scandate': holderArr[0],
+                            'scandate': res.data.data[0][i].scandate.split('T')[0],
                             'scancode': res.data.data[0][i].CODE,
                             'product': res.data.data[0][i].PART,
                             'quantity': res.data.data[0][i].QTY,
