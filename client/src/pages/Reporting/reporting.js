@@ -492,7 +492,7 @@ class report extends React.Component {
                                                 {
                                                     name: 'Tag Number',
                                                     id: 'tagnum',
-                                                    numeric: true,
+                                                    numeric: false,
                                                     disablePadding: true,
                                                     label: 'Tag Number'
                                                 }
