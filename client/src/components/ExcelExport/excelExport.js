@@ -17,10 +17,10 @@ const styles = theme => ({
 
 });
 
-
 class Download extends React.Component {
     render() {
         const { classes, dataArray } = this.props;
+        console.log(`data array being passed is ${dataArray}`);
         const data = [[{
                         value: "Rec Number",
                         style: {
@@ -135,64 +135,64 @@ class Download extends React.Component {
         let dataHolder = [];
 
         const columnsArray = [
-            // {title: "Rec Number", width: {wch: 12}, background: "FF00FF00"
-                // style: {
-                //     fill: {patternType: "solid", bgColor: {rgb: "FF00FF00"}},
-                //     font:{sz: "14", bold: true},
-                //     alignment: {vertical: "center", horizontal: "center"},
-                //     border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}},
-                //     numFmt: "0"
-                //
-                // }
-            // },
-            // {title: "Scan Date", width: {wch: 12},
-                // style: {
-                //     fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
-                //     font:{sz: "14", bold: true},
-                //     alignment: {vertical: "center", horizontal: "center"},
-                //     border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}},
-                //     numFmt: "yyyy-mm-dd"
-                //
-                // }
-            // },
-            // {title: "Scan Code", width: {wch: 12},
-                // style: {
-                //     fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
-                //     font:{sz: "14", bold: true},
-                //     alignment: {vertical: "center", horizontal: "center"},
-                //     border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}}
-                //
-                // }
-            // },
-            // {title: "Product", width: {wch: 12},
-                // style: {
-                //     fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
-                //     font:{sz: "14", bold: true},
-                //     alignment: {vertical: "center", horizontal: "center"},
-                //     border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}}
-                //
-                // }
-            // },
-            // {title: "Quantity", width: {wch: 12},
-                // style: {
-                //     fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
-                //     font:{sz: "14", bold: true},
-                //     alignment: {vertical: "center", horizontal: "center"},
-                //     border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}},
-                //     numFmt: "#,##0"
-                //
-                // }
-            // },
-            // {title: "Tag Number", width: {wch: 12},
-                // style: {
-                //     fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
-                //     font:{sz: "14", bold: true},
-                //     alignment: {vertical: "center", horizontal: "center"},
-                //     border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}},
-                //     numFmt: "#,##0"
-                //
-                // }
-            // }
+            {title: "Rec Number", width: {wch: 12}, background: "FF00FF00",
+                style: {
+                    fill: {patternType: "solid", bgColor: {rgb: "FF00FF00"}},
+                    font:{sz: "14", bold: true},
+                    alignment: {vertical: "center", horizontal: "center"},
+                    border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}},
+                    numFmt: "0"
+
+                }
+            },
+            {title: "Scan Date", width: {wch: 12},
+                style: {
+                    fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
+                    font:{sz: "14", bold: true},
+                    alignment: {vertical: "center", horizontal: "center"},
+                    border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}},
+                    numFmt: "yyyy-mm-dd"
+
+                }
+            },
+            {title: "Scan Code", width: {wch: 12},
+                style: {
+                    fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
+                    font:{sz: "14", bold: true},
+                    alignment: {vertical: "center", horizontal: "center"},
+                    border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}}
+
+                }
+            },
+            {title: "Product", width: {wch: 12},
+                style: {
+                    fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
+                    font:{sz: "14", bold: true},
+                    alignment: {vertical: "center", horizontal: "center"},
+                    border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}}
+
+                }
+            },
+            {title: "Quantity", width: {wch: 12},
+                style: {
+                    fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
+                    font:{sz: "14", bold: true},
+                    alignment: {vertical: "center", horizontal: "center"},
+                    border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}},
+                    numFmt: "#,##0"
+
+                }
+            },
+            {title: "Tag Number", width: {wch: 12},
+                style: {
+                    fill: {patternType: "solid", fgColor: {rgb: "FF00FF00"}},
+                    font:{sz: "14", bold: true},
+                    alignment: {vertical: "center", horizontal: "center"},
+                    border: {bottom: {style: "thick", color: { rgb: "FFFFAA00" }}},
+                    numFmt: "#,##0"
+
+                }
+            }
         ];
 
         // multiDataSet.push({ySteps: 1, columns: columnsArray});
@@ -227,8 +227,8 @@ class Download extends React.Component {
         }
 
 
-
         multiDataSet[0].data = data;
+        //multiDataSet[0].data = data;
 
         console.log("This is the object being created: ", multiDataSet);
         console.log("This is the original object passed as param: ", dataArray);

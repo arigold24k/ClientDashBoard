@@ -181,9 +181,9 @@ class Dashboard extends React.Component {
                 holderArray = [];
                 for (let i = 0; i < res.data.data[0].length; i++) {
                     holderObject = {
-                        name: res.data.data[0][i].Month,
+                        name: res.data.data[0][i].Word_Mon,
                         Consumed: res.data.data[0][i].Consumed,
-                        Received: res.data.data[0][i].Received
+                        Received: res.data.data[0][i].received
                     };
                     // holderArray = this.state.data;
                     holderArray.push(holderObject);

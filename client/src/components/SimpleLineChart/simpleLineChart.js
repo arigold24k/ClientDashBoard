@@ -20,7 +20,7 @@ function SimpleLineChart(passData) {
     return (
         // 99% per https://github.com/recharts/recharts/issues/172
 
-        <ResponsiveContainer width="99%" height={320}>
+        <ResponsiveContainer width="99%" height={480}>
             <LineChart data={data}>
                 <XAxis dataKey="name" />
                 <YAxis formatter = {(value) => new Intl.NumberFormat('en').format(value)}/>

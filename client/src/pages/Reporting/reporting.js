@@ -295,7 +295,7 @@ class report extends React.Component {
                     //coding if error making call
                     this.setState({open3: true})
                 }else {
-                    console.log('this is the resonse from summary reporting', res.data.data);
+                //    console.log('this is the resonse from summary reporting', res.data.data);
                     if(res.data.data && res.data.data !== 3) {
                         this.setState({open5: true})
                     }else if (res.data.data === 3) {
