@@ -129,13 +129,18 @@ class Dashboard extends React.Component {
         super(props);
         this.state = initialState;
     };
-    UNSAFE_componentWillMount() {
-            if(this.state.dataTable === null) {
-                this.getChartData();
-                this.getTableData();
-            }
+    // UNSAFE_componentWillMount() {
+    //
+    //
+    // }
+    componentDidMount() {
+        if(this.state.dataTable === null) {
+            this.getChartData();
+            this.getTableData();
+        }
 
     }
+
     updSelected (newSel) {
         const { selected } = this.state;
         const selectedIndex = selected.indexOf(newSel);

@@ -29,6 +29,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = initialState;
+
     };
     myCheckOutPage = () => {
         return (
@@ -83,16 +84,17 @@ class App extends Component {
             this.setState({auth:false})
         }
     }
-    UNSAFE_componentWillMount(){
-        // clearTimeout(this.interval);
-        this.getKey();
-        // console.log('This is the state in the component will mount ', this.state);
-        // document.title = 'Client Dashboard';
-
-      };
+    // UNSAFE_componentWillMount(){
+    //     // clearTimeout(this.interval);
+    //     this.getKey();
+    //     // console.log('This is the state in the component will mount ', this.state);
+    //     // document.title = 'Client Dashboard';
+    //
+    //   };
     componentDidMount() {
         // console.log("This is the state when the component moutned ", this.state);
         // window.location.href = '/login1';
+        this.getKey();
     }
     getValue = (event) => {
         // Updates the input state

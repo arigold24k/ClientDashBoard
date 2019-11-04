@@ -417,7 +417,7 @@ class Checkout extends React.Component {
         }
     };
 
-    componentWillMount() {
+    componentDidMount() {
         // this.setState({companyName: this.props});
 
         // console.log('the state in teh comp will mount, ', this.props);
