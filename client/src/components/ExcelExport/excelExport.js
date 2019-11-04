@@ -20,7 +20,6 @@ const styles = theme => ({
 class Download extends React.Component {
     render() {
         const { classes, dataArray } = this.props;
-        console.log(`data array being passed is ${dataArray}`);
         const data = [[{
                         value: "Rec Number",
                         style: {
@@ -199,7 +198,6 @@ class Download extends React.Component {
         multiDataSet.push({columns: columnsArray});
 
         //have to loop through data being passed and create an array of objects
-
         //looping through array being passed so array[0] will give us first object
         for (let i = 0; i < dataArray.length; i++) {
             dataHolder = [];
@@ -209,16 +207,16 @@ class Download extends React.Component {
             for (let j = 1; j < keyHolder.length; j++) {
                 if ((i+1) % 2 === 1) {
                     if( j === 5 ) {
-                        dataHolder.push({value: dataArray[i][keyHolder[j]], style: {font: {sz: "12"}, numFmt: "#,##0", alignment: {vertical: "center", horizontal: "center"}}});
+                        dataHolder.push({value: (dataArray[i][keyHolder[j]]) ? dataArray[i][keyHolder[j]] : 0, style: {font: {sz: "12"}, numFmt: "#,##0", alignment: {vertical: "center", horizontal: "center"}}});
                     }else {
-                        dataHolder.push({value: dataArray[i][keyHolder[j]], style: {font: {sz: "12"}, alignment: {vertical: "center", horizontal: "center"}}});
+                        dataHolder.push({value: (dataArray[i][keyHolder[j]]) ? dataArray[i][keyHolder[j]] : '', style: {font: {sz: "12"}, alignment: {vertical: "center", horizontal: "center"}}});
                     }
                 }
                 else {
                     if( j === 5 ) {
-                        dataHolder.push({value: dataArray[i][keyHolder[j]], style: {font: {sz: "12"}, fill: {patternType: "solid", fgColor:{rgb: "b5e7a0"}}, numFmt: "#,##0", alignment: {vertical: "center", horizontal: "center"}}});
+                        dataHolder.push({value: (dataArray[i][keyHolder[j]]) ? dataArray[i][keyHolder[j]] : 0, style: {font: {sz: "12"}, fill: {patternType: "solid", fgColor:{rgb: "b5e7a0"}}, numFmt: "#,##0", alignment: {vertical: "center", horizontal: "center"}}});
                     }else {
-                        dataHolder.push({value: dataArray[i][keyHolder[j]], style: {font: {sz: "12"}, fill: {patternType: "solid", fgColor:{rgb: "b5e7a0"}}, alignment: {vertical: "center", horizontal: "center"}}});
+                        dataHolder.push({value: (dataArray[i][keyHolder[j]]) ? dataArray[i][keyHolder[j]] : '', style: {font: {sz: "12"}, fill: {patternType: "solid", fgColor:{rgb: "b5e7a0"}}, alignment: {vertical: "center", horizontal: "center"}}});
                     }
                 }
             }
@@ -226,10 +224,9 @@ class Download extends React.Component {
 
         }
 
-
         multiDataSet[0].data = data;
         //multiDataSet[0].data = data;
-
+        //this.setState({data: multiDataSet});
         console.log("This is the object being created: ", multiDataSet);
         console.log("This is the original object passed as param: ", dataArray);
 
