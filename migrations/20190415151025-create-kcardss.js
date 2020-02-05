@@ -30,8 +30,7 @@ module.exports = {
       },
       PART: {
         type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: "123456"
+        allowNull: true,
       },
       QTY: {
         type: Sequelize.INTEGER,

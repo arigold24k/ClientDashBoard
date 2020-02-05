@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     PART: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       defaultValue: "123456"
     },
     QTY: {
