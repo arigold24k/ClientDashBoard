@@ -109,6 +109,8 @@
       <find>API</find>
       <find>DASH</find>
       <find>getChartData</find>
+      <find>get</find>
+      <find>dash</find>
     </findStrings>
   </component>
   <component name="Git.Settings">

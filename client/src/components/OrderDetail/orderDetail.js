@@ -30,7 +30,7 @@ class orderDetail extends React.Component {
                         inputRef={(input) => {this.myRef = input}}
                         id="partnum"
                         name="partnum"
-                        label="partnum"
+                        label="Part Number"
                         fullWidth
                         autoComplete="pnum"
                         onChange={this.props.updateval}
