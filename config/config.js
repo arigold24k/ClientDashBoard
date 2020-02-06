@@ -9,28 +9,28 @@ const configOjb = {
         "password": process.env.DBKEY,
         "database": process.env.DBNAME,
         "host": process.env.HOSTNUM,
-        "dialect": process.env.DIALECT
+        "dialect": 'mysql'
     },
     "local": {
         "username": process.env.USRNME,
         "password": process.env.DBKEY,
         "database": process.env.DBNAME,
         "host": process.env.HOSTNUM,
-        "dialect": process.env.DIALECT
+        "dialect": 'mysql'
     },
     "test": {
         "username": process.env.USRNME,
         "password": process.env.DBKEY,
         "database": process.env.DBNAME,
         "host": process.env.HOSTNUM,
-        "dialect": process.env.DIALECT
+        "dialect": 'mysql'
     },
     "production": {
         "username": process.env.USRNME,
         "password": process.env.DBKEY,
         "database": process.env.DBNAME,
         "host": process.env.HOSTNUM,
-        "dialect": process.env.DIALECT
+        "dialect": 'mysql'
     }
 };
 
