@@ -12,11 +12,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/handle.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="129">
+              <caret line="281" column="22" selection-start-line="281" selection-start-column="14" selection-end-line="281" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/orm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="243" column="22" lean-forward="true" selection-start-line="243" selection-start-column="22" selection-end-line="243" selection-end-column="22" />
+            <state relative-caret-position="146">
+              <caret line="250" column="77" lean-forward="true" selection-start-line="250" selection-start-column="77" selection-end-line="250" selection-end-column="77" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/pages/ClientCheckout/clientCKout.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="697">
+              <caret line="415" column="28" selection-start-line="415" selection-start-column="28" selection-end-line="415" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="282">
+              <caret line="233" column="10" selection-start-line="233" selection-start-column="4" selection-end-line="233" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -42,9 +69,14 @@
       <find>DASH</find>
       <find>getChartData</find>
       <find>get</find>
-      <find>dash</find>
       <find>regist</find>
       <find>signup</find>
+      <find>union</find>
+      <find>getchartdata</find>
+      <find>dash</find>
+      <find>api/cons</find>
+      <find>handle</find>
+      <find>having</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -89,6 +121,11 @@
             <path>
               <item name="ClientDashBoard" type="b2602c69:ProjectViewProjectNode" />
               <item name="ClientDashBoard" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ClientDashBoard" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ClientDashBoard" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ClientDashBoard" type="b2602c69:ProjectViewProjectNode" />
@@ -271,12 +308,12 @@
       <workItem from="1580390649806" duration="1274000" />
       <workItem from="1580909421622" duration="9634000" />
       <workItem from="1580943986765" duration="1474000" />
-      <workItem from="1580995555944" duration="5031000" />
+      <workItem from="1580995555944" duration="6229000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23793000" />
+    <option name="totallyTimeSpent" value="24991000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -403,13 +440,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2907">
-          <caret line="183" column="97" selection-start-line="183" selection-start-column="97" selection-end-line="183" selection-end-column="97" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/migrations/20190415151025-create-kcardss.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -472,13 +502,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/handle.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="38" column="6" lean-forward="true" selection-start-line="38" selection-start-column="6" selection-end-line="38" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/pages/Reporting/reporting.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-680">
@@ -496,13 +519,6 @@
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/pages/ClientCheckout/clientCKout.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="415" column="28" selection-start-line="415" selection-start-column="28" selection-end-line="415" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -542,10 +558,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/pages/ClientCheckout/clientCKout.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="415" column="28" selection-start-line="415" selection-start-column="28" selection-end-line="415" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/handle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="281" column="22" selection-start-line="281" selection-start-column="14" selection-end-line="281" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="233" column="10" selection-start-line="233" selection-start-column="4" selection-end-line="233" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/config/orm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="243" column="22" lean-forward="true" selection-start-line="243" selection-start-column="22" selection-end-line="243" selection-end-column="22" />
+        <state relative-caret-position="146">
+          <caret line="250" column="77" lean-forward="true" selection-start-line="250" selection-start-column="77" selection-end-line="250" selection-end-column="77" />
         </state>
       </provider>
     </entry>
