@@ -157,11 +157,12 @@ const ranges = [{
 const ranges2 = [{
     value: 0,
     label: 'No Selection'
-},/*{
-    value: 1,
-    label: 'Summary Report'
-}
-,*/{
+},
+//     {
+//     value: 1,
+//     label: 'Summary Report'
+// },
+    {
     value: 2,
     label: 'Scanned Report'
 }];
