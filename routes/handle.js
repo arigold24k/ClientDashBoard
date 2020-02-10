@@ -218,11 +218,11 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
             // console.log("This is the request in the process scan route, ", req.body);
             // put in code if the token is good
                 orm.findOneTag(req.body.tagnum,(err, results) => {
-                    // console.log("This is the log from the findontTag orm -- handle.js, ", results);
-                    // console.log("This is the error from the findontTag orm -- handle.js, ", err);
+                     console.log("This is the log from the findontTag orm -- handle.js, ", results);
+                     console.log("This is the error from the findontTag orm -- handle.js, ", err);
                     if(results !== null) {
                         if (req.body.purpose === 'CONSUME') {
-                        orm.insertToKCards(decoded.user.companycode,req.body.purpose, req.body.partnum, req.body.quantity, req.body.tagnum, decoded.user.username,  (err, data) => {
+                        orm.insertToKCARDs(decoded.user.companycode,req.body.purpose, req.body.partnum, req.body.quantity, req.body.tagnum, decoded.user.username,  (err, data) => {
                             if(err) {
                                 // console.log("Error in adding activity to kcards ", err);
                                 res.json({message: "data was not added", data: null})

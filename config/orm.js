@@ -183,7 +183,7 @@ const orm = {
             'PSISSION': user,
         };
         // console.log("Data being passed into the db KCARDs upsert, ", dataObj);
-        db.KCARDs.upsert(dataObj).then((res, metadata) => {
+        db.KCARDS.upsert(dataObj).then((res, metadata) => {
             return cb(null, res);
         }).catch((err) => {
             if (err) {
