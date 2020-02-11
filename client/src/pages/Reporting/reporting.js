@@ -487,18 +487,18 @@ class report extends React.Component {
                                                     label: 'Product Number'
                                                 },
                                                 {
-                                                    name: 'Quantity',
-                                                    id: 'quantity',
-                                                    numeric: true,
-                                                    disablePadding: true,
-                                                    label: 'Quantity in Inventory'
-                                                },
-                                                {
                                                     name: 'Tag Number',
                                                     id: 'tagnum',
                                                     numeric: false,
                                                     disablePadding: true,
                                                     label: 'Tag Number'
+                                                },
+                                                {
+                                                    name: 'Quantity',
+                                                    id: 'quantity',
+                                                    numeric: true,
+                                                    disablePadding: false,
+                                                    label: 'Quantity in Inventory'
                                                 }
                                             ]}
                                         />

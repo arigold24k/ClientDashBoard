@@ -227,8 +227,8 @@ class Download extends React.Component {
         multiDataSet[0].data = data;
         //multiDataSet[0].data = data;
         //this.setState({data: multiDataSet});
-        console.log("This is the object being created: ", multiDataSet);
-        console.log("This is the original object passed as param: ", dataArray);
+        // console.log("This is the object being created: ", multiDataSet);
+        // console.log("This is the original object passed as param: ", dataArray);
 
         return (
             <ExcelFile element={
