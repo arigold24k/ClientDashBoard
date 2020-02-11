@@ -276,12 +276,13 @@ const orm = {
         })
     },
     reporting2 : (compCode, cb) => {
-        const strSql = ` select * from KCARDs where customer = '${compCode}' AND date_format(SCANDATE,'%m/%d/%Y') <= date_format(sysdate(),'%m/%d/%Y')  AND date_format(SCANDATE,'%m/%d/%Y') >= date_format(date_sub(sysdate(),interval  weekday(sysdate()) day), '%m/%d/%Y') order by scandate;`;
+        //const strSql = `select * from KCARDs where customer = '${compCode}' AND SCANDATE >= dateadd(day, 1-datepart(dw, getdate()), CONVERT(date,getdate())) AND SCANDATE <  dateadd(day, 8-datepart(dw, getdate()), CONVERT(date,getdate())) order by scandate;`;
+        const strSql = `select * from KCARDs where customer = '${compCode}' AND date(SCANDATE) <= date_format(sysdate(),'%Y-%m-%d')  AND date(SCANDATE) >= date_format(date_sub(sysdate(),interval  weekday(sysdate()) day), '%Y-%m-%d') order by scandate;`;
         db.sequelize.query(strSql).then((results) => {
             // console.log('data coming from the reporting1 data, ', results);
             cb(null, results);
         }).catch((error) => {
-            // console.log('error from the reporting1 data, ', error);
+             console.log('error from the reporting1 data, ', error);
             cb(error, null);
         })
     },
