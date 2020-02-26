@@ -301,7 +301,7 @@ class Checkout extends React.Component {
     handleSubmit = () => {
         const checkLet = /[\D]/;
         const dataObj = {
-            partnum: this.state.orderdetails.partnum,
+            partnum: this.state.orderdetails.partnum ? this.state.orderdetails.partnum : 'manual',
             quantity: checkLet.test(this.state.orderdetails.quantity.substring(1,1)) ? this.state.orderdetails.quantity.substring(1,this.state.orderdetails.quantity.length -1) : this.state.orderdetails.quantity,
             tagnum: this.state.orderdetails.tagnum,
             purpose: purposetext(this.state.purposedetails.purpose)
