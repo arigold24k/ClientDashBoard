@@ -26,7 +26,6 @@ class orderDetail extends React.Component {
                 {/*<Grid item xs={12} sm={6}>*/}
                 <Grid item xs={12}>
                     <TextField
-
                         inputRef={(input) => {this.myRef = input}}
                         id="partnum"
                         name="partnum"
