@@ -220,7 +220,7 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
             //    orm.findOneTag(req.body.tagnum,(err, results) => {
             //          console.log("This is the log from the findontTag orm -- handle.js, ", results);
             //          console.log("This is the error from the findontTag orm -- handle.js, ", err);
-                    if(results !== null) {
+            //        if(results !== null) {
                         if (req.body.purpose === 'CONSUME') {
                         orm.insertToKCARDs(decoded.user.companycode,req.body.purpose, req.body.partnum, req.body.quantity, req.body.tagnum, decoded.user.username,  (err, data) => {
                             if(err) {
@@ -250,31 +250,51 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
                                 }
                             })
                         }else if (req.body.purpose === 'ERROR') {
-                            res.json({message: 'no action needed as Inventory Item Tag has not been removed from Inventory', data: 'NOERROR'})
+                            // res.json({message: 'no action needed as Inventory Item Tag has not been removed from Inventory', data: 'NOERROR'})
+                        //    if (req.body.purpose === 'ERROR') {
+                                // have to find a row in the kcard_master_raw and insert into kcard_master and remove from kcards
+                                orm.runError(req.body.tagnum, (error, data) => {
+                                    // console.log('run error, data: ', data);
+                                    if(data !== null) {
+                                        orm.deleteOneMaster('KCARDS', 'TAG_NUM', req.body.tagnum, (error, data) => {
+                                            if(data !== null) {
+                                                res.json({data: data})
+                                            }else{
+                                                res.json({data: error});
+                                            }
+                                        });
+                                        // res.json({message: "data was added successfully", data: data});
+                                    }else{
+                                        // console.log("error in the runError, ", err);
+                                    }
+                                })
+                            // }else {
+                             //   res.json({message: "data was not added", data: 'TAGALREADYCONSUMED'})
+                           // }
                         }
-                    }
-                    else if (results === null) {
-                     if (req.body.purpose === 'ERROR') {
-                            // have to find a row in the kcard_master_raw and insert into kcard_master and remove from kcards
-                         orm.runError(req.body.tagnum, (error, data) => {
-                             // console.log('run error, data: ', data);
-                             if(data !== null) {
-                                 orm.deleteOneMaster('KCARDS', 'TAG_NUM', req.body.tagnum, (error, data) => {
-                                     if(data !== null) {
-                                         res.json({data: data})
-                                     }else{
-                                         res.json({data: error});
-                                     }
-                                 });
-                                 // res.json({message: "data was added successfully", data: data});
-                             }else{
-                                 // console.log("error in the runError, ", err);
-                             }
-                         })
-                        }else {
-                         res.json({message: "data was not added", data: 'TAGALREADYCONSUMED'})
-                     }
-                    }
+                   // }
+                   // else if (results === null) {
+                   //   if (req.body.purpose === 'ERROR') {
+                   //          // have to find a row in the kcard_master_raw and insert into kcard_master and remove from kcards
+                   //       orm.runError(req.body.tagnum, (error, data) => {
+                   //           // console.log('run error, data: ', data);
+                   //           if(data !== null) {
+                   //               orm.deleteOneMaster('KCARDS', 'TAG_NUM', req.body.tagnum, (error, data) => {
+                   //                   if(data !== null) {
+                   //                       res.json({data: data})
+                   //                   }else{
+                   //                       res.json({data: error});
+                   //                   }
+                   //               });
+                   //               // res.json({message: "data was added successfully", data: data});
+                   //           }else{
+                   //               // console.log("error in the runError, ", err);
+                   //           }
+                   //       })
+                   //      }else {
+                   //       res.json({message: "data was not added", data: 'TAGALREADYCONSUMED'})
+                   //   }
+                   // }
              //   })
         }
     });
