@@ -202,6 +202,19 @@ const orm = {
             cb(error, null)
         })
     },
+    findOneTag_forday: (tagNumber, cb) => {
+        let today_ = new Date();
+        db.KCARDS.findOne({
+            where: {
+                'TAG_NUM': tagNumber,
+                'TO_DATE(scandate)': today_
+            }
+        }).then((results) => {
+            cb(null, results)
+        }).catch((error) => {
+            cb(error, null)
+        })
+    },
     deleteOneMaster: (table, col, val, cb) => {
         // console.log(`This is the data from delete one value: ${val} table: ${table} col: ${col} `);
         db[table].destroy({
