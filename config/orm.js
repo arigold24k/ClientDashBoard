@@ -75,7 +75,7 @@ const orm = {
             //looking to find a user that has that username code if no user exist go to next line of logic
             if(!data[0]) {
                 //if no user with that company code exist exist proceed.
-                this.find_one('UserTable', "UserCode", usercode, (er, data2) => {
+                this.find_one('UserTables', "UserCode", usercode, (er, data2) => {
                     // console.log("message from first find_one, ", data2);
                     if (data2 === null ) {
                         //if company code exist then proceed
