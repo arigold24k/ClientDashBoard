@@ -47,8 +47,10 @@ const orm = {
             // console.log('results form the the find one, ', results);
             if(results === null) {
                 cb(results, null);
+            }else {
+                cb(null, results);
             }
-            cb(null, results);
+
         }).catch((e) => {
             // console.log("Error finding the comp code, ", e);
             cb(e, null)
@@ -71,16 +73,16 @@ const orm = {
     },
     addoneUser: function(username, pw, email, usercode, cb) {
         this.findoneUser(username, (err, data) => {
-            // console.log("find one user ", data);
+             //console.log("find one user ", data);
             //looking to find a user that has that username code if no user exist go to next line of logic
-            if(!data[0]) {
+            if(err) {
                 //if no user with that company code exist exist proceed.
-                this.find_one('UserTables', "UserCode", usercode, (er, data2) => {
+                this.find_one('UserTable', "UserCode", usercode, (er, data2) => {
                     // console.log("message from first find_one, ", data2);
                     if (data2 === null ) {
                         //if company code exist then proceed
-                        this.find_one('CompUsers', 'usercode', usercode, (error, data1) => {
-                            // console.log("this is the find one company code ", data1);
+                        this.find_one('CompUser', 'usercode', usercode, (error, data1) => {
+                           //  console.log("this is the find one company code ", data1);
                             if(data1 !== null) {
                                 // console.log("company code exist data: ", data1.comp_code);
                                 const objData = {
@@ -96,7 +98,8 @@ const orm = {
                             }else {
                                 //code 3 equals no comp code
                                 cb(null, 3);
-                            }})
+                            }
+                        })
                     }else {
                         //code 2 means there is a user for that company
                         cb(null, 0);

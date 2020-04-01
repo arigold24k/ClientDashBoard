@@ -94,7 +94,7 @@ class signuppage extends React.Component {
 
         if (checkEmail(this.state.email)) {
             axios.post('/register', dataObj).then((req, res) => {
-                // console.log("This is the response to the front end from the register api ", req);
+                 console.log("This is the response to the front end from the register api ", req);
                 if(req.data.data === true) {
                     this.setState({open1: true});
                 }else if (req.data.data === 3) {

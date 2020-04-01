@@ -25,9 +25,11 @@ router.get("/data", function(req, res) {
     }))
 });
 router.post('/register', function(req, res) {
-    // console.log('Register API is being hit');
+     console.log('Register API is being hit');
+
     orm.addoneUser(req.body.userName, req.body.password, req.body.email, req.body.companyCode, (err, data) => {
-        // console.log('---data is coming back from query---', data);
+
+        console.log('---data is coming back from query---', data);
         if(data && (data !==0 && data !== 3)){
             // console.log('this is the data that came back from the call ', data);
             res.json({message:'Data has been inserted', data: data})
