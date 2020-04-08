@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: "123456"
     },
     QTY: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.REAL,
       allowNull: false,
       defaultValue: "999999"
     },
@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
       fields: ['RECNO']
     }],
     timestamps: false
-  },);
+  });
   KCARDS.associate = function(models) {
     // associations can be defined here
     //KCARDS.belongsTo(models.UserTable, {

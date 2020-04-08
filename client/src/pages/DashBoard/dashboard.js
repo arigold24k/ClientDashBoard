@@ -182,12 +182,12 @@ class Dashboard extends React.Component {
             let holderObject = {};
             if(res.data.data !== null) {
 
-                //console.log('Data that is coming back from the consumption, ', res.data.data[0]);
+                console.log('Data that is coming back from the consumption, ', res.data.data[0]);
                 //have the array built here
                 holderArray = [];
                 for (let i = 0; i < res.data.data[0].length; i++) {
                     holderObject = {
-                        name: res.data.data[0][i].Month,
+                        name: res.data.data[0][i].Month  + "-" + res.data.data[0][i].year.toString().slice(2,4),
                         Consumed: res.data.data[0][i].Consumed,
                         Received: res.data.data[0][i].Received
                     };
@@ -218,10 +218,10 @@ class Dashboard extends React.Component {
                 holderArrayTable = [];
                 for (let i = 0; i < res.data.data[0].length; i++) {
                     holderObjectTable = {
-                        id: res.data.data[0][i].PART,
-                        name: res.data.data[0][i].PART,
+                        id: res.data.data[0][i].cust_ref_num,
+                        name: res.data.data[0][i].cust_ref_num,
                         tagcount: res.data.data[0][i].tagcount.toString(),
-                        quantity: res.data.data[0][i].quantity.toString()
+                        quantity: Math.round(res.data.data[0][i].quantity).toString()
                     };
                     holderArrayTable.push(holderObjectTable);
                 }
@@ -247,8 +247,8 @@ class Dashboard extends React.Component {
             this.setState({
                 filtered: holdQueryString
             });
-            // console.log("Data in teh handle submit in the dasboard page, ", holdQueryString);
-            // console.log("Data in teh handle submit in the dasboard page, ", this.state);
+             console.log("Data in teh handle submit in the dasboard page, ", holdQueryString);
+             console.log("Data in teh handle submit in the dasboard page, ", this.state);
 
             this.getChartData(holdQueryString);
         }else{

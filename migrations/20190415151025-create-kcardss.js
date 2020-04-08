@@ -33,7 +33,7 @@ module.exports = {
         allowNull: true,
       },
       QTY: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.REAL,
         allowNull: false,
         defaultValue: "999999"
       },

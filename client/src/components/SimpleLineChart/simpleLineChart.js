@@ -10,7 +10,7 @@ import Legend from 'recharts/lib/component/Legend';
 
 function SimpleLineChart(passData) {
     const data = [];
-
+    const formatter = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
     for (let i = 0; i < passData.passData.length; i++) {
       data.push(passData.passData[i]);
@@ -23,7 +23,8 @@ function SimpleLineChart(passData) {
         <ResponsiveContainer width="99%" height={480}>
             <LineChart data={data}>
                 <XAxis dataKey="name" />
-                <YAxis formatter = {(value) => new Intl.NumberFormat('en').format(value)}/>
+                {/*<YAxis formatter = {(value) => new Intl.NumberFormat('en').format(value)}/>*/}
+                <YAxis tickFormatter={(value) => new Intl.NumberFormat('en').format(value)}/>
                 <CartesianGrid vertical={false} strokeDasharray="3 3" />
                 <Tooltip />
                 <Legend />
