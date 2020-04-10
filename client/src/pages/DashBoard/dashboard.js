@@ -218,10 +218,10 @@ class Dashboard extends React.Component {
                 holderArrayTable = [];
                 for (let i = 0; i < res.data.data[0].length; i++) {
                     holderObjectTable = {
-                        id: res.data.data[0][i].cust_ref_num,
-                        name: res.data.data[0][i].cust_ref_num,
-                        tagcount: res.data.data[0][i].tagcount.toString(),
-                        quantity: Math.round(res.data.data[0][i].quantity).toString()
+                        id: res.data.data[0][i].PART,
+                        name: res.data.data[0][i].PART,
+                        tagcount: res.data.data[0][i].TAG_COUNT.toString(),
+                        quantity: Math.round(res.data.data[0][i].QTY).toString()
                     };
                     holderArrayTable.push(holderObjectTable);
                 }

@@ -274,12 +274,13 @@ const orm = {
         })
     },
     dashboardDataTable : (compCode, cb) => {
-        const strSql = `SELECT DISTINCT cust_ref_num, count(item_tag_number) tagcount, SUM(loc_weight_in) quantity FROM InvItems WHERE loc_whse_code = '${compCode}' GROUP BY cust_ref_num HAVING count(item_tag_number) > 0 ORDER BY SUM(loc_weight_in) DESC;`;
+        //const strSql = `SELECT DISTINCT cust_ref_num, count(item_tag_number) tagcount, SUM(loc_weight_in) quantity FROM InvItems WHERE loc_whse_code = '${compCode}' GROUP BY cust_ref_num HAVING count(item_tag_number) > 0 ORDER BY SUM(loc_weight_in) DESC;`;
+        const strSql = `Select * FROM CurrentInventory WHERE BP_CODE = '${compCode}'`;
         db.sequelize.query(strSql).then((results) => {
-            // console.log('data coming from the dashboard data, ', results);
+             //console.log('data coming from the dashboard data, ', results);
             cb(null, results);
         }).catch((error) => {
-            // console.log('error from the dashboard data, ', error);
+             //console.log('error from the dashboard data, ', error);
             cb(error, null);
         })
     },
