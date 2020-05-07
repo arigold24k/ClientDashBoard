@@ -90,6 +90,7 @@ EnhancedTableHead.propTypes = {
 const toolbarStyles = theme => ({
     root: {
         paddingRight: theme.spacing.unit,
+        height: 'auto'
     },
     highlight:
         theme.palette.type === 'light'

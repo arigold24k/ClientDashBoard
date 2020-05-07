@@ -8,7 +8,7 @@ class signUp extends React.Component {
     render () {
         return <React.Fragment>
             <Typography variant="h6" gutterBottom align="center" color="primary">
-                Create account
+                Create Username
              </Typography>
             <Grid container spacing={24}>
                 <Grid item xs={12}>

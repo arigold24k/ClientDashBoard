@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4bf03c05-fc22-480e-a891-05bede3e6fba" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/orm.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/orm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/Reporting/reporting.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/Reporting/reporting.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,11 +14,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/orm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="821">
-              <caret line="281" column="29" lean-forward="true" selection-start-line="281" selection-start-column="29" selection-end-line="281" selection-end-column="29" />
+            <state relative-caret-position="1348">
+              <caret line="277" column="54" selection-start-line="277" selection-start-column="38" selection-end-line="277" selection-end-column="54" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/src/pages/Reporting/reporting.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1037">
+              <caret line="109" column="45" lean-forward="true" selection-start-line="109" selection-start-column="45" selection-end-line="109" selection-end-column="45" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -35,8 +47,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="208" column="27" lean-forward="true" selection-start-line="208" selection-start-column="27" selection-end-line="208" selection-end-column="27" />
+            <state relative-caret-position="3332">
+              <caret line="208" column="27" selection-start-line="208" selection-start-column="27" selection-end-line="208" selection-end-column="27" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -47,8 +59,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4369">
-              <caret line="276" column="70" selection-start-line="276" selection-start-column="70" selection-end-line="276" selection-end-column="119" />
+            <state relative-caret-position="1914">
+              <caret line="116" column="32" selection-start-line="116" selection-start-column="25" selection-end-line="116" selection-end-column="32" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -88,8 +100,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getchartdata</find>
-      <find>dash</find>
       <find>api/cons</find>
       <find>having</find>
       <find>PROCESS</find>
@@ -118,6 +128,8 @@
       <find>condition</find>
       <find>updSelected</find>
       <find>datapassed</find>
+      <find>paper1</find>
+      <find>classes</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\avidal\ClientDashBoard</dir>
@@ -135,7 +147,6 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/config/config.js" />
         <option value="$PROJECT_DIR$/client/src/components/SignIn/signin.js" />
-        <option value="$PROJECT_DIR$/client/src/pages/Reporting/reporting.js" />
         <option value="$PROJECT_DIR$/client/src/components/ExcelExport/excelExport.js" />
         <option value="$PROJECT_DIR$/client/src/components/OrderDetail/orderDetail.js" />
         <option value="$PROJECT_DIR$/client/src/pages/ClientCheckout/clientCKout.js" />
@@ -148,14 +159,16 @@
         <option value="$PROJECT_DIR$/client/src/components/SimpleLineChart/simpleLineChart.js" />
         <option value="$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js" />
         <option value="$PROJECT_DIR$/config/orm.js" />
+        <option value="$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js" />
+        <option value="$PROJECT_DIR$/client/src/pages/Reporting/reporting.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1928" />
-    <option name="y" value="116" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-2040" />
+    <option name="y" value="105" />
     <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="height" value="930" />
   </component>
   <component name="ProjectId" id="1QmcOZahOAFzPNKzJ9HYLbITpGy" />
   <component name="ProjectView">
@@ -163,6 +176,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -178,13 +192,48 @@
             <path>
               <item name="ClientDashBoard" type="b2602c69:ProjectViewProjectNode" />
               <item name="ClientDashBoard" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ClientDashBoard" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ClientDashBoard" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ClientDashBoard" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ClientDashBoard" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="SimpleTable" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ClientDashBoard" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ClientDashBoard" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ClientDashBoard" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ClientDashBoard" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="Reporting" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ClientDashBoard" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ClientDashBoard" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -369,12 +418,15 @@
       <workItem from="1585753799868" duration="1056000" />
       <workItem from="1585758498099" duration="25925000" />
       <workItem from="1586460204926" duration="174000" />
-      <workItem from="1586548642294" duration="1753000" />
+      <workItem from="1586548642294" duration="2340000" />
+      <workItem from="1586788934547" duration="147000" />
+      <workItem from="1586789568436" duration="1378000" />
+      <workItem from="1587574020372" duration="2636000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76343000" />
+    <option name="totallyTimeSpent" value="81091000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -386,8 +438,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="116" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-1928" y="-3" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13804004" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -484,12 +535,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/build/static/js/main.cc245526.chunk.js.map">
+      <provider editor-type-id="sourcemapFileViewerProvider" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="392">
           <caret column="104649" selection-start-column="104649" selection-end-column="104649" />
         </state>
       </provider>
-      <provider editor-type-id="sourcemapFileViewerProvider" />
     </entry>
     <entry file="file://$PROJECT_DIR$/functions/functions.js">
       <provider selected="true" editor-type-id="text-editor" />
@@ -540,16 +591,6 @@
     <entry file="file://$PROJECT_DIR$/client/src/components/SignUp/signUp.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/pages/Reporting/reporting.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7684">
-          <caret line="470" column="67" selection-start-line="470" selection-start-column="67" selection-end-line="470" selection-end-column="67" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -699,6 +740,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/orm.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1348">
+          <caret line="277" column="54" selection-start-line="277" selection-start-column="38" selection-end-line="277" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/models/stinvitem.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -706,10 +754,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js">
+    <entry file="file://$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4369">
-          <caret line="276" column="70" selection-start-line="276" selection-start-column="70" selection-end-line="276" selection-end-column="119" />
+        <state relative-caret-position="3332">
+          <caret line="208" column="27" selection-start-line="208" selection-start-column="27" selection-end-line="208" selection-end-column="27" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -733,20 +781,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/pages/DashBoard/dashboard.js">
+    <entry file="file://$PROJECT_DIR$/client/src/components/SimpleTable/simpleTable.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="208" column="27" lean-forward="true" selection-start-line="208" selection-start-column="27" selection-end-line="208" selection-end-column="27" />
+        <state relative-caret-position="1914">
+          <caret line="116" column="32" selection-start-line="116" selection-start-column="25" selection-end-line="116" selection-end-column="32" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/orm.js">
+    <entry file="file://$PROJECT_DIR$/client/src/pages/Reporting/reporting.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="821">
-          <caret line="281" column="29" lean-forward="true" selection-start-line="281" selection-start-column="29" selection-end-line="281" selection-end-column="29" />
+        <state relative-caret-position="1037">
+          <caret line="109" column="45" lean-forward="true" selection-start-line="109" selection-start-column="45" selection-end-line="109" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

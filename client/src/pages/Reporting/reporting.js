@@ -110,6 +110,7 @@ const styles = theme => ({
         marginBottom: theme.spacing.unit * 3,
         padding: theme.spacing.unit,
         overflow: 'auto',
+        height: '90%',
         [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
             marginTop: theme.spacing.unit * -1,
             marginBottom: theme.spacing.unit * 6,
