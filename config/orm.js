@@ -205,15 +205,38 @@ const orm = {
             cb(error, null)
         })
     },
-    findOneTag_forday: (tagNumber, cb) => {
+    findOneTag_forday: (tagNumber, code_, cb) => {
         let today_ = new Date();
         db.KCARDS.findOne({
             where: {
                 'TAG_NUM': tagNumber,
-                'TO_DATE(scandate)': today_
+                'TO_DATE(scandate)': today_,
+                'CODE': code_
             }
         }).then((results) => {
+            console.log(`This is the results form the findont tag forday function ${results}`);
             cb(null, results)
+        }).catch((error) => {
+            console.log(`This is the error form the findont tag forday function ${error}`);
+            cb(error, null)
+        })
+    },
+    check_if_scanned: (tagNumber, code_, cb) => {
+        let today_ = new Date();
+        db.KCARDS.findOne({
+            where: {
+                'TAG_NUM': tagNumber,
+                // 'TO_DATE(scandate)': today_,
+                'CODE': code_
+            }
+        }).then((results) => {
+            if (results == null) {
+                cb(null, false)
+            } else {
+                console.log(`This is the results form the findont tag forday function ${(results)}`);
+                cb(null, true)
+            };
+
         }).catch((error) => {
             cb(error, null)
         })
@@ -256,15 +279,23 @@ const orm = {
         });
     },
     dashboardData : (compCode, filtered,cb) => {
-        let condition1, condition2;
+        let condition1, condition2, compcode_;
         if(!filtered){
             condition1 = '';
-            condition2 = ''
+            condition2 = '';
         }else{
             condition1 = `AND cust_ref_num in (${filtered})`;
             condition2 = `AND part in (${filtered})`;
         }
-        const strSql = `Select c.* from ((select A.Month, A.year, A.mon_num, Consumed, Received from (SELECT date_format(a.scandate, '%b') Month, SUM((CASE WHEN a.CODE LIKE 'CONSUME%' THEN a.QTY ELSE '' END)) Consumed, year(a.scandate) year, month(a.scandate) mon_num FROM KCARDs a WHERE a.CUSTOMER = '${compCode}' AND DATE(a.SCANDATE) >= date_sub(sysdate(), INTERVAL 13 MONTH) AND DATE(a.SCANDATE) <= sysdate() ${condition2} GROUP BY date_format(a.scandate, '%b'), year(a.scandate), month(a.scandate)) A LEFT JOIN (SELECT date_format(b.date_in, '%b') Month, SUM(b.loc_weight_in) Received, year(b.date_in) year, month(b.date_in) mon_num FROM InvItems b WHERE b.loc_whse_code = '${compCode}' AND date(b.date_in) >= date_sub(sysdate(), INTERVAL 13 MONTH) AND date(b.date_in) <= sysdate() ${condition1} GROUP BY date_format(b.date_in, '%b'), year(b.date_in), month(b.date_in)) B ON A.Month = B.Month AND A.year = B.year AND A.mon_num = B.mon_num) union (select B.Month, B.year, B.mon_num, Consumed, Received from (SELECT date_format(a.scandate, '%b') Month, SUM((CASE WHEN a.CODE LIKE 'CONSUME%' THEN a.QTY ELSE '' END)) Consumed, year(a.scandate) year, month(a.scandate) mon_num FROM KCARDs a WHERE a.CUSTOMER = '${compCode}' AND DATE(a.SCANDATE) >= date_sub(sysdate(), INTERVAL 13 MONTH)	AND DATE(a.SCANDATE) <= sysdate() ${condition2}  GROUP BY date_format(a.scandate, '%b'), year(a.scandate), month(a.scandate)) A RIGHT JOIN (SELECT date_format(b.date_in, '%b') Month, SUM(b.loc_weight_in) Received, year(b.date_in) year, month(b.date_in) mon_num FROM InvItems b WHERE b.loc_whse_code = '${compCode}' AND date(b.date_in) >= date_sub(sysdate(), INTERVAL 13 MONTH) AND date(b.date_in) <= sysdate() ${condition1} GROUP BY date_format(b.date_in, '%b'), year(b.date_in), month(b.date_in)) B ON A.Month = B.Month AND A.year = B.year AND A.mon_num = B.mon_num)) c WHERE c.Month is not null and c.Year is not null Order by year asc, mon_num asc;`;
+
+
+        if (compCode == '001871AS') {
+            compcode_ = `'001871AS', '001871TR'`;
+        }else {
+            compcode_ = `'${compCode}'`
+        }
+
+        const strSql = `Select c.* from ((select A.Month, A.year, A.mon_num, Consumed, Received from (SELECT date_format(a.scandate, '%b') Month, SUM((CASE WHEN a.CODE LIKE 'CONSUME%' THEN a.QTY ELSE '' END)) Consumed, year(a.scandate) year, month(a.scandate) mon_num FROM KCARDs a WHERE a.CUSTOMER in (${compcode_}) AND DATE(a.SCANDATE) >= date_sub(sysdate(), INTERVAL 13 MONTH) AND DATE(a.SCANDATE) <= sysdate() ${condition2} GROUP BY date_format(a.scandate, '%b'), year(a.scandate), month(a.scandate)) A LEFT JOIN (SELECT date_format(b.date_in, '%b') Month, SUM(b.loc_weight_in) Received, year(b.date_in) year, month(b.date_in) mon_num FROM InvItems b WHERE b.loc_whse_code in (${compcode_}) AND date(b.date_in) >= date_sub(sysdate(), INTERVAL 13 MONTH) AND date(b.date_in) <= sysdate() ${condition1} GROUP BY date_format(b.date_in, '%b'), year(b.date_in), month(b.date_in)) B ON A.Month = B.Month AND A.year = B.year AND A.mon_num = B.mon_num) union (select B.Month, B.year, B.mon_num, Consumed, Received from (SELECT date_format(a.scandate, '%b') Month, SUM((CASE WHEN a.CODE LIKE 'CONSUME%' THEN a.QTY ELSE '' END)) Consumed, year(a.scandate) year, month(a.scandate) mon_num FROM KCARDs a WHERE a.CUSTOMER in (${compcode_}) AND DATE(a.SCANDATE) >= date_sub(sysdate(), INTERVAL 13 MONTH)	AND DATE(a.SCANDATE) <= sysdate() ${condition2}  GROUP BY date_format(a.scandate, '%b'), year(a.scandate), month(a.scandate)) A RIGHT JOIN (SELECT date_format(b.date_in, '%b') Month, SUM(b.loc_weight_in) Received, year(b.date_in) year, month(b.date_in) mon_num FROM InvItems b WHERE b.loc_whse_code in (${compcode_}) AND date(b.date_in) >= date_sub(sysdate(), INTERVAL 13 MONTH) AND date(b.date_in) <= sysdate() ${condition1} GROUP BY date_format(b.date_in, '%b'), year(b.date_in), month(b.date_in)) B ON A.Month = B.Month AND A.year = B.year AND A.mon_num = B.mon_num)) c WHERE c.Month is not null and c.Year is not null Order by year asc, mon_num asc;`;
         db.sequelize.query(strSql).then((results) => {
             // console.log('data coming from the dashboard data, ', results);
             cb(null, results);

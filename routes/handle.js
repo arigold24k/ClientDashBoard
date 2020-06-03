@@ -224,24 +224,33 @@ router.post('/api/processScan', verifyToken ,(req, res) => {
             //          console.log("This is the error from the findontTag orm -- handle.js, ", err);
             //        if(results !== null) {
                         if (req.body.purpose === 'CONSUME') {
-                        orm.insertToKCARDs(decoded.user.companycode,req.body.purpose, req.body.partnum, req.body.quantity, req.body.tagnum, decoded.user.username,  (err, data) => {
-                            if(err) {
-                                // console.log("Error in adding activity to kcards ", err);
-                                res.json({message: "data was not added", data: null})
-                                //put in code if it was not inserted
-                            }else{
-                                //code out if it inserted.
-                                // console.log("Data should have been added, ", data);
-                                // orm.deleteOneMaster("KCARD_MASTER", "ITEM_TAG_INTEGER", req.body.tagnum, (err, data) => {
-                                //     // console.log("data from delete, ", data);
-                                //     if(data !== null) {
-                                        res.json({message: "data was added successfully", data: data});
-                                    // }else{
-                                    //     // console.log("error in the delete, ", err);
-                                    // }
-                                // })
-                            }
-                        })
+                        orm.check_if_scanned(req.body.tagnum, req.body.purpose, (error5, res5) => {
+                            //if error checking
+
+                          if (res5 === true) {
+                                res.json({message : "Tag Already Consumed",  data: 'TAGALREADYCONSUMED'})
+                          }else {
+                              orm.insertToKCARDs(decoded.user.companycode,req.body.purpose, req.body.partnum, req.body.quantity, req.body.tagnum, decoded.user.username,  (err, data) => {
+                                  if(err) {
+                                      // console.log("Error in adding activity to kcards ", err);
+                                      res.json({message: "data was not added", data: null});
+                                      //put in code if it was not inserted
+                                  }else{
+                                      //code out if it inserted.
+                                      // console.log("Data should have been added, ", data);
+                                      // orm.deleteOneMaster("KCARD_MASTER", "ITEM_TAG_INTEGER", req.body.tagnum, (err, data) => {
+                                      //     // console.log("data from delete, ", data);
+                                      //     if(data !== null) {
+                                      res.json({message: "data was added successfully", data: data});
+                                      // }else{
+                                      //     // console.log("error in the delete, ", err);
+                                      // }
+                                      // })
+                                  }
+                              });
+                          }
+                        });
+
                         }else if (req.body.purpose === 'RECEIPT') {
                             // have to updated record in kcards master
                             orm.updateOne('KCARD_MASTER', 'ITEM_TAG_INTEGER', req.body.tagnum, 'DATE_MODIFIED', new Date(), (err, data) => {
