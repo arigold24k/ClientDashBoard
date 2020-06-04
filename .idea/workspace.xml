@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4bf03c05-fc22-480e-a891-05bede3e6fba" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/config/orm.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/orm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/handle.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/handle.js" afterDir="false" />
-    </list>
+    <list default="true" id="4bf03c05-fc22-480e-a891-05bede3e6fba" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,10 +116,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-2040" />
-    <option name="y" value="105" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="930" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectId" id="1QmcOZahOAFzPNKzJ9HYLbITpGy" />
   <component name="ProjectView">
@@ -345,12 +342,12 @@
       <workItem from="1586788934547" duration="147000" />
       <workItem from="1586789568436" duration="1378000" />
       <workItem from="1587574020372" duration="2636000" />
-      <workItem from="1591197103469" duration="6955000" />
+      <workItem from="1591197103469" duration="7021000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88046000" />
+    <option name="totallyTimeSpent" value="88112000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -363,7 +360,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13804004" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
