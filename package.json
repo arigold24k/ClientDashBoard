@@ -38,7 +38,7 @@
     "react-number-format": "^4.0.7",
     "react-router": "^5.1.2",
     "reactstrap": "^7.1.0",
-    "sequelize": "^5.3.1",
+    "sequelize": "^6.28.2",
     "serve-favicon": "~2.5.0",
     "tedious": "^5.0.3",
     "tempa-xlsx": "0.0.1",
